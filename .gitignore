@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# 本機 Python 版本／虛擬環境設定（因人而異，不進版控）
+.python-version
+
+# 本機資料（不進版控）
+*.db
+*.db-journal
+*.sqlite3
+backend/photos/
+
+# Node / 前端
+node_modules/
+frontend/dist/
+
+# 環境變數與編輯器
+.env
+.env.local
+.DS_Store
+.idea/
+.vscode/
+
+# UI/UX 設計稿參考（Claude Design handoff bundle，不進版控）
+design-reference/
