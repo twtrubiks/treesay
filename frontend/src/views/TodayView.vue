@@ -98,6 +98,22 @@ function onVisibilityChange() {
   if (document.visibilityState === 'visible') reloadIfStale()
 }
 
+// 輸入框跟著字長高。固定兩行的話，打到第三行就開始往上滾——寫的人看不見
+// 自己剛剛說了什麼。上限 320px（約 10 行）：再高會把上面的訊息擠掉，
+// 一個佔滿螢幕的輸入框本身就是在催人寫滿它
+const COMPOSER_MAX_HEIGHT = 320
+
+function autosizeComposer() {
+  const el = textareaRef.value
+  if (!el) return
+  el.style.height = 'auto'
+  // 先量再設：設完 height 之後 scrollHeight 就被上限夾住了，判斷會失準
+  const needed = el.scrollHeight
+  el.style.height = `${Math.min(needed, COMPOSER_MAX_HEIGHT)}px`
+  // 沒滿之前不讓捲軸露臉，否則剛好滿一行時它會閃一下
+  el.style.overflowY = needed > COMPOSER_MAX_HEIGHT ? 'auto' : 'hidden'
+}
+
 async function send() {
   const content = input.value.trim()
   if (!content && !photoFile.value) return
@@ -106,6 +122,8 @@ async function send() {
     input.value = ''
     clearPhoto()
     answering.value = null
+    // 清空是 v-model 下一輪才進 DOM，這時候量高度會量到還沒清掉的字
+    nextTick(autosizeComposer)
   } catch {
     // 錯誤文案已寫入 store.error
   }
@@ -374,6 +392,7 @@ function dismissError() {
         class="composer-input"
         rows="2"
         placeholder="想說什麼都可以，樹在聽……"
+        @input="autosizeComposer"
         @keydown="onKeydown"
       ></textarea>
       <div class="composer-actions">
@@ -763,8 +782,31 @@ function dismissError() {
   outline: none;
   resize: none;
   background: transparent;
+  padding: 0;
   font: 400 20px/1.6 var(--sans);
   color: var(--ink);
+  /* 兩行是起點不是天花板：空框的呼吸感留著，高度交給 autosizeComposer。
+     max-height 要跟 COMPOSER_MAX_HEIGHT 同一個數字 */
+  min-height: 64px;
+  max-height: 320px;
+  overflow-y: hidden;
+  /* 真的寫滿才出現的那條，也要是暖的——原生捲軸在這一頁像另一個世界 */
+  scrollbar-width: thin;
+  scrollbar-color: var(--ink-faint) transparent;
+}
+
+/* 舊版 WebKit 不吃上面的標準屬性，那條帶箭頭的原生捲軸會照樣冒出來 */
+.composer-input::-webkit-scrollbar {
+  width: 6px;
+}
+
+.composer-input::-webkit-scrollbar-thumb {
+  background: var(--ink-faint);
+  border-radius: 3px;
+}
+
+.composer-input::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 @media (prefers-reduced-motion: reduce) {
