@@ -14,6 +14,8 @@ export interface MessageOut {
 export interface DayDetail {
   date: string
   status: DayStatus
+  // 那天樹問的問題（Day 誕生時蓋章存檔，不隨題庫變動位移）
+  question: string
   diary: string | null
   emotion: Emotion | null
   tree_reply: string | null
@@ -24,7 +26,6 @@ export interface DayDetail {
 }
 
 export interface TodayResponse extends DayDetail {
-  question: string
   // 補種窗口內留了話卻沒收尾、最早的一天（沒有就 null）——首頁遞補種邀請用
   backfill_candidate: string | null
 }

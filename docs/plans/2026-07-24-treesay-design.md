@@ -69,7 +69,9 @@ Python 環境：自己開一個獨立的虛擬環境即可（venv、pyenv 都行
 
 ## 資料模型（SQLite / SQLAlchemy）
 
-- `days`：date (unique)、status（`collecting`／`planting`／`planted`）、diary_text、
+- `days`：date (unique)、status（`collecting`／`planting`／`planted`）、
+  question（那天樹問的問題——題庫依「日期 mod 題數」定題，加題會位移所有日期，
+  所以 Day 誕生時就蓋章存檔，讀取與種樹一律用存的值）、diary_text、
   emotion、tree_reply、planted_at、planting_started_at（防連點與逾期判定用）
 - `messages`：day_id FK、content、photo_path (nullable)、created_at
 - `memories`：content、source_date、created_at——樹長期記得的、關於使用者的事
@@ -80,8 +82,10 @@ Python 環境：自己開一個獨立的虛擬環境即可（venv、pyenv 都行
 
 照片存 `photos/YYYY-MM-DD/<uuid>.<ext>`，DB 只記相對路徑，FastAPI 靜態服務。
 
-`init_db()` 只建表不刪表：升級不動既有的表，某張表即使不再使用，裡面仍是使用者
-寫下的東西，不該被一次升級默默清掉。
+`init_db()` 只新增不刪除：`create_all` 建缺的表，`_upgrade_days_table()` 幫舊庫的
+days 表補後來新增的欄位（缺欄位才 ALTER、question 只回填 NULL 的列，冪等）。
+升級不動既有的表：某張表即使不再使用，裡面仍是使用者寫下的東西，
+不該被一次升級默默清掉。
 
 ### 樹的記憶
 

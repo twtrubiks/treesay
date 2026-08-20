@@ -18,6 +18,8 @@ from sqlalchemy.orm import (
     sessionmaker,
 )
 
+import questions
+
 BASE_DIR = Path(__file__).resolve().parent
 DEFAULT_DATA_DIR = Path.home() / ".treesay"
 
@@ -63,6 +65,10 @@ class Day(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     date: Mapped[datetime.date] = mapped_column(unique=True, index=True)
     status: Mapped[str] = mapped_column(String(20), default="collecting")
+    # 那天樹問的問題。建立這一列時就蓋章存下——題庫依「日期 mod 題數」定題，
+    # 往題庫加一題，所有日期算出來的題目就會位移；問過什麼是那一天的事實，
+    # 跟 diary_text 一樣落盤，不在讀取時重算。
+    question: Mapped[str | None] = mapped_column(Text)
     diary_text: Mapped[str | None] = mapped_column(Text)
     emotion: Mapped[str | None] = mapped_column(String(20))
     tree_reply: Mapped[str | None] = mapped_column(Text)
@@ -120,10 +126,35 @@ SessionLocal = sessionmaker(bind=engine, autoflush=False, expire_on_commit=False
 
 
 def init_db() -> None:
-    """建表。只新增不刪除。
+    """建表與升級。只新增不刪除。
 
     升級不動既有的表：某張表即使不再使用，裡面仍是使用者寫下的東西，
     不該被一次升級默默清掉。留著不用，要撈的人用 sqlite3 直接查得到。
     """
     PHOTOS_DIR.mkdir(parents=True, exist_ok=True)
     Base.metadata.create_all(engine)
+    _upgrade_days_table()
+
+
+def _upgrade_days_table() -> None:
+    """幫既有的 days 表補上後來新增的欄位。
+
+    create_all 只建缺的表、不會幫舊表加欄位，老資料庫起新程式第一個查詢
+    就會炸 no such column，所以這裡自己補。純加法且冪等：缺欄位才 ALTER、
+    question 只回填還是 NULL 的列，全新資料庫走到這裡什麼都不會發生。
+
+    question 回填用當下的 question_for()——趁題庫還沒變動，把「那天問過
+    什麼」凍結成事實；之後題庫再怎麼長，歷史的問題都不會跟著位移。
+    """
+    with engine.begin() as conn:
+        cols = {row[1] for row in conn.exec_driver_sql("PRAGMA table_info(days)")}
+        if "question" not in cols:
+            conn.exec_driver_sql("ALTER TABLE days ADD COLUMN question TEXT")
+        rows = conn.exec_driver_sql(
+            "SELECT id, date FROM days WHERE question IS NULL"
+        ).fetchall()
+        for day_id, date_str in rows:
+            conn.exec_driver_sql(
+                "UPDATE days SET question = ? WHERE id = ?",
+                (questions.question_for(datetime.date.fromisoformat(date_str)), day_id),
+            )

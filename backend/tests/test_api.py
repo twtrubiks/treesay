@@ -10,6 +10,7 @@ from sqlalchemy.orm import sessionmaker
 
 import ai
 import models
+import questions
 
 
 class FakeClock:
@@ -314,6 +315,44 @@ class TestBackfillInvite:
         client.delete(f"/api/messages/{mid}")
         clock.now += datetime.timedelta(days=1)
         assert client.get("/api/today").json()["backfill_candidate"] is None
+
+
+class TestQuestionIsAFact:
+    """那天問過什麼是那一天的事實：Day 誕生時蓋章，題庫變動不得位移歷史。"""
+
+    def _grow_bank(self, monkeypatch):
+        """模擬往題庫加一題——mod 定題的所有日期會因此位移。"""
+        monkeypatch.setattr(questions, "QUESTIONS", ["新加的一題"] + questions.QUESTIONS)
+
+    def test_stamped_question_survives_bank_growth(self, client, clock, monkeypatch):
+        before = client.get("/api/today").json()["question"]
+        client.post("/api/messages", data={"content": "嗨"})  # row 誕生，蓋章
+        self._grow_bank(monkeypatch)
+        assert client.get("/api/today").json()["question"] == before
+
+    def test_unstamped_day_follows_current_bank(self, client, clock, monkeypatch):
+        """還沒開口的日子沒有事實可言，問題現算現看。"""
+        self._grow_bank(monkeypatch)
+        expected = questions.question_for(datetime.date(2026, 7, 24))
+        assert client.get("/api/today").json()["question"] == expected
+
+    def test_plant_prompt_uses_stamped_question(
+        self, client, clock, mock_ai, monkeypatch
+    ):
+        client.post("/api/messages", data={"content": "嗨"})
+        stamped = client.get("/api/today").json()["question"]
+        self._grow_bank(monkeypatch)
+        mock_ai(PLANT_RESULT)
+        client.post("/api/today/plant")
+        assert stamped in mock_ai.calls[0]["prompt"]
+
+    def test_day_detail_and_export_carry_question(self, client, clock, mock_ai):
+        client.post("/api/messages", data={"content": "嗨"})
+        mock_ai(PLANT_RESULT)
+        client.post("/api/today/plant")
+        stamped = questions.question_for(datetime.date(2026, 7, 24))
+        assert client.get("/api/days/2026-07-24").json()["question"] == stamped
+        assert client.get("/api/export").json()["days"][0]["question"] == stamped
 
 
 class TestForest:

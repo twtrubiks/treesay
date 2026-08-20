@@ -133,7 +133,10 @@ def get_db():
 def get_or_create_day(db, date: datetime.date) -> Day:
     day = db.scalar(select(Day).where(Day.date == date))
     if day is None:
-        day = Day(date=date, status="collecting")
+        # question 在這一列誕生時就蓋章存下（見 models.Day.question 的說明）
+        day = Day(
+            date=date, status="collecting", question=questions.question_for(date)
+        )
         db.add(day)
         db.flush()
     return day
@@ -183,6 +186,9 @@ def day_dict(day: Day | None, date: datetime.date) -> dict:
         return {
             "date": date.isoformat(),
             "status": "collecting",
+            # 這一天還沒有任何記錄（連 row 都沒有），問題現算現看即可；
+            # 第一則訊息進來、row 誕生時才蓋章成事實
+            "question": questions.question_for(date),
             "diary": None,
             "emotion": None,
             "tree_reply": None,
@@ -193,6 +199,7 @@ def day_dict(day: Day | None, date: datetime.date) -> dict:
     return {
         "date": day.date.isoformat(),
         "status": day.status,
+        "question": day.question or questions.question_for(date),
         "diary": day.diary_text,
         "emotion": day.emotion,
         "tree_reply": day.tree_reply,
@@ -210,7 +217,6 @@ def get_today(db=Depends(get_db)):
     date = models.effective_date(models.now_local())
     day = db.scalar(select(Day).where(Day.date == date))
     payload = day_dict(day, date)
-    payload["question"] = questions.question_for(date)
     payload["backfill_candidate"] = backfill_candidate(db, date)
     return payload
 
@@ -351,7 +357,8 @@ async def plant_day(db, date: datetime.date, now: datetime.datetime) -> dict:
 
     prompt = prompts.plant_prompt(
         msgs,
-        question=questions.question_for(date),
+        # 用蓋章存下的那題，不重算——題庫變動後重算會對不上當天真正問過的
+        question=day.question or questions.question_for(date),
         days_ago=days_ago,
         memories=[m.content for m in all_memories[-MEMORY_PROMPT_LIMIT:]],
         recent_diaries=recent_diaries,
@@ -579,6 +586,7 @@ def export_all(db=Depends(get_db)):
             {
                 "date": d.date.isoformat(),
                 "status": d.status,
+                "question": d.question,
                 "diary": d.diary_text,
                 "emotion": d.emotion,
                 "tree_reply": d.tree_reply,
