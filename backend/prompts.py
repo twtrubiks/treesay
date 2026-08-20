@@ -99,15 +99,16 @@ def plant_prompt(
 
 {messages_text}
 {question_block}{backfill_block}
-請完成四件事：
+請完成五件事：
 
 1. diary：以使用者的第一人稱「我」，把這些碎片整理成一篇通順的日記。保留使用者原本的語氣與用詞，不加油添醋、不虛構沒提到的事。若訊息附有照片路徑，請用 Read 工具看圖，把畫面自然地編進日記裡。
 2. emotion：從這七種裡選一個最貼近{when}整體心情的：{EMOTIONS_TEXT}。
 3. tree_reply：以樹的身分寫一段溫暖的回覆（80～150 字）。要具體回應使用者{when}提到的事，接住情緒就好——不說教、不給建議、不打分數。
 4. memory：從{when}的訊息裡，挑出值得長期記住、關於使用者本人的事（0～3 條，每條一句話、40 字以內）。只記會持續一段時間的事——進行中的事、重要的人、反覆出現的心情或期待；一次性的瑣事、當天就過去的情緒不記。已經在記得清單裡的不重複記。沒有值得記的就給空陣列。
+5. keywords：從{when}的訊息裡挑 2～4 個關鍵詞（用使用者自己的用詞，每個 2～8 個字），讓日後回望時想得起這一天。不是分類標籤、不是評價，沒有合適的就給空陣列。
 
 {JSON_ONLY}
-格式：{{"diary": "...", "emotion": "...", "tree_reply": "...", "memory": ["..."]}}"""
+格式：{{"diary": "...", "emotion": "...", "tree_reply": "...", "memory": ["..."], "keywords": ["..."]}}"""
 
 
 def weekly_prompt(diaries: list[dict], memories: list[str] | None = None) -> str:

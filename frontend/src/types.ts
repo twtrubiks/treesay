@@ -19,6 +19,9 @@ export interface DayDetail {
   diary: string | null
   emotion: Emotion | null
   tree_reply: string | null
+  // 種樹順手抽出的關鍵詞。先存不顯示，為「那年今天」與日後搜尋鋪路；
+  // 落盤前種的樹是空陣列。永遠不做次數統計或標籤雲
+  keywords: string[]
   planted_at: string | null
   messages: MessageOut[]
   // 那一天現在還能不能種樹（今天隨時可以，過去的只在補種窗口內）

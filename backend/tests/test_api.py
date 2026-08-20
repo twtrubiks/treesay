@@ -355,6 +355,35 @@ class TestQuestionIsAFact:
         assert client.get("/api/export").json()["days"][0]["question"] == stamped
 
 
+class TestKeywords:
+    """種樹順手留下的回望線索：存起來備用，壞掉不拖垮種樹。"""
+
+    def test_plant_stores_keywords(self, client, clock, mock_ai):
+        client.post("/api/messages", data={"content": "傍晚去散步"})
+        mock_ai({**PLANT_RESULT, "keywords": ["散步", "傍晚"]})
+        r = client.post("/api/today/plant")
+        assert r.json()["keywords"] == ["散步", "傍晚"]
+        assert client.get("/api/days/2026-07-24").json()["keywords"] == ["散步", "傍晚"]
+        assert client.get("/api/export").json()["days"][0]["keywords"] == [
+            "散步",
+            "傍晚",
+        ]
+
+    def test_garbage_keywords_do_not_break_plant(self, client, clock, mock_ai):
+        client.post("/api/messages", data={"content": "嗨"})
+        mock_ai({**PLANT_RESULT, "keywords": "不是清單"})
+        r = client.post("/api/today/plant")
+        assert r.status_code == 200
+        assert r.json()["status"] == "planted"
+        assert r.json()["keywords"] == []
+
+    def test_missing_keywords_field_means_empty(self, client, clock, mock_ai):
+        """落盤前的舊模型輸出沒有這個欄位，一樣正常種樹。"""
+        client.post("/api/messages", data={"content": "嗨"})
+        mock_ai(PLANT_RESULT)
+        assert client.post("/api/today/plant").json()["keywords"] == []
+
+
 class TestForest:
     def test_planted_and_unfinished_days_both_listed(self, client, clock, mock_ai):
         client.post("/api/messages", data={"content": "留一句就睡了"})  # 07-24 沒收尾

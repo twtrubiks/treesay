@@ -70,6 +70,14 @@ class TestUpgradeOldDb:
         assert rows["2026-08-05"] == questions.question_for(datetime.date(2026, 8, 5))
         assert rows["2026-08-19"] == questions.question_for(datetime.date(2026, 8, 19))
 
+    def test_keywords_column_added_but_left_null(self, tmp_path, monkeypatch):
+        """舊日記沒抽過關鍵詞是事實，補欄位但不回頭生內容。"""
+        db_path = self._make_old_db(tmp_path, ["2026-08-05"])
+        engine = self._init_on(db_path, monkeypatch)
+        with engine.connect() as conn:
+            (kw,) = conn.exec_driver_sql("SELECT keywords_json FROM days").fetchone()
+        assert kw is None
+
     def test_upgrade_is_idempotent_and_keeps_stamped_question(
         self, tmp_path, monkeypatch
     ):
@@ -89,4 +97,4 @@ class TestUpgradeOldDb:
             cols = {
                 row[1] for row in conn.exec_driver_sql("PRAGMA table_info(days)")
             }
-        assert "question" in cols
+        assert {"question", "keywords_json"} <= cols

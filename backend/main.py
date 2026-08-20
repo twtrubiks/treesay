@@ -43,6 +43,9 @@ PLANT_MEMORY_LIMIT = 3
 MEMORY_PROMPT_LIMIT = 20
 MEMORY_KEEP_LIMIT = 30
 
+# 種一次樹最多留幾個關鍵詞。它是回望的線索，不是分類系統。
+PLANT_KEYWORD_LIMIT = 4
+
 # 近期日記注入：只取目標日往前這幾天內、最多這幾篇。窗口刻意小——
 # 「近期」要對得起這兩個字，一個月前的日記突然被翻出來不是連續性，是驚嚇。
 RECENT_DIARY_DAYS = 7
@@ -180,6 +183,11 @@ def backfill_candidate(db, today: datetime.date) -> str | None:
     return None
 
 
+def day_keywords(day: Day) -> list[str]:
+    # 落盤之前種的樹沒有關鍵詞（NULL），當空清單——不回頭重跑 AI
+    return json.loads(day.keywords_json) if day.keywords_json else []
+
+
 def day_dict(day: Day | None, date: datetime.date) -> dict:
     today = models.effective_date(models.now_local())
     if day is None:
@@ -192,6 +200,7 @@ def day_dict(day: Day | None, date: datetime.date) -> dict:
             "diary": None,
             "emotion": None,
             "tree_reply": None,
+            "keywords": [],
             "planted_at": None,
             "messages": [],
             "can_plant": False,
@@ -203,6 +212,7 @@ def day_dict(day: Day | None, date: datetime.date) -> dict:
         "diary": day.diary_text,
         "emotion": day.emotion,
         "tree_reply": day.tree_reply,
+        "keywords": day_keywords(day),
         "planted_at": day.planted_at.isoformat() if day.planted_at else None,
         "messages": [message_dict(m) for m in day.messages],
         "can_plant": can_plant_day(day, date, today),
@@ -384,6 +394,11 @@ async def plant_day(db, date: datetime.date, now: datetime.datetime) -> dict:
     day.diary_text = diary
     day.emotion = ai.normalize_emotion(data.get("emotion"))
     day.tree_reply = tree_reply
+    # 順手留下的回望線索：欄位壞掉就當沒有，比照 memory 不拖垮種樹
+    day.keywords_json = json.dumps(
+        ai.normalize_keywords(data.get("keywords"), PLANT_KEYWORD_LIMIT),
+        ensure_ascii=False,
+    )
     day.status = "planted"
     day.planted_at = models.now_local()
 
@@ -590,6 +605,7 @@ def export_all(db=Depends(get_db)):
                 "diary": d.diary_text,
                 "emotion": d.emotion,
                 "tree_reply": d.tree_reply,
+                "keywords": day_keywords(d),
                 "planted_at": d.planted_at.isoformat() if d.planted_at else None,
                 "messages": [
                     {

@@ -114,11 +114,13 @@ def normalize_emotion(value: object) -> str:
 # 存進去會讓之後每次種樹的 prompt 被灌爆，直接丟棄。
 MEMORY_ITEM_MAX_CHARS = 120
 
+# 單個關鍵詞的長度上限。超過的是句子不是詞。
+KEYWORD_ITEM_MAX_CHARS = 20
 
-def normalize_memories(value: object, limit: int) -> list[str]:
-    """把 AI 回的記憶欄位整理成乾淨的字串清單。
 
-    記憶會被永久保存並注入之後每次種樹，所以寬進嚴出：
+def _clean_str_list(value: object, limit: int, max_chars: int) -> list[str]:
+    """把 AI 回的字串清單欄位整理乾淨，寬進嚴出：
+
     不是清單就當沒有，非字串、空白、過長、重複的條目一律略過。
     """
     if not isinstance(value, list):
@@ -128,12 +130,22 @@ def normalize_memories(value: object, limit: int) -> list[str]:
         if not isinstance(item, str):
             continue
         text = item.strip()
-        if not text or len(text) > MEMORY_ITEM_MAX_CHARS or text in out:
+        if not text or len(text) > max_chars or text in out:
             continue
         out.append(text)
         if len(out) >= limit:
             break
     return out
+
+
+def normalize_memories(value: object, limit: int) -> list[str]:
+    """記憶會被永久保存並注入之後每次種樹，清洗從嚴。"""
+    return _clean_str_list(value, limit, MEMORY_ITEM_MAX_CHARS)
+
+
+def normalize_keywords(value: object, limit: int) -> list[str]:
+    """關鍵詞欄位壞掉就當沒有——比照記憶，不能因為它讓種樹跟著失敗。"""
+    return _clean_str_list(value, limit, KEYWORD_ITEM_MAX_CHARS)
 
 
 def strip_code_fence(text: str) -> str:

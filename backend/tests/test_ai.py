@@ -93,6 +93,22 @@ class TestNormalizeMemories:
         assert ai.normalize_memories(items, 3) == ["一樣的", "第二件", "第三件"]
 
 
+class TestNormalizeKeywords:
+    """關鍵詞欄位壞掉就當沒有，不能拖垮種樹。"""
+
+    @pytest.mark.parametrize("bad", [None, "一個詞", {"a": 1}, 123])
+    def test_non_list_returns_empty(self, bad):
+        assert ai.normalize_keywords(bad, 4) == []
+
+    def test_cleans_dedupes_and_caps(self):
+        items = ["  種樹  ", "", 7, "種樹", "散步", "晚餐", "貓", "多的"]
+        assert ai.normalize_keywords(items, 4) == ["種樹", "散步", "晚餐", "貓"]
+
+    def test_sentence_length_item_dropped(self):
+        long = "這不是一個詞而是一整句話所以應該被丟掉才對吧"
+        assert ai.normalize_keywords([long, "散步"], 4) == ["散步"]
+
+
 class TestCheckCli:
     """環境檢查只採信確定訊號，寧可漏判也不誤殺。"""
 

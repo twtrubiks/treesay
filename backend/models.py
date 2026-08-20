@@ -69,6 +69,10 @@ class Day(Base):
     # 往題庫加一題，所有日期算出來的題目就會位移；問過什麼是那一天的事實，
     # 跟 diary_text 一樣落盤，不在讀取時重算。
     question: Mapped[str | None] = mapped_column(Text)
+    # 種樹順手抽出的關鍵詞（JSON 陣列字串），為「那年今天」與日後搜尋鋪路。
+    # 落盤之前的舊日記留 NULL——那天沒抽是事實，不回頭重跑 AI。
+    # 永遠不拿它做次數統計或標籤雲：那是把日子變成可比較數字的後門。
+    keywords_json: Mapped[str | None] = mapped_column(Text)
     diary_text: Mapped[str | None] = mapped_column(Text)
     emotion: Mapped[str | None] = mapped_column(String(20))
     tree_reply: Mapped[str | None] = mapped_column(Text)
@@ -150,6 +154,8 @@ def _upgrade_days_table() -> None:
         cols = {row[1] for row in conn.exec_driver_sql("PRAGMA table_info(days)")}
         if "question" not in cols:
             conn.exec_driver_sql("ALTER TABLE days ADD COLUMN question TEXT")
+        if "keywords_json" not in cols:
+            conn.exec_driver_sql("ALTER TABLE days ADD COLUMN keywords_json TEXT")
         rows = conn.exec_driver_sql(
             "SELECT id, date FROM days WHERE question IS NULL"
         ).fetchall()

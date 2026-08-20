@@ -72,7 +72,9 @@ Python 環境：自己開一個獨立的虛擬環境即可（venv、pyenv 都行
 - `days`：date (unique)、status（`collecting`／`planting`／`planted`）、
   question（那天樹問的問題——題庫依「日期 mod 題數」定題，加題會位移所有日期，
   所以 Day 誕生時就蓋章存檔，讀取與種樹一律用存的值）、diary_text、
-  emotion、tree_reply、planted_at、planting_started_at（防連點與逾期判定用）
+  emotion、tree_reply、keywords_json（種樹順手抽出的關鍵詞，先存不顯示，
+  為「那年今天」與日後搜尋鋪路；落盤前的舊日記留 NULL，不回頭重跑 AI）、
+  planted_at、planting_started_at（防連點與逾期判定用）
 - `messages`：day_id FK、content、photo_path (nullable)、created_at
 - `memories`：content、source_date、created_at——樹長期記得的、關於使用者的事
 - `weekly_reports`：week_start (unique)、content_json、created_at
@@ -222,9 +224,10 @@ TypeScript 著力點：`frontend/src/types.ts` 為各 API request／response 定
   一關：它很容易變成「你那時候比較有力氣」的對照。條件是安靜出現、不提醒、
   不並排比較。
 - **語音輸入**（Web Speech API）：對想傾訴的人，說比打字自然。
-- **種樹順便輸出 `keywords`**：JSON 多一個欄位，幾乎零成本，為「那年今天」
-  與日後的搜尋鋪路——不是為了做 PKM。
 - **PWA、深色模式**。
+
+（「種樹順便輸出 `keywords`」已實作：plant JSON 多回一欄、存 `days.keywords_json`，
+先存不顯示。它是回望的線索，不是 PKM——永遠不做次數統計或標籤雲。）
 
 ## 測試（成功標準）
 
