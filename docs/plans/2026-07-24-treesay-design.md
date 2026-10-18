@@ -12,7 +12,7 @@
 **單人本機使用，無登入。**
 
 「本機」指的是**儲存與帳號**：日記存在自己的磁碟、不必註冊、沒有其他使用者。
-AI 生成仍會把內容經 `claude -p` 送到 Anthropic——文件與 UI 文案都不得宣稱
+AI 生成仍會把內容經 Claude API 送到 Anthropic——文件與 UI 文案都不得宣稱
 「無雲端」或「不會離開這台電腦」。
 
 樹知道的，就是使用者親口告訴它的。App 不自動讀取這台電腦上的任何東西。
@@ -24,7 +24,7 @@ AI 生成仍會把內容經 `claude -p` 送到 Anthropic——文件與 UI 文�
 | 決策 | 結論 |
 |---|---|
 | 使用情境 | 單人本機，沒有帳號、沒有其他使用者、沒有分享出口 |
-| AI 引擎 | 本機 `claude -p`（走 Claude 訂閱，async subprocess，單次 timeout 240s） |
+| AI 引擎 | Claude API（官方 `anthropic` SDK、API key 計費、structured outputs，單次 timeout 240s） |
 | 技術棧 | FastAPI ＋ SQLAlchemy ＋ SQLite；Vue 3 ＋ Vite ＋ TypeScript ＋ Pinia |
 | 功能範圍 | 聊天寫日記、AI 代寫、樹回覆、情緒判斷、樹的長期記憶、月曆森林、補種、週報、今日問題、照片日記、完整匯出 |
 | 互動節奏 | 結算式：白天只收集訊息不呼叫 AI，按「種下今天的樹」才一次生成 |
@@ -39,8 +39,8 @@ AI 生成仍會把內容經 `claude -p` 送到 Anthropic——文件與 UI 文�
 瀏覽器 (Vue 3 SPA)
     │  HTTP (JSON / multipart)
 FastAPI (uvicorn, 僅綁 127.0.0.1)
-    │  async subprocess（timeout 240s）
-claude -p --output-format json
+    │  HTTPS（anthropic SDK，timeout 240s）
+Claude API（Messages API ＋ structured outputs）
     │
 SQLite (treesay.db)  +  photos/ 照片目錄
 ```
@@ -52,11 +52,11 @@ SQLite (treesay.db)  +  photos/ 照片目錄
 treesay/
 ├── backend/
 │   ├── main.py        # FastAPI 路由
-│   ├── ai.py          # claude CLI 封裝（subprocess + JSON 解析 + 重試 + 用途檔次）
+│   ├── ai.py          # Claude API 封裝（structured outputs + 照片 + 重試 + 用途檔次）
 │   ├── models.py      # SQLAlchemy 模型、切日邏輯、資料目錄
 │   ├── prompts.py     # 所有 prompt 模板（繁中、療癒語氣）
 │   ├── questions.py   # 今日問題內建題庫（依日期定題，不耗 AI）
-│   └── tests/         # pytest（mock subprocess，不真呼叫 claude）
+│   └── tests/         # pytest（mock API，不真呼叫 Claude）
 └── frontend/          # Vue 3 + Vite + TS + Pinia（create-vue 鷹架）
     └── src/
         ├── views/         # 5 個頁面
@@ -109,27 +109,34 @@ days 表補後來新增的欄位（缺欄位才 ALTER、question 只回填 NULL 
 
 ## AI 呼叫（`ai.py`）
 
-無狀態單次 `claude -p`，prompt 要求輸出純 JSON。每個用途各自挑檔次——跑的是
-使用者自己的訂閱額度，日記不該跟工作搶最貴的檔次：
+無狀態單次 Messages API 呼叫（官方 `anthropic` SDK）。每個用途各自挑檔次——每次呼叫
+都按 token 計費，日記不需要最貴的檔次：
 
 | 用途 | 預設檔次 | 輸入 | 輸出 JSON |
 |---|---|---|---|
-| 種樹 `plant` | `claude-opus-5` / `medium` | 當天全部訊息＋照片路徑＋記憶＋近期日記＋`days_ago` | `{diary, emotion, tree_reply, memory[]}` |
-| 週報 `weekly` | `claude-sonnet-5` / `medium` | 該週所有已種樹的日記＋現有記憶（0 篇則不呼叫） | `{good_things, bad_things, keywords, advice, memories[]}` |
+| 種樹 `plant` | `claude-opus-5-5` / `medium` | 當天全部訊息＋照片＋記憶＋近期日記＋`days_ago` | `{diary, emotion, tree_reply, memory[], keywords[]}` |
+| 週報 `weekly` | `claude-sonnet-5-5` / `medium` | 該週所有已種樹的日記＋現有記憶（0 篇則不呼叫） | `{good_things, bad_things, keywords, advice, memories[]}` |
 
 - 覆寫：`TREESAY_PLANT_MODEL`／`TREESAY_PLANT_EFFORT`／`TREESAY_WEEKLY_MODEL`／
   `TREESAY_WEEKLY_EFFORT`。effort 打錯字會退回預設並在終端機提醒，不會變成種樹失敗
   （否則前端只看得到「樹睡著了」，使用者查不出是自己打錯字）。啟動時印一行實際生效的檔次。
-- 照片：種樹 prompt 附照片檔路徑，開 `Read` 讓 Claude 看圖編入日記。
-- **工具權限是排他白名單**：日記內容原樣進 prompt，等同不可信輸入。`--tools` 列舉
-  這個 session 有哪些工具（預設空字串＝全關，看照片才開 `Read`），再加
-  `--setting-sources ""` 不載入使用者的 `settings.json`、不繼承那裡的放行規則。
-  不改用 `--permission-mode` 收斂——實測 `-p` 無頭模式下它擋不住工具，只有
-  `--tools` 是 fail-closed 的。
-- **輸出是雙層 JSON**：`--output-format json` 回的是 CLI envelope
-  （`{"type": "result", "subtype": ..., "result": "..."}`）。先解析 envelope 並
-  檢查 `subtype` 是否 success，再取 `result` 字串剝 code fence 後 `json.loads`。
-- 穩健性：任一層解析失敗重試 1 次；再失敗回 502。
+- **API key**：讀 `TREESAY_ANTHROPIC_API_KEY`，明確傳給 SDK。不借用 `ANTHROPIC_API_KEY`——
+  那個變數 export 在 shell 設定裡的話 Claude Code 也會讀到，從訂閱改走 API 計費。
+  使用者把 key 與檔次覆寫填在專案根目錄的 `.env`（git 忽略，範本 `.env.example`），
+  `python main.py` 啟動時載入；shell 已 export 的值優先。
+- **輸出由 structured outputs 把關**：每個用途帶自己的 JSON schema（`output_config.format`，
+  定義在 `prompts.py`），模型只能產出符合 schema 的 JSON；情緒在 schema 裡就是 7 種 enum。
+  schema 有硬性要求：object 的欄位全列 `required`、`additionalProperties: false`，且不支援
+  `maxItems`／`maxLength`——條數與字數上限仍寫在 prompt，落盤前由 `normalize_*` 清洗。
+  週報沒有記憶可整理時 schema 就不含 `memories`，免得必填欄位逼 AI 生出記憶。
+- **照片**：以 base64 image block 放在請求最前面，各帶「照片 N」標籤；prompt 只用編號
+  指涉，本機路徑不送出。看檔頭認格式（只送 JPEG／PNG／GIF／WebP），單張與總量各有上限；
+  送不出去的照片只標記「這次沒能帶給你看」，種樹照常——一張照片不能讓那天永遠種不下去。
+- **沒有工具**：日記內容原樣進 prompt，等同不可信輸入。請求裡不帶任何工具，日記即使
+  夾帶指令，能影響的也只有輸出的文字。
+- 穩健性：拒答（`stop_reason: refusal`）、`max_tokens` 截斷與一般 API 錯誤重試 1 次，
+  再失敗回 502；逾時與 key 錯誤不重試。SDK 自己的重試關閉（`max_retries=0`）——它連
+  逾時也會重試，疊上去會把 planting 拖過 300 秒的逾期時間。
 
 ## API
 
@@ -200,9 +207,11 @@ TypeScript 著力點：`frontend/src/types.ts` 為各 API request／response 定
    `PLANTING_STALE_SECONDS = 300`（單次 timeout 240s ＋ 緩衝）視為失敗，可重按。
 3. AI 錯誤以療癒文案呈現，不裸露技術錯誤：
    - 一般失敗：「樹睡著了，等等再來 🌙」
-   - 找不到 CLI：「樹還沒連上森林 🌱 這台電腦找不到 claude 指令……」
-   - 沒登入：「樹在等你開門 🌿 請在終端機執行 claude auth login……」
-4. 啟動時檢查 claude CLI 是否可用並在終端機提示；沒有它仍可瀏覽既有日記，
+   - 沒設 key：「樹還沒連上森林 🌱 請先設定環境變數 TREESAY_ANTHROPIC_API_KEY……」
+   - key 無效（401）：「樹在等你開門 🌿 這把 API key 打不開門……」
+
+   額度用完、模型名打錯等其他 API 錯誤一律走一般失敗，真正原因記在後端 log。
+4. 啟動時檢查 API key 有沒有設（不打網路）並在終端機提示；沒有它仍可瀏覽既有日記，
    只是種樹與週報會失敗。
 
 ## 還沒做的想法
@@ -231,9 +240,10 @@ TypeScript 著力點：`frontend/src/types.ts` 為各 API request／response 定
 
 ## 測試（成功標準）
 
-1. `ai.py` 單元測試：JSON 解析各情境（envelope、error subtype、code fence、
-   壞 JSON、枚舉外情緒），不真呼叫 claude。
-2. API 整合測試（pytest ＋ mock subprocess）：丟訊息→種樹→日記入庫；
+1. `ai.py` 單元測試：輸出解析（拒答、截斷、壞 JSON、枚舉外情緒）、key 缺漏與無效、
+   重試與逾時、請求不帶工具、照片格式與上限、schema 合乎 structured outputs 要求，
+   不真呼叫 API。
+2. API 整合測試（pytest ＋ mock API）：丟訊息→種樹→日記入庫；
    凌晨 4:00 前訊息歸前一天；`planting` 中重複種樹被擋；補種窗口邊界；
    記憶注入與瘦身；週報快取命中。
 3. 前端以手動走完一輪流程驗收。

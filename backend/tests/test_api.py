@@ -1,7 +1,9 @@
-"""API 整合測試：pytest ＋ mock subprocess（ai._run_claude），不真呼叫 claude。"""
+"""API 整合測試：pytest ＋ mock Claude API（ai._create），不真呼叫 Claude。"""
 
+import base64
 import datetime
 import json
+from types import SimpleNamespace
 
 import pytest
 from fastapi.testclient import TestClient
@@ -49,27 +51,28 @@ def client(db_factory, clock):
     return TestClient(main.app)
 
 
+def api_response(text: str, stop_reason: str = "end_turn"):
+    return SimpleNamespace(
+        stop_reason=stop_reason, content=[SimpleNamespace(type="text", text=text)]
+    )
+
+
 @pytest.fixture()
 def mock_ai(monkeypatch):
-    """把 ai._run_claude 換成回傳預錄 envelope 的假 subprocess。"""
+    """把 ai._create 換成回傳預錄 JSON 的假 API。"""
     state = {"payloads": [], "calls": []}
 
     def install(*payloads):
         state["payloads"] = list(payloads)
 
-    async def fake_run(prompt, allowed_tools=None, profile="plant"):
-        state["calls"].append({"prompt": prompt, "allowed_tools": allowed_tools})
-        idx = min(len(state["calls"]) - 1, len(state["payloads"]) - 1)
-        payload = state["payloads"][idx]
-        return json.dumps(
-            {
-                "type": "result",
-                "subtype": "success",
-                "result": json.dumps(payload, ensure_ascii=False),
-            }
+    async def fake_create(prompt, schema, images, profile):
+        state["calls"].append(
+            {"prompt": prompt, "schema": schema, "images": images, "profile": profile}
         )
+        idx = min(len(state["calls"]) - 1, len(state["payloads"]) - 1)
+        return api_response(json.dumps(state["payloads"][idx], ensure_ascii=False))
 
-    monkeypatch.setattr(ai, "_run_claude", fake_run)
+    monkeypatch.setattr(ai, "_create", fake_create)
     install.calls = state["calls"]
     return install
 
@@ -120,45 +123,37 @@ class TestMessageToPlant:
     def test_ai_failure_returns_502_and_unlocks(self, client, clock, monkeypatch):
         client.post("/api/messages", data={"content": "嗨"})
 
-        async def broken(prompt, allowed_tools=None, profile="plant"):
-            return "not json"
+        async def broken(prompt, schema, images, profile):
+            return api_response("拒答", stop_reason="refusal")
 
-        monkeypatch.setattr(ai, "_run_claude", broken)
+        monkeypatch.setattr(ai, "_create", broken)
         r = client.post("/api/today/plant")
         assert r.status_code == 502
         assert "樹睡著了" in r.json()["detail"]
         # 失敗後回到 collecting，可以再丟訊息
         assert client.post("/api/messages", data={"content": "再試"}).status_code == 201
 
-    def test_not_logged_in_returns_503_with_actionable_hint(
+    def test_invalid_key_returns_503_with_actionable_hint(
         self, client, clock, monkeypatch
     ):
         """環境沒設好時重按也不會好，要講明該修什麼而非「樹睡著了」。"""
         client.post("/api/messages", data={"content": "嗨"})
 
-        async def broken(prompt, allowed_tools=None, profile="plant"):
-            return "not json"
+        async def rejected(prompt, schema, images, profile):
+            raise ai.AIKeyInvalidError("401")
 
-        async def logged_out():
-            return {"loggedIn": False}
-
-        monkeypatch.setattr(ai, "_run_claude", broken)
-        monkeypatch.setattr(ai, "_auth_status", logged_out)
+        monkeypatch.setattr(ai, "_create", rejected)
         r = client.post("/api/today/plant")
         assert r.status_code == 503
-        assert "claude auth login" in r.json()["detail"]
+        assert ai.API_KEY_ENV in r.json()["detail"]
         assert client.post("/api/messages", data={"content": "再試"}).status_code == 201
 
-    def test_cli_missing_returns_503(self, client, clock, monkeypatch):
+    def test_missing_key_returns_503(self, client, clock, monkeypatch):
         client.post("/api/messages", data={"content": "嗨"})
-
-        async def no_such_binary(*args, **kwargs):
-            raise FileNotFoundError("claude")
-
-        monkeypatch.setattr(ai.asyncio, "create_subprocess_exec", no_such_binary)
+        monkeypatch.delenv(ai.API_KEY_ENV)
         r = client.post("/api/today/plant")
         assert r.status_code == 503
-        assert "claude" in r.json()["detail"]
+        assert ai.API_KEY_ENV in r.json()["detail"]
 
 
 class TestDayCutover:
@@ -450,22 +445,49 @@ class TestMessages:
     def test_edit_missing_message(self, client):
         assert client.patch("/api/messages/999", json={"content": "改"}).status_code == 404
 
-    def test_photo_upload_and_plant_uses_read_tool(self, client, clock, mock_ai):
+    def test_photo_upload_and_plant_sends_image(self, client, clock, mock_ai):
+        jpeg = b"\xff\xd8\xff\xe0fake-jpg-bytes"
         r = client.post(
             "/api/messages",
             data={"content": "看看這張"},
-            files={"photo": ("cat.jpg", b"fake-jpg-bytes", "image/jpeg")},
+            files={"photo": ("cat.jpg", jpeg, "image/jpeg")},
         )
         assert r.status_code == 201
         photo_url = r.json()["photo_url"]
         assert photo_url.startswith("/photos/2026-07-24/")
         saved = models.PHOTOS_DIR / photo_url.removeprefix("/photos/")
-        assert saved.read_bytes() == b"fake-jpg-bytes"
+        assert saved.read_bytes() == jpeg
 
         mock_ai(PLANT_RESULT)
         client.post("/api/today/plant")
-        assert mock_ai.calls[0]["allowed_tools"] == ["Read"]
-        assert str(saved) in mock_ai.calls[0]["prompt"]
+        (image,) = mock_ai.calls[0]["images"]
+        assert image["source"]["data"] == base64.b64encode(jpeg).decode()
+        prompt = mock_ai.calls[0]["prompt"]
+        assert "看看這張（附照片 1）" in prompt
+        # 照片已經直接附上，本機路徑沒有理由送出去
+        assert str(models.PHOTOS_DIR) not in prompt
+
+    def test_unsupported_photo_does_not_block_planting(self, client, clock, mock_ai):
+        """樹看不懂的照片（例如 HEIC）只是略過，那天的樹照樣種得下去。"""
+        client.post(
+            "/api/messages",
+            data={"content": "手機拍的"},
+            files={"photo": ("live.heic", b"\x00\x00\x00\x18ftypheic", "image/heic")},
+        )
+        client.post(
+            "/api/messages",
+            data={"content": "這張可以"},
+            files={"photo": ("ok.png", b"\x89PNG\r\n\x1a\nbody", "image/png")},
+        )
+        mock_ai(PLANT_RESULT)
+        r = client.post("/api/today/plant")
+        assert r.json()["status"] == "planted"
+
+        call = mock_ai.calls[0]
+        assert [i["source"]["media_type"] for i in call["images"]] == ["image/png"]
+        assert "手機拍的（附了一張照片，但這次沒能帶給你看）" in call["prompt"]
+        # 編號跟著實際送出的照片走，不是跟著訊息順序
+        assert "這張可以（附照片 1）" in call["prompt"]
 
 
 class TestMemory:
@@ -501,7 +523,8 @@ class TestMemory:
         prompt = mock_ai.calls[0]["prompt"]
         assert "不追蹤進度" not in prompt
         assert "最近種下的日記" not in prompt
-        assert '"memory"' in prompt
+        assert "memory：" in prompt
+        assert "memory" in mock_ai.calls[0]["schema"]["properties"]
 
     def test_same_fact_not_duplicated(self, client, clock, mock_ai):
         for i in range(2):
@@ -628,6 +651,7 @@ class TestWeeklyReport:
 
         assert client.get("/api/reports/2026-07-13").json()["status"] == "ready"
         assert "在做 treesay" in mock_ai.calls[0]["prompt"]  # 現有記憶有進 prompt
+        assert "memories" in mock_ai.calls[0]["schema"]["properties"]
 
         mems = {m["content"]: m for m in client.get("/api/memories").json()}
         assert set(mems) == {"在做樹說", "新合併的事"}
@@ -655,6 +679,8 @@ class TestWeeklyReport:
         mock_ai(WEEKLY_RESULT)
         client.get("/api/reports/2026-07-13")
         assert "樹一路記著" not in mock_ai.calls[0]["prompt"]
+        # 沒東西可整理就不要求這個欄位——schema 必填，留著等於逼 AI 生記憶出來
+        assert "memories" not in mock_ai.calls[0]["schema"]["properties"]
 
 
 class TestExport:

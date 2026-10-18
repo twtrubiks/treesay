@@ -15,15 +15,16 @@ import ai  # noqa: E402
 
 
 @pytest.fixture(autouse=True)
-def stub_claude_env(monkeypatch):
-    """把環境探測擋成「已安裝且已登入」，測試不受本機 claude 狀態影響。
+def stub_api(monkeypatch):
+    """給一把假 key，並把 SDK client 換成一碰就失敗的替身。
 
-    否則沒裝 claude 的機器上，走環境診斷的測試會拿到 503 而非預期結果。
-    要驗證探測邏輯本身的測試，在測試內覆寫這兩個點即可。
+    測試不受本機有沒有設 key 影響，也絕不會真的打到 API（花錢、要網路）。
+    要驗證請求內容的測試，在測試內換上自己的假 client 即可。
     """
-    monkeypatch.setattr(ai.shutil, "which", lambda cmd: "/usr/bin/claude")
+    monkeypatch.setenv(ai.API_KEY_ENV, "sk-ant-test")
 
-    async def logged_in():
-        return {"loggedIn": True}
+    class NoNetwork:
+        def __init__(self, *args, **kwargs):
+            raise AssertionError("測試不該真的呼叫 Claude API")
 
-    monkeypatch.setattr(ai, "_auth_status", logged_in)
+    monkeypatch.setattr(ai.anthropic, "AsyncAnthropic", NoNetwork)

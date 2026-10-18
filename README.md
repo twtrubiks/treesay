@@ -6,7 +6,7 @@
 [![Vue](https://img.shields.io/badge/Vue-3-4fc08d.svg)](https://vuejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-6-3178c6.svg)](https://www.typescriptlang.org/)
 
-[![Claude Code](https://img.shields.io/badge/Claude%20Code-必要-d97757.svg)](https://claude.com/claude-code)
+[![Claude API](https://img.shields.io/badge/Claude%20API-必要-d97757.svg)](https://platform.claude.com/)
 
 單人本機、無登入的療癒日記 Web App。像傳訊息一樣把想法丟給「樹」，
 AI 整理成日記並溫暖回覆。
@@ -51,23 +51,31 @@ AI 整理成日記並溫暖回覆。
 ## 前置需求
 
 > [!IMPORTANT]
-> 這個專案透過你本機的 `claude` CLI 呼叫 AI，**走你自己的 Claude 訂閱額度**。
-> 每個使用者都要自己安裝並登入 Claude Code，程式不使用也不需要 API key。
-> 這也表示它只能跑在你自己的電腦上，不適合部署成公開服務。
+> 這個專案透過 Claude API 生成日記與週報，**需要你自己的 Anthropic API key，按用量計費**。
+> key 只放在你自己電腦上的 `.env`，程式只綁 `127.0.0.1`——它是給自己用的，不適合部署成公開服務。
 
 | 需求 | 版本 | 說明 |
 |---|---|---|
 | Python | 3.13+ | 後端 |
 | Node.js | >=24.12 | 前端 build |
-| [Claude Code](https://claude.com/claude-code) | 已登入 | AI 生成日記與週報 |
+| Anthropic API key | — | 到 [Claude Console](https://platform.claude.com/) 建立，需先儲值 |
 
-確認 claude CLI 可用：
+在專案根目錄建立 `.env`（已在 `.gitignore`，不會進版控），填入 key：
 
 ```bash
-claude auth status    # 應顯示 "loggedIn": true
+cp .env.example .env && chmod 600 .env
+# 打開 .env，填 TREESAY_ANTHROPIC_API_KEY=sk-ant-...
 ```
 
-沒登入的話執行 `claude auth login`。
+`.env` 只在 `python main.py` 啟動時讀取，改了要重新啟動。也可以改用 shell 的
+`export TREESAY_ANTHROPIC_API_KEY=...`——shell 裡已有的值優先，`.env` 不會覆蓋它。
+
+> [!NOTE]
+> 刻意不用 `ANTHROPIC_API_KEY`：那個變數一旦 export，Claude Code 也會讀到它，
+> 從訂閱改走 API 計費。樹說用自己的變數名，兩邊互不干擾。
+
+早期版本透過本機 `claude` CLI 走 Claude Code 的訂閱額度，最後一版是 commit `17dae6a`，
+已不再維護，只留在 git 歷史裡。
 
 ## 安裝
 
@@ -91,7 +99,7 @@ cd backend && python main.py
 打開 http://127.0.0.1:8000 就是完整的 App——後端會直接提供前端頁面，
 不需要另外啟動 dev server。
 
-啟動時若 claude CLI 沒安裝或沒登入，終端機會提示；此時仍可瀏覽既有日記，
+啟動時若沒有設定 `TREESAY_ANTHROPIC_API_KEY`，終端機會提示；此時仍可瀏覽既有日記，
 只是種樹與週報會失敗。
 
 ## 你的資料在哪
@@ -99,8 +107,9 @@ cd backend && python main.py
 > [!IMPORTANT]
 > **「本機」指的是儲存，不是 AI。** 日記與照片只存在你的磁碟上，沒有帳號、
 > 沒有伺服器保管、沒有其他使用者看得到。但按下「種下今天的樹」或產生週報時，
-> 當天的訊息／日記內容會經由 `claude -p` **送到 Anthropic** 才生成回覆，
-> 適用你的 Claude 方案的資料政策。
+> 當天的訊息／日記內容與照片會經由 Claude API **送到 Anthropic** 才生成回覆，
+> 適用 Anthropic 商業條款（API）的資料政策——依官方文件，API 資料未經你明確同意
+> 不會用來訓練模型。
 >
 > 也就是說：不會有別人讀到你的日記，但它不是完全不出門。要連這段都留在本機，
 > 得改接本機模型（目前不支援）。
@@ -119,9 +128,9 @@ cd backend && python main.py
 TREESAY_DATA_DIR=/path/to/somewhere python main.py
 ```
 
-## 用掉多少額度
+## 花多少錢
 
-AI 走你自己的 Claude 訂閱額度。
+AI 按 Claude API 用量計費，實際花費在 [Claude Console](https://platform.claude.com/) 的用量頁看得到。
 
 用量比想像的少：**一天一次種樹，一週一次週報**
 
@@ -129,21 +138,21 @@ AI 走你自己的 Claude 訂閱額度。
 
 | 用途 | 預設模型 | effort |
 |---|---|---|
-| 種樹（日記＋樹的回覆） | `claude-opus-5` | `medium` |
-| 週報 | `claude-sonnet-5` | `medium` |
+| 種樹（日記＋樹的回覆） | `claude-opus-5-5` | `medium` |
+| 週報 | `claude-sonnet-5-5` | `medium` |
 
 覺得不合用就自己調（effort 可填 `low`、`medium`、`high`、`xhigh`）：
 
 ```bash
-TREESAY_PLANT_MODEL=claude-sonnet-5 TREESAY_PLANT_EFFORT=low python main.py
-TREESAY_WEEKLY_MODEL=claude-haiku-4-5 python main.py
+TREESAY_PLANT_MODEL=claude-sonnet-5-5 TREESAY_PLANT_EFFORT=low python main.py
+TREESAY_WEEKLY_MODEL=claude-haiku-5-5 python main.py
 ```
 
-這樣只有這次啟動生效。想固定下來就寫進 shell 設定（`~/.zshrc`、`~/.bashrc`）：
+這樣只有這次啟動生效。想固定下來就寫進 `.env`（`.env.example` 裡有註解掉的範本）：
 
 ```bash
-export TREESAY_PLANT_MODEL=claude-sonnet-5
-export TREESAY_PLANT_EFFORT=low
+TREESAY_PLANT_MODEL=claude-sonnet-5-5
+TREESAY_PLANT_EFFORT=low
 ```
 
 啟動時終端機會印一行實際生效的檔次（`🌳 AI 檔次：plant=... / ...`），可以確認
@@ -178,7 +187,7 @@ cd backend && pytest
 
 - **後端**：FastAPI ＋ SQLAlchemy ＋ SQLite（uvicorn 僅綁 `127.0.0.1`）
 - **前端**：Vue 3 ＋ Vite ＋ TypeScript ＋ Pinia
-- **AI**：本機 `claude -p --output-format json`（async subprocess）
+- **AI**：Claude API（官方 `anthropic` SDK，structured outputs）
 
 設計文件見 [`docs/plans/`](docs/plans/)。
 

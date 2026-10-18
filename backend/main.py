@@ -9,24 +9,38 @@ import sys
 import uuid
 from pathlib import Path
 
-from fastapi import Depends, FastAPI, File, Form, HTTPException, Response, UploadFile
-from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
-from sqlalchemy import select
-from sqlalchemy.orm import selectinload
-from starlette.exceptions import HTTPException as StarletteHTTPException
+from dotenv import load_dotenv
 
-import ai
-import models
-import prompts
-import questions
-from models import Day, Memory, Message, WeeklyReport
+# 專案根目錄的 .env（git 忽略），放 API key 與檔次覆寫。必須在 import models
+# 之前載入：資料落點（TREESAY_DATA_DIR）在 import 時就決定。只在直接執行時
+# 載入——測試 import main 時不該吃到本機的 key 與設定。shell 已 export 的
+# 同名變數優先，.env 不覆蓋。
+ENV_FILE = Path(__file__).resolve().parent.parent / ".env"
+if __name__ == "__main__":
+    load_dotenv(ENV_FILE)
+
+from fastapi import Depends, FastAPI, File, Form, HTTPException, Response, UploadFile  # noqa: E402
+from fastapi.staticfiles import StaticFiles  # noqa: E402
+from pydantic import BaseModel  # noqa: E402
+from sqlalchemy import select  # noqa: E402
+from sqlalchemy.orm import selectinload  # noqa: E402
+from starlette.exceptions import HTTPException as StarletteHTTPException  # noqa: E402
+
+import ai  # noqa: E402
+import models  # noqa: E402
+import prompts  # noqa: E402
+import questions  # noqa: E402
+from models import Day, Memory, Message, WeeklyReport  # noqa: E402
 
 FRONTEND_DIST = Path(__file__).resolve().parent.parent / "frontend" / "dist"
 
 TREE_ASLEEP = "樹睡著了，等等再來 🌙"
-CLI_MISSING = "樹還沒連上森林 🌱 這台電腦找不到 claude 指令，請先安裝 Claude Code。"
-NOT_LOGGED_IN = "樹在等你開門 🌿 請在終端機執行 claude auth login，再回來試一次。"
+KEY_MISSING = (
+    f"樹還沒連上森林 🌱 請在專案根目錄的 .env 填入 {ai.API_KEY_ENV}，再重新啟動樹說。"
+)
+KEY_INVALID = (
+    f"樹在等你開門 🌿 這把 API key 打不開門，請確認 {ai.API_KEY_ENV} 是否正確。"
+)
 PLANTING_STALE_SECONDS = 300
 
 # 今天之外還能回頭補種的天數。窗口刻意留短：如果任何一天都補得回來，森林就從
@@ -59,30 +73,31 @@ def ai_http_error(exc: ai.AIError) -> HTTPException:
     環境沒設好時重按幾次也不會好，要講清楚該修什麼；其餘失敗維持
     療癒文案，不裸露技術錯誤（真正的原因記在後端 log）。
     """
-    if isinstance(exc, ai.AICliMissingError):
-        return HTTPException(503, CLI_MISSING)
-    if isinstance(exc, ai.AINotLoggedInError):
-        return HTTPException(503, NOT_LOGGED_IN)
+    if isinstance(exc, ai.AIKeyMissingError):
+        return HTTPException(503, KEY_MISSING)
+    if isinstance(exc, ai.AIKeyInvalidError):
+        return HTTPException(503, KEY_INVALID)
     return HTTPException(502, TREE_ASLEEP)
 
 models.init_db()
 
 
-async def check_environment() -> None:
-    """啟動時檢查 claude CLI，有問題就在終端機講清楚。
+def check_environment() -> None:
+    """啟動時檢查 API key 有沒有設，沒有就在終端機講清楚。
 
     不中止啟動——森林、日記詳情這些讀取功能不需要 AI，環境沒設好
     也還能回來看已經種下的樹。
     """
     try:
-        await ai.check_cli()
-    except ai.AICliMissingError:
-        hint = "找不到 claude 指令，請先安裝 Claude Code：https://claude.com/claude-code"
-    except ai.AINotLoggedInError:
-        hint = "claude CLI 尚未登入，請執行：claude auth login"
-    else:
-        return
-    print(f"\n⚠️  {hint}\n   種樹與週報會失敗，其餘功能正常。\n", file=sys.stderr)
+        ai.check_key()
+    except ai.AIKeyMissingError:
+        print(
+            f"\n⚠️  沒有設定 {ai.API_KEY_ENV}。請到 Claude Console 取得 API key，填進：\n"
+            f"   {ENV_FILE}\n"
+            "   （沒有這個檔案就從 .env.example 複製一份）\n"
+            "   種樹與週報會失敗，其餘功能正常。\n",
+            file=sys.stderr,
+        )
 
 
 def show_ai_profiles() -> None:
@@ -115,7 +130,7 @@ def check_frontend() -> None:
 
 @contextlib.asynccontextmanager
 async def lifespan(app: FastAPI):
-    await check_environment()
+    check_environment()
     show_ai_profiles()
     check_frontend()
     yield
@@ -333,15 +348,25 @@ async def plant_day(db, date: datetime.date, now: datetime.datetime) -> dict:
     day.planting_started_at = now
     db.commit()
 
-    msgs = [
-        {
-            "time": m.created_at.strftime("%H:%M"),
-            "content": m.content,
-            "photo_path": str(models.PHOTOS_DIR / m.photo_path) if m.photo_path else None,
-        }
-        for m in day.messages
-    ]
-    has_photo = any(m["photo_path"] for m in msgs)
+    # 照片直接附進請求，prompt 裡只用編號指涉——本機路徑不必讓 AI 知道。
+    # 送不出去的照片（格式不支援、太大）只標記樹看不到，種樹照常。
+    loaded = iter(
+        ai.image_blocks(
+            [models.PHOTOS_DIR / m.photo_path for m in day.messages if m.photo_path]
+        )
+    )
+    images: list[dict] = []
+    msgs = []
+    for m in day.messages:
+        entry = {"time": m.created_at.strftime("%H:%M"), "content": m.content}
+        if m.photo_path:
+            block = next(loaded)
+            if block is None:
+                entry["photo_unseen"] = True
+            else:
+                images.append(block)
+                entry["photo"] = len(images)
+        msgs.append(entry)
 
     # 樹帶著記憶傾聽：長期記得的事＋目標日往前幾天的日記。
     # 補種時近期日記以「那一天」為基準往回看，不然樹會引用未來。
@@ -374,9 +399,7 @@ async def plant_day(db, date: datetime.date, now: datetime.datetime) -> dict:
         recent_diaries=recent_diaries,
     )
     try:
-        data = await ai.ask(
-            prompt, allowed_tools=["Read"] if has_photo else None, profile="plant"
-        )
+        data = await ai.ask(prompt, prompts.PLANT_SCHEMA, images=images, profile="plant")
     except ai.AIError as e:
         day.status = "collecting"
         day.planting_started_at = None
@@ -542,6 +565,7 @@ async def get_report(week_start: str, db=Depends(get_db)):
     try:
         data = await ai.ask(
             prompts.weekly_prompt(diaries, memories=[m.content for m in mems]),
+            prompts.weekly_schema(with_memories=bool(mems)),
             profile="weekly",
         )
     except ai.AIError as e:

@@ -1,51 +1,57 @@
-"""claude CLI 封裝：async subprocess ＋ 雙層 JSON 解析 ＋ 重試。
+"""Claude API 封裝：Messages API ＋ structured outputs ＋ 重試。
 
-輸出是雙層 JSON：`--output-format json` 回的是 CLI envelope
-（{"type": "result", "subtype": ..., "result": "..."}）。
-先解析 envelope 檢查 subtype 是否 success，再取 result 字串
-剝除 code fence 後 json.loads。解析失敗重試 1 次；逾時不重試
-（5 分鐘 planting 逾期規則以單次 timeout 240s ＋ 緩衝推算）。
+輸出由 structured outputs 把關：每個用途帶自己的 JSON schema
+（`output_config.format`），模型只能產出符合 schema 的 JSON——沒有 CLI
+envelope、沒有 code fence。例外只有拒答與 max_tokens 截斷，兩者都當失敗
+重試 1 次；逾時不重試（5 分鐘 planting 逾期規則以單次 timeout 240s ＋
+緩衝推算，所以 SDK 自己的重試關掉，次數只由這裡決定）。
 
-工具權限：使用者寫的日記會原樣進 prompt，對這個 subprocess 而言等同
-不可信輸入，所以工具一律走排他白名單——`--tools` 決定 session 裡有哪些
-工具存在，沒列到的等於不存在。預設一個都不給，只有要看照片時才開 Read。
-再加 `--setting-sources ""` 不載入使用者的 settings.json，避免繼承那裡
-既有的放行規則。
-
-不靠 `--permission-mode` 收斂：實測 `-p` 無頭模式下權限模式不會攔工具
-（要求跑 Bash 就真的跑了），只有 `--tools` 是 fail-closed 的。
+沒有工具：照片直接以 image block 放進訊息，這個呼叫裡不存在任何工具。
+使用者寫的日記原樣進 prompt、等同不可信輸入，但裡面就算夾帶指令，
+能影響的也只有輸出的文字。
 """
 
 from __future__ import annotations
 
-import asyncio
+import base64
 import json
 import logging
 import os
-import shutil
+from pathlib import Path
+
+import anthropic
 
 from models import DEFAULT_EMOTION, EMOTIONS
 
 logger = logging.getLogger(__name__)
 
-CLAUDE_CMD = "claude"
+# 不用 SDK 預設的 ANTHROPIC_API_KEY：那個變數一旦 export 在 shell 設定裡，
+# Claude Code 也會讀到它，從訂閱改走 API 計費。樹說用自己的名字，兩邊互不干擾。
+API_KEY_ENV = "TREESAY_ANTHROPIC_API_KEY"
+
 TIMEOUT_SECONDS = 240
-AUTH_TIMEOUT_SECONDS = 15
+# 思考與輸出共用這個上限。日記與週報都是幾百字的短文，16k 是留給 adaptive
+# thinking 的餘裕，不是預期會用到這麼多。
+MAX_TOKENS = 16000
 
 # 依強度排序，錯誤訊息直接照這個順序列給使用者
 EFFORTS = ("low", "medium", "high", "xhigh")
 
 
-# 每個用途各自挑檔次。跑的是使用者自己的 Claude 訂閱額度，那份額度平常是拿來
-# 工作的——日記不該跟工作搶最貴的檔次。
+# 每個用途各自挑檔次。每一次呼叫都按 token 計費——日記不需要最貴的檔次。
 DEFAULT_PROFILES: dict[str, tuple[str, str]] = {
     # 種樹：日記是使用者每天真的會讀的東西，值得好模型。但它是一段一百多字的
-    # 溫暖短文，不是推理題，effort 開到頂只是多燒額度、不會讓文字更暖。
-    "plant": ("claude-opus-5", "medium"),
+    # 溫暖短文，不是推理題，effort 開到頂只是多花錢、不會讓文字更暖。
+    "plant": ("claude-opus-5-5", "medium"),
     # 週報：把已經寫好的七篇日記濃縮成四個欄位，模型小一階，但 effort 跟種樹
     # 齊平——一週只跑一次，省在這裡省不到什麼。
-    "weekly": ("claude-sonnet-5", "medium"),
+    "weekly": ("claude-sonnet-5-5", "medium"),
 }
+
+# API 限制：單張照片 base64 後 10 MB、整個 request 32 MB。照片總預算抓在
+# request 上限之下，留餘裕給文字。
+IMAGE_MAX_B64_BYTES = 10_000_000
+IMAGES_BUDGET_B64_BYTES = 24_000_000
 
 
 def resolve_profile(name: str) -> tuple[str, str]:
@@ -54,7 +60,7 @@ def resolve_profile(name: str) -> tuple[str, str]:
     每次呼叫都重讀環境變數，不在 import 時凍結——測試不必操心 import 順序，
     設定何時生效也只跟程序有沒有重啟有關，跟模組什麼時候被載入無關。
 
-    effort 打錯字（xhigh → hgih）若原樣傳下去，claude 會拒絕，而前端只會
+    effort 打錯字（xhigh → hgih）若原樣傳下去，API 會拒絕，而前端只會
     顯示「樹睡著了」——使用者永遠查不到是自己少打一個字母。寧可回退預設，
     也不要讓一個 typo 變成看不懂的失敗。模型名稱沒辦法離線驗證，改由啟動
     時印出實際生效的檔次讓人自己確認。
@@ -88,19 +94,33 @@ def profile_summary() -> str:
 
 
 class AIError(Exception):
-    """AI 呼叫失敗（subprocess 錯誤或 JSON 解析失敗）。"""
+    """AI 呼叫失敗（API 錯誤或輸出不可用）。"""
 
 
 class AITimeoutError(AIError):
     """AI 呼叫逾時（不重試）。"""
 
 
-class AICliMissingError(AIError):
-    """找不到 claude CLI（未安裝或不在 PATH）。"""
+class AIKeyError(AIError):
+    """API key 有問題——重按幾次也不會好，要讓使用者知道該去修什麼。"""
 
 
-class AINotLoggedInError(AIError):
-    """claude CLI 尚未登入。"""
+class AIKeyMissingError(AIKeyError):
+    """沒有設定 API key。"""
+
+
+class AIKeyInvalidError(AIKeyError):
+    """API key 被 API 拒絕（401）。"""
+
+
+def api_key() -> str | None:
+    return os.environ.get(API_KEY_ENV, "").strip() or None
+
+
+def check_key() -> None:
+    """啟動檢查：只看 key 有沒有設，不打網路——有沒有效等真的呼叫時才知道。"""
+    if api_key() is None:
+        raise AIKeyMissingError(f"沒有設定 {API_KEY_ENV}")
 
 
 def normalize_emotion(value: object) -> str:
@@ -148,144 +168,126 @@ def normalize_keywords(value: object, limit: int) -> list[str]:
     return _clean_str_list(value, limit, KEYWORD_ITEM_MAX_CHARS)
 
 
-def strip_code_fence(text: str) -> str:
-    text = text.strip()
-    if text.startswith("```"):
-        first_newline = text.find("\n")
-        if first_newline != -1 and text.endswith("```"):
-            text = text[first_newline + 1 : -3].strip()
-    return text
+def sniff_media_type(data: bytes) -> str | None:
+    """看檔頭認圖片格式，只認 API 支援的四種。
 
-
-def parse_response(raw: str) -> dict:
-    """解析 CLI envelope 與內層 JSON，任一層失敗丟 AIError。"""
-    try:
-        envelope = json.loads(raw)
-    except json.JSONDecodeError as e:
-        raise AIError(f"envelope 不是合法 JSON：{e}") from e
-    if not isinstance(envelope, dict) or envelope.get("subtype") != "success":
-        subtype = envelope.get("subtype") if isinstance(envelope, dict) else type(envelope).__name__
-        raise AIError(f"claude 回傳非 success（subtype={subtype}）")
-    result = envelope.get("result")
-    if not isinstance(result, str):
-        raise AIError("envelope 缺少 result 字串")
-    try:
-        inner = json.loads(strip_code_fence(result))
-    except json.JSONDecodeError as e:
-        raise AIError(f"result 不是合法 JSON：{e}") from e
-    if not isinstance(inner, dict):
-        raise AIError(f"result JSON 不是物件（得到 {type(inner).__name__}）")
-    return inner
-
-
-async def _auth_status() -> dict | None:
-    """讀 `claude auth status --json`；無法判定時回 None（不當成未登入）。"""
-    try:
-        proc = await asyncio.create_subprocess_exec(
-            CLAUDE_CMD,
-            "auth",
-            "status",
-            "--json",
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.DEVNULL,
-        )
-        stdout, _ = await asyncio.wait_for(proc.communicate(), AUTH_TIMEOUT_SECONDS)
-        status = json.loads(stdout)
-    except (OSError, TimeoutError, json.JSONDecodeError):
-        return None
-    return status if isinstance(status, dict) else None
-
-
-async def check_cli() -> None:
-    """檢查 claude CLI 可用且已登入，否則丟對應的 AIError 子類。
-
-    只採信兩個確定訊號——CLI 在不在 PATH、`auth status` 的 loggedIn，
-    不對錯誤訊息做字串猜測，寧可漏判也不誤殺（額度用盡等情境一律
-    走通用失敗路徑）。
+    不信副檔名：API 會檢查 media_type 與內容是否相符，標錯一張整次就失敗。
     """
-    if shutil.which(CLAUDE_CMD) is None:
-        raise AICliMissingError("PATH 中找不到 claude CLI")
-    status = await _auth_status()
-    if status is not None and status.get("loggedIn") is False:
-        raise AINotLoggedInError("claude CLI 尚未登入")
+    if data.startswith(b"\xff\xd8\xff"):
+        return "image/jpeg"
+    if data.startswith(b"\x89PNG\r\n\x1a\n"):
+        return "image/png"
+    if data[:6] in (b"GIF87a", b"GIF89a"):
+        return "image/gif"
+    if data[:4] == b"RIFF" and data[8:12] == b"WEBP":
+        return "image/webp"
+    return None
 
 
-async def _run_claude(
-    prompt: str,
-    allowed_tools: list[str] | None = None,
-    profile: str = "plant",
-) -> str:
+def image_blocks(paths: list[Path]) -> list[dict | None]:
+    """把照片轉成 image block，順序與 paths 對齊；送不出去的位置放 None。
+
+    格式不支援（例如 HEIC）、單張過大、超出整體預算、檔案不見，都只是這張
+    樹看不到——一張照片不能拖垮整次種樹，否則那天會永遠種不下去。
+    """
+    blocks: list[dict | None] = []
+    budget = IMAGES_BUDGET_B64_BYTES
+    for path in paths:
+        try:
+            data = path.read_bytes()
+        except OSError:
+            data = b""
+        media_type = sniff_media_type(data)
+        encoded = base64.b64encode(data).decode() if media_type else ""
+        if media_type and len(encoded) <= min(IMAGE_MAX_B64_BYTES, budget):
+            budget -= len(encoded)
+            blocks.append(
+                {
+                    "type": "image",
+                    "source": {"type": "base64", "media_type": media_type, "data": encoded},
+                }
+            )
+        else:
+            logger.warning("照片 %s 無法送給樹看（格式不支援、太大或不見了），略過", path.name)
+            blocks.append(None)
+    return blocks
+
+
+def parse_response(response) -> dict:
+    """取出 structured output 的 JSON 物件，失敗丟 AIError。
+
+    schema 保證正常結束的輸出能解析；拒答（refusal）與 max_tokens 截斷時
+    文字不保證符合 schema，一律當失敗交給重試。
+    """
+    if response.stop_reason != "end_turn":
+        raise AIError(f"Claude 沒有正常結束（stop_reason={response.stop_reason}）")
+    text = "".join(block.text for block in response.content if block.type == "text")
+    try:
+        data = json.loads(text)
+    except json.JSONDecodeError as e:
+        raise AIError(f"輸出不是合法 JSON：{e}") from e
+    if not isinstance(data, dict):
+        raise AIError(f"輸出 JSON 不是物件（得到 {type(data).__name__}）")
+    return data
+
+
+def _content(prompt: str, images: list[dict]) -> list[dict]:
+    """照片放前面、各自帶編號標籤，prompt 裡用「附照片 N」對上。"""
+    blocks: list[dict] = []
+    for i, image in enumerate(images, 1):
+        blocks += [{"type": "text", "text": f"照片 {i}："}, image]
+    blocks.append({"type": "text", "text": prompt})
+    return blocks
+
+
+async def _create(prompt: str, schema: dict, images: list[dict], profile: str):
+    key = api_key()
+    if key is None:
+        raise AIKeyMissingError(f"沒有設定 {API_KEY_ENV}")
     model, effort = resolve_profile(profile)
-    tools = ",".join(allowed_tools) if allowed_tools else ""
-    cmd = [
-        CLAUDE_CMD,
-        "-p",
-        "--output-format",
-        "json",
-        "--model",
-        model,
-        "--effort",
-        effort,
-        # 不繼承使用者 settings.json 的放行規則
-        "--setting-sources",
-        "",
-        # 排他白名單：沒列到的工具在這個 session 中不存在（空字串＝全關）
-        "--tools",
-        tools,
-    ]
-    if allowed_tools:
-        # 存在之外還要預先核准，才不必倚賴無頭模式的預設放行行為
-        cmd += ["--allowedTools", tools]
-    try:
-        proc = await asyncio.create_subprocess_exec(
-            *cmd,
-            stdin=asyncio.subprocess.PIPE,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE,
-        )
-    except FileNotFoundError as e:
-        raise AICliMissingError(f"找不到 claude CLI：{e}") from e
-    except OSError as e:
-        raise AIError(f"無法啟動 claude CLI：{e}") from e
-    try:
-        stdout, stderr = await asyncio.wait_for(
-            proc.communicate(prompt.encode()), TIMEOUT_SECONDS
-        )
-    except TimeoutError:
-        proc.kill()
-        await proc.wait()
-        raise AITimeoutError(f"claude 呼叫逾時（{TIMEOUT_SECONDS}s）") from None
-    if proc.returncode != 0:
-        detail = stderr.decode(errors="replace").strip()
-        # 前端只會看到療癒文案，真正的原因留在後端 log 供自行診斷
-        logger.warning("claude 結束碼 %s：%s", proc.returncode, detail[:500])
-        raise AIError(f"claude 結束碼 {proc.returncode}：{detail[:200]}")
-    return stdout.decode()
+    # key 明確傳入：SDK 就不會再去翻 ANTHROPIC_API_KEY 或磁碟上的設定檔
+    async with anthropic.AsyncAnthropic(
+        api_key=key, timeout=TIMEOUT_SECONDS, max_retries=0
+    ) as client:
+        try:
+            return await client.messages.create(
+                model=model,
+                max_tokens=MAX_TOKENS,
+                messages=[{"role": "user", "content": _content(prompt, images)}],
+                output_config={
+                    "effort": effort,
+                    "format": {"type": "json_schema", "schema": schema},
+                },
+            )
+        except anthropic.APITimeoutError:
+            raise AITimeoutError(f"Claude API 逾時（{TIMEOUT_SECONDS}s）") from None
+        except anthropic.AuthenticationError as e:
+            raise AIKeyInvalidError(f"{API_KEY_ENV} 被拒絕") from e
+        except anthropic.APIError as e:
+            # 前端只會看到療癒文案，真正的原因（額度用完、模型名打錯……）
+            # 留在後端 log 供自行診斷
+            logger.warning("Claude API 失敗：%s", e)
+            raise AIError(f"Claude API 失敗：{e}") from e
 
 
 async def ask(
     prompt: str,
-    allowed_tools: list[str] | None = None,
+    schema: dict,
+    images: list[dict] | None = None,
     profile: str = "plant",
 ) -> dict:
-    """呼叫 claude 並回傳內層 JSON dict；解析失敗重試 1 次，逾時不重試。
+    """呼叫 Claude 並回傳符合 schema 的 dict；失敗重試 1 次。
 
+    逾時與 key 的問題不重試：前者會把 planting 拖過逾期時間，後者重按也不會好。
     profile 決定模型與 effort（見 DEFAULT_PROFILES 與 resolve_profile）。
-
-    兩次都失敗才回頭診斷環境——沒登入之類的問題重按幾次也不會好，
-    要讓使用者知道該去修什麼，而不是一直看到「樹睡著了」。
     """
     last_error = AIError("AI 呼叫失敗")
     for _ in range(2):
         try:
-            raw = await _run_claude(prompt, allowed_tools, profile)
-            return parse_response(raw)
-        except (AITimeoutError, AICliMissingError):
+            response = await _create(prompt, schema, images or [], profile)
+            return parse_response(response)
+        except (AITimeoutError, AIKeyError):
             raise
         except AIError as e:
             last_error = e
-    try:
-        await check_cli()
-    except AIError as diagnosis:
-        raise diagnosis from last_error
     raise last_error
