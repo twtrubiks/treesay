@@ -48,6 +48,21 @@ export interface MemoryOut {
   created_at: string
 }
 
+// AI 費用：只按月加總，不拆到天（對應 GET /api/usage）
+export interface UsageMonth {
+  month: string // YYYY-MM
+  total_usd: number
+  plant_usd: number
+  weekly_usd: number
+  // 模型不在價目表上的呼叫次數——算不出錢，不偷偷當成 0 元
+  unpriced_calls: number
+}
+
+export interface UsageResponse {
+  months: UsageMonth[]
+  total_usd: number
+}
+
 export interface WeeklyReportContent {
   good_things: string[]
   bad_things: string[]

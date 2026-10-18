@@ -23,6 +23,7 @@ from pathlib import Path
 import anthropic
 from PIL import ExifTags, Image, ImageOps
 
+import models
 from models import DEFAULT_EMOTION, EMOTIONS
 
 logger = logging.getLogger(__name__)
@@ -64,6 +65,18 @@ IMAGE_MAX_PIXELS = 1_150_000
 JPEG_QUALITY = 85
 
 
+# 每百萬 token 的美元價格（輸入, 輸出），抄自官方定價頁（2026-10）。只用來估算
+# 「AI 費用」頁的數字，實際帳單以 Claude Console 為準。用環境變數換成表上沒有的
+# 模型時，那幾次呼叫會記成未計價——在這裡補上那個模型就好。
+# Haiku 5.5 的 prompt 超過 10 萬 token 會變貴，樹說的請求到不了那裡。
+PRICES: dict[str, tuple[float, float]] = {
+    "claude-fable-5-1": (10, 50),
+    "claude-opus-5-5": (4, 20),
+    "claude-sonnet-5-5": (2, 10),
+    "claude-haiku-5-5": (0.10, 0.50),
+}
+
+
 def resolve_profile(name: str) -> tuple[str, str]:
     """取某個用途的 (model, effort)，環境變數可覆寫預設。
 
@@ -103,6 +116,20 @@ def profile_summary() -> str:
     return "，".join(parts)
 
 
+def unpriced_models() -> list[str]:
+    """目前生效、但不在 PRICES 裡的模型，啟動時提醒用。
+
+    這些模型的呼叫會記成未計價，「AI 費用」頁的數字就會少算。價目表是手抄的，
+    模型改名或換了環境變數都可能讓它過期——在啟動時講，比等到月底看帳才發現好。
+    """
+    seen: list[str] = []
+    for name in DEFAULT_PROFILES:
+        model, _ = resolve_profile(name)
+        if model not in PRICES and model not in seen:
+            seen.append(model)
+    return seen
+
+
 class AIError(Exception):
     """AI 呼叫失敗（API 錯誤或輸出不可用）。"""
 
@@ -131,6 +158,39 @@ def check_key() -> None:
     """啟動檢查：只看 key 有沒有設，不打網路——有沒有效等真的呼叫時才知道。"""
     if api_key() is None:
         raise AIKeyMissingError(f"沒有設定 {API_KEY_ENV}")
+
+
+def estimate_cost(model: str, input_tokens: int, output_tokens: int) -> float | None:
+    """依價目表估算一次呼叫的美元費用；模型不在表上回 None。"""
+    price = PRICES.get(model)
+    if price is None:
+        return None
+    return (input_tokens * price[0] + output_tokens * price[1]) / 1_000_000
+
+
+def record_usage(profile: str, model: str, usage) -> None:
+    """把一次呼叫的用量記進資料庫，給「AI 費用」頁看。
+
+    拒答、被截斷而要重試的回應一樣計費，所以每拿到一個回應就記一筆，
+    不管之後解不解析得出來。費用在記下的當下算好存起來，日後定價調整，
+    舊帳不會跟著被改寫。記帳失敗只留 log：錢已經花了、回覆也拿到了，
+    不能因為記帳出錯讓這次種樹作廢。
+    """
+    try:
+        with models.SessionLocal() as db:
+            db.add(
+                models.ApiUsage(
+                    created_at=models.now_local(),
+                    purpose=profile,
+                    model=model,
+                    input_tokens=usage.input_tokens,
+                    output_tokens=usage.output_tokens,
+                    cost_usd=estimate_cost(model, usage.input_tokens, usage.output_tokens),
+                )
+            )
+            db.commit()
+    except Exception:
+        logger.warning("記錄 AI 用量失敗", exc_info=True)
 
 
 def normalize_emotion(value: object) -> str:
@@ -293,7 +353,7 @@ async def _create(prompt: str, schema: dict, images: list[dict], profile: str):
         api_key=key, timeout=TIMEOUT_SECONDS, max_retries=0
     ) as client:
         try:
-            return await client.messages.create(
+            response = await client.messages.create(
                 model=model,
                 max_tokens=MAX_TOKENS,
                 messages=[{"role": "user", "content": _content(prompt, images)}],
@@ -311,6 +371,8 @@ async def _create(prompt: str, schema: dict, images: list[dict], profile: str):
             # 留在後端 log 供自行診斷
             logger.warning("Claude API 失敗：%s", e)
             raise AIError(f"Claude API 失敗：{e}") from e
+    record_usage(profile, model, response.usage)
+    return response
 
 
 async def ask(

@@ -49,6 +49,10 @@ function isActive(prefix: string): boolean {
       </RouterLink>
 
       <div class="spacer"></div>
+      <!-- 費用是工具，不是這個 App 想讓人每天看的東西：放底部小字，不進主導覽 -->
+      <RouterLink to="/usage" class="usage-link" :class="{ active: isActive('/usage') }">
+        AI 費用
+      </RouterLink>
       <!-- 不寫「只有你和樹知道」——內容仍會送到 Anthropic 生成，只能說沒有別人看得到 -->
       <div class="sidebar-footer">沒有別人看得到。<br />不用登入，說完就好。</div>
     </aside>
@@ -220,6 +224,17 @@ function isActive(prefix: string): boolean {
 
 .spacer {
   flex: 1;
+}
+
+.usage-link {
+  padding: 0 8px 10px;
+  font: 400 15px var(--sans);
+  color: var(--ink-mute);
+}
+
+.usage-link:hover,
+.usage-link.active {
+  color: var(--ink-soft);
 }
 
 .sidebar-footer {

@@ -31,7 +31,7 @@ import ai  # noqa: E402
 import models  # noqa: E402
 import prompts  # noqa: E402
 import questions  # noqa: E402
-from models import Day, Memory, Message, WeeklyReport  # noqa: E402
+from models import ApiUsage, Day, Memory, Message, WeeklyReport  # noqa: E402
 
 FRONTEND_DIST = Path(__file__).resolve().parent.parent / "frontend" / "dist"
 
@@ -102,8 +102,18 @@ def check_environment() -> None:
 
 
 def show_ai_profiles() -> None:
-    """印出實際生效的模型檔次——調了環境變數卻沒吃到，是查不出來的那種問題。"""
+    """印出實際生效的模型檔次——調了環境變數卻沒吃到，是查不出來的那種問題。
+
+    順便提醒不在價目表上的模型：那些呼叫會記成未計價，費用頁會少算。
+    """
     print(f"🌳 AI 檔次：{ai.profile_summary()}", file=sys.stderr)
+    unpriced = ai.unpriced_models()
+    if unpriced:
+        print(
+            f"⚠️  {'、'.join(unpriced)} 不在 ai.PRICES 價目表裡，這些呼叫的費用算不出來，\n"
+            "   「AI 費用」頁會少算。到 backend/ai.py 的 PRICES 補上那個模型的價格即可。",
+            file=sys.stderr,
+        )
 
 
 class SPAStaticFiles(StaticFiles):
@@ -602,6 +612,42 @@ async def get_report(week_start: str, db=Depends(get_db)):
         "status": "ready",
         "report": report,
         "generated_at": row.created_at.isoformat(),
+    }
+
+
+# ---------- AI 費用 ----------
+
+
+@app.get("/api/usage")
+def usage_by_month(db=Depends(get_db)):
+    """按月加總的 AI 估算費用，最近的月份在前。
+
+    只給到月：每天花多少跟那天說了多少話直接相關，拆到天就成了另一種
+    「今天的數字」。金額依 ai.PRICES 估算，帳單以 Claude Console 為準。
+    """
+    months: dict[str, dict] = {}
+    for row in db.scalars(select(ApiUsage).order_by(ApiUsage.created_at.desc())):
+        key = row.created_at.strftime("%Y-%m")
+        m = months.setdefault(
+            key,
+            {
+                "month": key,
+                "total_usd": 0.0,
+                "plant_usd": 0.0,
+                "weekly_usd": 0.0,
+                # 模型不在價目表上的呼叫，算不出錢，只能說有這幾次
+                "unpriced_calls": 0,
+            },
+        )
+        if row.cost_usd is None:
+            m["unpriced_calls"] += 1
+            continue
+        m["total_usd"] += row.cost_usd
+        if row.purpose in ("plant", "weekly"):
+            m[f"{row.purpose}_usd"] += row.cost_usd
+    return {
+        "months": list(months.values()),
+        "total_usd": sum(m["total_usd"] for m in months.values()),
     }
 
 

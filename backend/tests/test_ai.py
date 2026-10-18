@@ -39,6 +39,7 @@ def make_response(text: str, stop_reason: str = "end_turn"):
             SimpleNamespace(type="thinking", thinking="想一想"),
             SimpleNamespace(type="text", text=text),
         ],
+        usage=SimpleNamespace(input_tokens=1000, output_tokens=500),
     )
 
 
@@ -437,3 +438,70 @@ class TestProfiles:
         weekly_effort = ai.DEFAULT_PROFILES["weekly"][1]
         assert f"weekly=claude-haiku-5-5 / {weekly_effort}" in summary
         assert "plant={} / {}".format(*ai.DEFAULT_PROFILES["plant"]) in summary
+
+    def test_default_models_are_all_priced(self):
+        """預設檔次一定要在價目表上，否則出廠就記不到錢。"""
+        assert ai.unpriced_models() == []
+
+    def test_unpriced_models_lists_overrides_missing_from_prices(self, monkeypatch):
+        """換成表上沒有的模型，啟動時要講出來，不然費用頁默默少算。"""
+        monkeypatch.setenv("TREESAY_PLANT_MODEL", "claude-opus-9")
+        monkeypatch.setenv("TREESAY_WEEKLY_MODEL", "claude-opus-9")
+        assert ai.unpriced_models() == ["claude-opus-9"]
+
+
+class TestUsage:
+    """每個回應記一筆用量，給「AI 費用」頁加總。"""
+
+    def rows(self, db_factory):
+        with db_factory() as db:
+            return db.query(models.ApiUsage).order_by(models.ApiUsage.id).all()
+
+    def test_each_response_recorded_with_cost(self, monkeypatch, db_factory):
+        install_client(monkeypatch, make_response('{"ok": true}'))
+        asyncio.run(ai.ask("hi", SCHEMA, profile="plant"))
+
+        (row,) = self.rows(db_factory)
+        model = ai.DEFAULT_PROFILES["plant"][0]
+        assert (row.purpose, row.model) == ("plant", model)
+        assert (row.input_tokens, row.output_tokens) == (1000, 500)
+        assert row.cost_usd == pytest.approx(ai.estimate_cost(model, 1000, 500))
+
+    def test_cost_follows_price_table(self):
+        # Opus 5.5：輸入 $4、輸出 $20／百萬 token
+        assert ai.estimate_cost("claude-opus-5-5", 1_000_000, 100_000) == pytest.approx(6)
+
+    def test_retried_responses_are_billed_too(self, monkeypatch, db_factory):
+        """拒答的那次一樣花了錢，不能只記成功的那次。"""
+        install_client(
+            monkeypatch,
+            make_response("", stop_reason="refusal"),
+            make_response('{"ok": true}'),
+        )
+        asyncio.run(ai.ask("hi", SCHEMA))
+        assert len(self.rows(db_factory)) == 2
+
+    def test_failed_request_not_recorded(self, monkeypatch, db_factory):
+        """API 直接回錯誤就沒有用量可記。"""
+        install_client(monkeypatch, status_error(anthropic.InternalServerError, 500))
+        with pytest.raises(ai.AIError):
+            asyncio.run(ai.ask("hi", SCHEMA))
+        assert self.rows(db_factory) == []
+
+    def test_unknown_model_recorded_without_cost(self, monkeypatch, db_factory):
+        """換成價目表上沒有的模型，還是要記下來，只是算不出錢。"""
+        monkeypatch.setenv("TREESAY_PLANT_MODEL", "claude-someday-9")
+        install_client(monkeypatch, make_response('{"ok": true}'))
+        asyncio.run(ai.ask("hi", SCHEMA, profile="plant"))
+        (row,) = self.rows(db_factory)
+        assert row.model == "claude-someday-9" and row.cost_usd is None
+
+    def test_recording_failure_does_not_lose_reply(self, monkeypatch):
+        """錢已經花了、回覆也拿到了，記帳出錯不能讓這次種樹作廢。"""
+
+        def broken_session():
+            raise RuntimeError("disk full")
+
+        monkeypatch.setattr(models, "SessionLocal", broken_session)
+        install_client(monkeypatch, make_response('{"ok": true}'))
+        assert asyncio.run(ai.ask("hi", SCHEMA)) == {"ok": True}

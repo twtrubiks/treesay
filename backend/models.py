@@ -123,6 +123,27 @@ class WeeklyReport(Base):
     created_at: Mapped[datetime.datetime] = mapped_column(default=now_local)
 
 
+class ApiUsage(Base):
+    """每一個 Claude API 回應的用量與估算費用，給「AI 費用」頁按月加總。
+
+    刻意不連到哪一天的日記：每天花多少跟那天說了多少話直接相關，
+    拆到天就成了另一種「今天的數字」。
+    """
+
+    __tablename__ = "api_usage"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    created_at: Mapped[datetime.datetime] = mapped_column(index=True)
+    # 用途，即 ai.DEFAULT_PROFILES 的 key（plant / weekly）
+    purpose: Mapped[str] = mapped_column(String(20))
+    model: Mapped[str] = mapped_column(String(64))
+    input_tokens: Mapped[int]
+    # 含 adaptive thinking 的思考 token——它們按輸出計費
+    output_tokens: Mapped[int]
+    # 記下當下依 ai.PRICES 算好的美元費用；模型不在價目表上為 NULL
+    cost_usd: Mapped[float | None]
+
+
 engine = create_engine(
     f"sqlite:///{DB_PATH}", connect_args={"check_same_thread": False}
 )

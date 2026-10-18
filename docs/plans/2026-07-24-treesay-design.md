@@ -78,6 +78,9 @@ Python 環境：自己開一個獨立的虛擬環境即可（venv、pyenv 都行
 - `messages`：day_id FK、content、photo_path (nullable)、created_at
 - `memories`：content、source_date、created_at——樹長期記得的、關於使用者的事
 - `weekly_reports`：week_start (unique)、content_json、created_at
+- `api_usage`：created_at、purpose（plant／weekly）、model、input_tokens、output_tokens、
+  cost_usd——每個 API 回應一筆，給「AI 費用」頁按月加總。刻意不連到 days：每天花多少
+  跟那天說了多少話直接相關，拆到天就成了另一種「今天的數字」
 
 情緒固定 7 種枚舉：`happy / calm / excited / tired / sad / anxious / angry`，
 前端據此對應情緒樹 SVG。枚舉外的值 fallback 為 `calm`。
@@ -142,6 +145,11 @@ days 表補後來新增的欄位（缺欄位才 ALTER、question 只回填 NULL 
 - 穩健性：拒答（`stop_reason: refusal`）、`max_tokens` 截斷與一般 API 錯誤重試 1 次，
   再失敗回 502；逾時與 key 錯誤不重試。SDK 自己的重試關閉（`max_retries=0`）——它連
   逾時也會重試，疊上去會把 planting 拖過 300 秒的逾期時間。
+- **用量記帳**：每拿到一個回應就記一筆 `api_usage`——拒答、截斷而要重試的回應同樣
+  計費，所以照記；API 直接回錯誤則沒有用量可記。費用在記下當下依 `ai.PRICES`（官方
+  定價，每百萬 token 美元）算好存起來，日後調價不改寫舊帳；模型不在價目表上就記成
+  未計價（cost_usd 為 NULL），頁面照實說有幾次沒算進去。記帳失敗只留 log，不讓已經
+  付了錢的回覆作廢。金額是估算，帳單以 Claude Console 為準。
 
 ## API
 
@@ -157,6 +165,7 @@ GET    /api/days/{date}              單日詳情
 GET    /api/memories                 樹記得的事
 DELETE /api/memories/{id}            忘掉一件事
 GET    /api/reports/{week_start}     週報（week_start 為週一；無快取則生成）
+GET    /api/usage                    AI 估算費用（按月加總，最近的月份在前）
 GET    /api/export                   完整匯出 JSON（日記、週報、記憶；照片只記檔名）
 /photos/**                           照片靜態檔
 ```
@@ -187,7 +196,7 @@ TypeScript 著力點：`frontend/src/types.ts` 為各 API request／response 定
 補種的 prompt 帶 `days_ago`，樹的回覆要認得時間差，但不能責怪使用者沒準時回來。
 首頁只遞一天的補種邀請（挑最早的，它最先過期），多天並列就成了待辦清單。
 
-## 前端頁面（5 個 view）
+## 前端頁面（6 個 view）
 
 1. **🌱 今日** `/`：樹（隨訊息數長大，此階段為中性樹——情緒種樹後才判定）＋聊天泡泡＋
    輸入框＋照片鈕；頂部「今日問題」卡片（依日期定題，重整不變，送出後退場）；
@@ -201,6 +210,9 @@ TypeScript 著力點：`frontend/src/types.ts` 為各 API request／response 定
 4. **📋 週報** `/report`：週選擇器＋報告卡片，僅已結束的週可點開，首次點開現場
    生成並快取；當週顯示「這週還在生長中 🌱」。
 5. **🧠 記憶** `/memories`：樹記得的事，一條一條看得到、刪得掉。
+6. **AI 費用** `/usage`：按月的估算費用（種樹／週報分開），註明帳單以 Claude Console
+   為準。入口是側邊欄底部的小字、不進主導覽——它是工具，不是這個 App 想讓人每天看的
+   東西；只到月、沒有趨勢圖，不拆到天。
 
 視覺：溫暖手繪風、奶油底色＋大地色系、圓角卡片；樹用內嵌 SVG（自繪，
 中性生長樹 × 階段 ＋ 7 情緒成樹——生長中情緒未定，不需 7×N 全矩陣）。
@@ -246,11 +258,11 @@ TypeScript 著力點：`frontend/src/types.ts` 為各 API request／response 定
 ## 測試（成功標準）
 
 1. `ai.py` 單元測試：輸出解析（拒答、截斷、壞 JSON、枚舉外情緒）、key 缺漏與無效、
-   重試與逾時、請求不帶工具、照片格式與上限、schema 合乎 structured outputs 要求，
-   不真呼叫 API。
+   重試與逾時、請求不帶工具、照片格式與上限、縮圖與轉正、schema 合乎 structured outputs
+   要求、用量記帳（重試也計費、未計價模型、記帳失敗不影響回覆），不真呼叫 API。
 2. API 整合測試（pytest ＋ mock API）：丟訊息→種樹→日記入庫；
    凌晨 4:00 前訊息歸前一天；`planting` 中重複種樹被擋；補種窗口邊界；
-   記憶注入與瘦身；週報快取命中。
+   記憶注入與瘦身；週報快取命中；費用按月加總。
 3. 前端以手動走完一輪流程驗收。
 
 ```bash

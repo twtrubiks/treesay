@@ -7,6 +7,7 @@ import type {
   MessageOut,
   ReportResponse,
   TodayResponse,
+  UsageResponse,
 } from './types'
 
 export class ApiError extends Error {
@@ -79,4 +80,7 @@ export const api = {
   // 讓樹放下一件事（刪了就是刪了，之後的種樹與週報都不會再看到）
   deleteMemory: (id: number) =>
     request<{ ok: boolean }>(`/api/memories/${id}`, { method: 'DELETE' }),
+
+  // AI 估算費用，按月加總（帳單以 Claude Console 為準）
+  getUsage: () => request<UsageResponse>('/api/usage'),
 }

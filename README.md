@@ -74,7 +74,7 @@ cp .env.example .env && chmod 600 .env
 > 刻意不用 `ANTHROPIC_API_KEY`：那個變數一旦 export，Claude Code 也會讀到它，
 > 從訂閱改走 API 計費。樹說用自己的變數名，兩邊互不干擾。
 
-早期版本透過本機 `claude` CLI 走 Claude Code 的訂閱額度，最後一版是 commit `17dae6a`，
+早期版本透過本機 `claude` CLI 走 Claude Code 的訂閱額度，最後一版是 commit [`17dae6a`](https://github.com/twtrubiks/treesay/tree/17dae6a)，
 已不再維護，只留在 git 歷史裡。
 
 ## 安裝
@@ -130,33 +130,35 @@ TREESAY_DATA_DIR=/path/to/somewhere python main.py
 
 ## 花多少錢
 
-AI 按 Claude API 用量計費，實際花費在 [Claude Console](https://platform.claude.com/) 的用量頁看得到。
+AI 按 Claude API 用量計費，**一天一次種樹，一週一次週報**。側邊欄底部的「AI 費用」頁
+會按月顯示估算花費，實際帳單以 [Claude Console](https://platform.claude.com/) 為準。
 
-用量比想像的少：**一天一次種樹，一週一次週報**
+以預設檔次實測（2026 年 10 月）：
 
-每個用途各自挑檔次，不是一律最貴的：
+| 一次呼叫 | 費用 |
+|---|---|
+| 種樹（不附照片） | 約 US$0.02 |
+| 種樹時每多附一張照片 | 約 US$0.006 |
+| 週報 | 約 US$0.004 |
 
-| 用途 | 預設模型 | effort |
-|---|---|---|
-| 種樹（日記＋樹的回覆） | `claude-opus-5-5` | `medium` |
-| 週報 | `claude-sonnet-5-5` | `medium` |
+每天種樹、不附照片，一個月約 US$0.5～0.7；每天附兩張照片約 US$1。
+照片送出前會縮到標準解析度（原圖不動），不縮的話一張就要 US$0.019，幾乎等於一次種樹。
 
-覺得不合用就自己調（effort 可填 `low`、`medium`、`high`、`xhigh`）：
+預設檔次：種樹用 `claude-opus-5-5`、週報用 `claude-sonnet-5-5`，effort 都是 `medium`。
+
+**想再省一點**：一次種樹的費用裡，模型的思考佔了近四成，使用者的訊息本身只佔零頭，
+所以降 effort 比少說話有效。由省到更省：
 
 ```bash
-TREESAY_PLANT_MODEL=claude-sonnet-5-5 TREESAY_PLANT_EFFORT=low python main.py
-TREESAY_WEEKLY_MODEL=claude-haiku-5-5 python main.py
+TREESAY_PLANT_EFFORT=low            # 種樹少想一點；日記是短文不是推理題，影響有限
+TREESAY_WEEKLY_MODEL=claude-haiku-5-5   # 週報只是濃縮已寫好的日記，小模型就夠
+TREESAY_PLANT_MODEL=claude-sonnet-5-5   # 種樹換小一階的模型，單價減半
 ```
 
-這樣只有這次啟動生效。想固定下來就寫進 `.env`（`.env.example` 裡有註解掉的範本）：
-
-```bash
-TREESAY_PLANT_MODEL=claude-sonnet-5-5
-TREESAY_PLANT_EFFORT=low
-```
-
-啟動時終端機會印一行實際生效的檔次（`🌳 AI 檔次：plant=... / ...`），可以確認
-覆寫有沒有吃到。effort 打錯字會退回預設並在終端機提醒，不會變成種樹失敗。
+effort 可填 `low`、`medium`、`high`、`xhigh`。這些變數寫進 `.env` 就固定下來
+（`.env.example` 裡有註解掉的範本），或在啟動時臨時帶入。啟動時終端機會印一行
+實際生效的檔次（`🌳 AI 檔次：plant=... / ...`）；effort 打錯字會退回預設並提醒，
+不會變成種樹失敗。
 
 **備份**——日記是不可再生的資料。完整匯出：
 

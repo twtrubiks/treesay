@@ -30,6 +30,11 @@ const router = createRouter({
       name: 'memories',
       component: () => import('../views/MemoryView.vue'),
     },
+    {
+      path: '/usage',
+      name: 'usage',
+      component: () => import('../views/UsageView.vue'),
+    },
     // 沒對上的網址（打錯的、過期的書籤）安靜回首頁，不留空白畫面
     {
       path: '/:pathMatch(.*)*',

@@ -9,8 +9,6 @@ from types import SimpleNamespace
 import pytest
 from fastapi.testclient import TestClient
 from PIL import Image
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 
 import ai
 import models
@@ -37,20 +35,6 @@ def clock(monkeypatch):
     c = FakeClock()
     monkeypatch.setattr(models, "now_local", c)
     return c
-
-
-@pytest.fixture()
-def db_factory(tmp_path, monkeypatch):
-    engine = create_engine(
-        f"sqlite:///{tmp_path / 'test.db'}", connect_args={"check_same_thread": False}
-    )
-    models.Base.metadata.create_all(engine)
-    factory = sessionmaker(bind=engine, autoflush=False, expire_on_commit=False)
-    monkeypatch.setattr(models, "SessionLocal", factory)
-    photos = tmp_path / "photos"
-    photos.mkdir()
-    monkeypatch.setattr(models, "PHOTOS_DIR", photos)
-    return factory
 
 
 @pytest.fixture()
@@ -740,3 +724,47 @@ class TestFrontendServing:
         r = client.get("/forest")
         assert r.status_code == 200
         assert "text/html" in r.headers["content-type"]
+
+
+class TestUsage:
+    """AI 費用頁：只按月加總，不拆到天。"""
+
+    def add(self, db_factory, when, purpose, cost, model="claude-opus-5-5"):
+        with db_factory() as db:
+            db.add(
+                models.ApiUsage(
+                    created_at=when,
+                    purpose=purpose,
+                    model=model,
+                    input_tokens=1000,
+                    output_tokens=500,
+                    cost_usd=cost,
+                )
+            )
+            db.commit()
+
+    def test_empty(self, client):
+        assert client.get("/api/usage").json() == {"months": [], "total_usd": 0}
+
+    def test_grouped_by_month_newest_first(self, client, db_factory):
+        dt = datetime.datetime
+        self.add(db_factory, dt(2026, 6, 30, 23, 0), "plant", 0.02)
+        self.add(db_factory, dt(2026, 7, 1, 9, 0), "plant", 0.03)
+        self.add(db_factory, dt(2026, 7, 2, 9, 0), "plant", 0.01)
+        self.add(db_factory, dt(2026, 7, 6, 9, 0), "weekly", 0.004)
+        self.add(db_factory, dt(2026, 7, 7, 9, 0), "plant", None, model="claude-someday-9")
+
+        body = client.get("/api/usage").json()
+
+        july, june = body["months"]
+        assert july["month"] == "2026-07"
+        assert july["plant_usd"] == pytest.approx(0.04)
+        assert july["weekly_usd"] == pytest.approx(0.004)
+        assert july["total_usd"] == pytest.approx(0.044)
+        # 算不出錢的呼叫不偷偷當成 0 元，要讓人知道有幾次沒算進去
+        assert july["unpriced_calls"] == 1
+        assert (june["month"], june["unpriced_calls"]) == ("2026-06", 0)
+        assert june["total_usd"] == pytest.approx(0.02)
+        assert body["total_usd"] == pytest.approx(0.064)
+        # 只到月，沒有任何一天的數字
+        assert set(july) == {"month", "total_usd", "plant_usd", "weekly_usd", "unpriced_calls"}
