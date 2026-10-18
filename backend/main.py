@@ -6,6 +6,7 @@ import asyncio
 import contextlib
 import datetime
 import json
+import sqlite3
 import sys
 import uuid
 from pathlib import Path
@@ -22,7 +23,7 @@ if __name__ == "__main__":
 
 from fastapi import Depends, FastAPI, File, Form, HTTPException, Response, UploadFile  # noqa: E402
 from fastapi.staticfiles import StaticFiles  # noqa: E402
-from pydantic import BaseModel  # noqa: E402
+from pydantic import BaseModel, ValidationError  # noqa: E402
 from sqlalchemy import select  # noqa: E402
 from sqlalchemy.orm import selectinload  # noqa: E402
 from starlette.exceptions import HTTPException as StarletteHTTPException  # noqa: E402
@@ -708,6 +709,168 @@ def export_all(db=Depends(get_db)):
             "Content-Disposition": f'attachment; filename="treesay-{stamp}.json"'
         },
     )
+
+
+# ---------- 匯入 ----------
+
+IMPORT_UNREADABLE = "這份檔案樹讀不懂 🍂 請確認是樹說匯出的 JSON。"
+
+
+class ImportMessage(BaseModel):
+    content: str = ""
+    photo: str | None = None
+    created_at: datetime.datetime
+
+
+class ImportDay(BaseModel):
+    date: datetime.date
+    status: str = "collecting"
+    question: str | None = None
+    diary: str | None = None
+    emotion: str | None = None
+    tree_reply: str | None = None
+    keywords: list = []
+    planted_at: datetime.datetime | None = None
+    messages: list[ImportMessage] = []
+
+
+class ImportReport(BaseModel):
+    week_start: datetime.date
+    report: dict
+    created_at: datetime.datetime | None = None
+
+
+class ImportMemory(BaseModel):
+    content: str
+    source_date: datetime.date
+    created_at: datetime.datetime | None = None
+
+
+class ImportPayload(BaseModel):
+    """/api/export 吐出的那份 JSON。多出來的欄位（exported_at、data_dir、id）略過。"""
+
+    days: list[ImportDay] = []
+    weekly_reports: list[ImportReport] = []
+    memories: list[ImportMemory] = []
+
+
+def backup_database(db) -> Path | None:
+    """匯入動筆之前，把整個資料庫先複製一份放在旁邊。
+
+    用 SQLite 自己的 backup API 而不是直接 copy 檔案：連線開著的時候 copy，
+    可能抄到寫到一半的頁面。檔名帶時間戳、放在 treesay.db 隔壁，
+    要還原就把它改回 treesay.db。
+    """
+    src_path = db.get_bind().url.database
+    if not src_path or src_path == ":memory:":
+        return None
+    src_path = Path(src_path)
+    dest = src_path.with_name(
+        f"{src_path.name}.bak-{models.now_local():%Y%m%d-%H%M%S}"
+    )
+    src = sqlite3.connect(src_path)
+    dst = sqlite3.connect(dest)
+    try:
+        src.backup(dst)
+    finally:
+        dst.close()
+        src.close()
+    return dest
+
+
+@app.post("/api/import")
+async def import_all(file: UploadFile = File(...), db=Depends(get_db)):
+    """把 /api/export 的 JSON 匯回來（換電腦、重灌之後）。
+
+    只加不蓋：本機已經有的那一天、那一週、同一條記憶都跳過，匯入的版本
+    不會覆蓋你後來寫的東西——日記不該因為一次匯入而默默少掉。寫入前先
+    備份整個資料庫（見 backup_database）。相片不在 JSON 裡，檔名照存，
+    把 photos/ 複製回來、檔名對得上就會重新顯示。
+    """
+    raw = await file.read()
+    try:
+        payload = ImportPayload.model_validate_json(raw)
+    except ValidationError:
+        raise HTTPException(400, IMPORT_UNREADABLE)
+
+    backup = backup_database(db)
+
+    existing_dates = set(db.scalars(select(Day.date)).all())
+    existing_weeks = set(db.scalars(select(WeeklyReport.week_start)).all())
+    existing_memories = set(db.scalars(select(Memory.content)).all())
+    result = {
+        "backup": str(backup) if backup else None,
+        "days_added": 0,
+        "days_skipped": 0,
+        "reports_added": 0,
+        "reports_skipped": 0,
+        "memories_added": 0,
+        "memories_skipped": 0,
+        "photos_missing": 0,
+    }
+
+    for d in payload.days:
+        if d.date in existing_dates:
+            result["days_skipped"] += 1
+            continue
+        existing_dates.add(d.date)
+        # 匯出當下卡在 planting 的那天，進來當作還在收集；種好了才算種好
+        planted = d.status == "planted" and bool(d.diary) and bool(d.tree_reply)
+        day = Day(
+            date=d.date,
+            status="planted" if planted else "collecting",
+            # 匯出沒帶問題的舊資料，照 Day 誕生時的規則蓋章
+            question=d.question or questions.question_for(d.date),
+            diary_text=d.diary if planted else None,
+            emotion=ai.normalize_emotion(d.emotion) if planted else None,
+            tree_reply=d.tree_reply if planted else None,
+            keywords_json=json.dumps(
+                ai.normalize_keywords(d.keywords, PLANT_KEYWORD_LIMIT),
+                ensure_ascii=False,
+            )
+            if planted
+            else None,
+            planted_at=d.planted_at if planted else None,
+        )
+        for m in d.messages:
+            if m.photo and not (models.PHOTOS_DIR / m.photo).is_file():
+                result["photos_missing"] += 1
+            day.messages.append(
+                Message(content=m.content, photo_path=m.photo, created_at=m.created_at)
+            )
+        db.add(day)
+        result["days_added"] += 1
+
+    for w in payload.weekly_reports:
+        if w.week_start in existing_weeks:
+            result["reports_skipped"] += 1
+            continue
+        existing_weeks.add(w.week_start)
+        db.add(
+            WeeklyReport(
+                week_start=w.week_start,
+                content_json=json.dumps(w.report, ensure_ascii=False),
+                created_at=w.created_at or models.now_local(),
+            )
+        )
+        result["reports_added"] += 1
+
+    for mem in payload.memories:
+        if mem.content in existing_memories:
+            result["memories_skipped"] += 1
+            continue
+        existing_memories.add(mem.content)
+        db.add(
+            Memory(
+                content=mem.content,
+                source_date=mem.source_date,
+                created_at=mem.created_at or models.now_local(),
+            )
+        )
+        result["memories_added"] += 1
+
+    db.commit()
+    return result
 
 
 @app.api_route("/api/{path:path}", methods=["GET", "POST", "PUT", "PATCH", "DELETE"])

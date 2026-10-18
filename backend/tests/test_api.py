@@ -709,6 +709,133 @@ class TestExport:
         assert [m["content"] for m in day["messages"]] == ["今天還行"]
 
 
+
+class TestImport:
+    def _upload(self, client, payload):
+        body = payload if isinstance(payload, bytes) else json.dumps(payload).encode()
+        return client.post("/api/import", files={"file": ("treesay.json", body, "application/json")})
+
+    def _planted_export(self, client, mock_ai):
+        client.post("/api/messages", data={"content": "今天還行"})
+        mock_ai({**PLANT_RESULT, "memory": ["養了一隻貓"], "keywords": ["貓"]})
+        client.post("/api/today/plant")
+        return client.get("/api/export").json()
+
+    def test_roundtrip_into_empty_database(self, client, clock, mock_ai, tmp_path, monkeypatch):
+        exported = self._planted_export(client, mock_ai)
+
+        # 換一個全新的資料庫（像換了電腦），把剛才的匯出匯進去
+        from sqlalchemy import create_engine
+        from sqlalchemy.orm import sessionmaker
+
+        engine = create_engine(f"sqlite:///{tmp_path / 'other.db'}")
+        models.Base.metadata.create_all(engine)
+        monkeypatch.setattr(models, "SessionLocal", sessionmaker(bind=engine, expire_on_commit=False))
+
+        assert client.get("/api/export").json()["days"] == []
+        r = self._upload(client, exported)
+        assert r.status_code == 200
+        assert r.json()["days_added"] == 1
+        assert r.json()["memories_added"] == 1
+
+        again = client.get("/api/export").json()
+        assert again["days"] == exported["days"]
+        assert [m["content"] for m in again["memories"]] == ["養了一隻貓"]
+        day = client.get("/api/days/2026-07-24").json()
+        assert day["status"] == "planted"
+        assert day["keywords"] == ["貓"]
+        assert day["question"] == exported["days"][0]["question"]
+
+    def test_existing_day_is_kept_not_overwritten(self, client, clock, mock_ai):
+        exported = self._planted_export(client, mock_ai)
+        exported["days"][0]["diary"] = "別人家的版本"
+
+        r = self._upload(client, exported)
+        assert r.json()["days_added"] == 0
+        assert r.json()["days_skipped"] == 1
+        assert r.json()["memories_skipped"] == 1
+        assert client.get("/api/days/2026-07-24").json()["diary"] == PLANT_RESULT["diary"]
+
+    def test_backup_written_before_import(self, client, clock, tmp_path):
+        client.post("/api/messages", data={"content": "備份前就在的話"})
+        r = self._upload(client, {"days": []})
+        backup = r.json()["backup"]
+        assert backup and backup.startswith(str(tmp_path / "test.db.bak-"))
+        import sqlite3
+
+        with sqlite3.connect(backup) as conn:
+            rows = conn.execute("SELECT content FROM messages").fetchall()
+        assert rows == [("備份前就在的話",)]
+
+    def test_garbage_file_rejected(self, client):
+        r = self._upload(client, b"not json at all")
+        assert r.status_code == 400
+        assert "讀不懂" in r.json()["detail"]
+        r = self._upload(client, {"days": [{"date": "not-a-date"}]})
+        assert r.status_code == 400
+
+    def test_planted_day_with_bad_emotion_falls_back(self, client, clock):
+        payload = {
+            "days": [
+                {
+                    "date": "2026-07-20",
+                    "status": "planted",
+                    "diary": "那天的日記",
+                    "emotion": "ecstatic",
+                    "tree_reply": "樹的回覆",
+                    "planted_at": "2026-07-20T22:00:00",
+                    "messages": [{"content": "嗨", "photo": None, "created_at": "2026-07-20T10:00:00"}],
+                }
+            ]
+        }
+        self._upload(client, payload)
+        day = client.get("/api/days/2026-07-20").json()
+        assert day["emotion"] == "calm"
+        assert day["question"]  # 匯出沒帶問題也會蓋章
+        assert [m["content"] for m in day["messages"]] == ["嗨"]
+
+    def test_half_planted_day_comes_back_as_collecting(self, client, clock):
+        payload = {
+            "days": [
+                {
+                    "date": "2026-07-23",
+                    "status": "planting",
+                    "messages": [{"content": "卡住那天", "created_at": "2026-07-23T10:00:00"}],
+                }
+            ]
+        }
+        self._upload(client, payload)
+        day = client.get("/api/days/2026-07-23").json()
+        assert day["status"] == "collecting"
+        assert day["can_plant"]  # 昨天，還在補種窗口內
+
+    def test_missing_photo_is_counted_but_kept(self, client, clock):
+        payload = {
+            "days": [
+                {
+                    "date": "2026-07-23",
+                    "messages": [
+                        {"content": "", "photo": "2026-07-23/x.jpg", "created_at": "2026-07-23T10:00:00"}
+                    ],
+                }
+            ]
+        }
+        r = self._upload(client, payload)
+        assert r.json()["photos_missing"] == 1
+        msg = client.get("/api/days/2026-07-23").json()["messages"][0]
+        assert msg["photo_url"] == "/photos/2026-07-23/x.jpg"
+
+    def test_weekly_report_imported_once(self, client, clock):
+        payload = {
+            "weekly_reports": [
+                {"week_start": "2026-07-13", "report": {"summary": "一週"}, "created_at": "2026-07-20T09:00:00"}
+            ]
+        }
+        assert self._upload(client, payload).json()["reports_added"] == 1
+        assert self._upload(client, payload).json()["reports_skipped"] == 1
+        assert client.get("/api/export").json()["weekly_reports"][0]["report"] == {"summary": "一週"}
+
+
 class TestFrontendServing:
     def test_unknown_api_path_returns_404_json(self, client):
         """打錯的 API 不能被 SPA fallback 接走、回成 200 HTML。"""

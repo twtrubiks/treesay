@@ -169,6 +169,16 @@ curl -OJ http://127.0.0.1:8000/api/export     # 存成 treesay-YYYYMMDD.json
 也可以直接用瀏覽器開 `/api/export` 下載。相片不含在 JSON 裡（只記檔名），
 完整備份請連同 `~/.treesay/photos/` 一起複製。
 
+換電腦或重灌之後，把匯出的 JSON 匯回來：
+
+```bash
+curl -F "file=@treesay-YYYYMMDD.json" http://127.0.0.1:8000/api/import
+```
+
+匯入只加不蓋：本機已經有的那一天、那一週、同一條記憶會跳過，不會被匯入的版本覆蓋。
+動筆前會先把整個資料庫複製成 `~/.treesay/treesay.db.bak-<時間>`，匯壞了把它改回
+`treesay.db` 就回到匯入前。相片請自己把 `photos/` 複製回去，檔名對得上就會重新顯示。
+
 ## 開發
 
 前端改動想要熱重載時，用 vite dev server（會 proxy `/api` 到後端）：
