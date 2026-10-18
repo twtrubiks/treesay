@@ -2,12 +2,14 @@
 
 import asyncio
 import base64
+import io
 import json
 from types import SimpleNamespace
 
 import anthropic
 import httpx2
 import pytest
+from PIL import ExifTags, Image
 
 import ai
 import models
@@ -16,8 +18,17 @@ import prompts
 SCHEMA = prompts.PLANT_SCHEMA
 REQUEST = httpx2.Request("POST", "https://api.anthropic.com/v1/messages")
 
-JPEG = b"\xff\xd8\xff\xe0" + b"fake-jpeg-body"
-PNG = b"\x89PNG\r\n\x1a\n" + b"fake-png-body"
+
+
+def image_bytes(fmt: str = "JPEG", size=(8, 6), mode: str = "RGB", **save_kwargs) -> bytes:
+    """Pillow 解得開的真圖片——送出前會先在本機解一次，只有檔頭的假檔過不了關。"""
+    buf = io.BytesIO()
+    Image.new(mode, size).save(buf, fmt, **save_kwargs)
+    return buf.getvalue()
+
+
+JPEG = image_bytes("JPEG")
+PNG = image_bytes("PNG")
 
 
 def make_response(text: str, stop_reason: str = "end_turn"):
@@ -313,6 +324,45 @@ class TestImages:
             paths.append(path)
         blocks = ai.image_blocks(paths)
         assert [b is not None for b in blocks] == [True, True, False]
+
+    def test_corrupt_file_skipped(self, tmp_path):
+        """檔頭對、內容壞的檔案送出去會讓整次請求 400，在本機就先擋下。"""
+        broken = tmp_path / "broken.jpg"
+        broken.write_bytes(b"\xff\xd8\xff\xe0" + b"not-really-a-jpeg")
+        assert ai.image_blocks([broken]) == [None]
+
+    def test_phone_photo_downscaled_original_untouched(self, tmp_path):
+        """手機原圖縮到標準解析度再送，磁碟上的原圖一個 byte 都不動。"""
+        photo = tmp_path / "phone.jpg"
+        original = image_bytes("JPEG", size=(4032, 3024))
+        photo.write_bytes(original)
+
+        (block,) = ai.image_blocks([photo])
+
+        assert block["source"]["media_type"] == "image/jpeg"
+        sent = Image.open(io.BytesIO(base64.b64decode(block["source"]["data"])))
+        w, h = sent.size
+        assert max(w, h) <= ai.IMAGE_MAX_EDGE
+        assert w * h <= ai.IMAGE_MAX_PIXELS
+        assert abs(w / h - 4032 / 3024) < 0.01
+        assert photo.read_bytes() == original
+
+    def test_exif_orientation_applied(self):
+        """直拍的照片方向記在 EXIF，模型不讀 metadata，送出前要真的轉正。"""
+        exif = Image.Exif()
+        exif[ExifTags.Base.Orientation] = 6  # 順時針轉 90 度才是正的
+        data = image_bytes("JPEG", size=(40, 20), exif=exif.tobytes())
+
+        sent, media_type = ai.prepare_image(data)
+
+        assert media_type == "image/jpeg"
+        assert Image.open(io.BytesIO(sent)).size == (20, 40)
+
+    def test_transparency_kept_as_png(self):
+        """有透明的圖縮圖後仍是 PNG，轉 JPEG 透明處會變成一片黑。"""
+        data = image_bytes("PNG", size=(3000, 2000), mode="RGBA")
+        _, media_type = ai.prepare_image(data)
+        assert media_type == "image/png"
 
 
 class TestSchemas:

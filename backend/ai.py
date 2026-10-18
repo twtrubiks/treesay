@@ -14,12 +14,14 @@ envelope、沒有 code fence。例外只有拒答與 max_tokens 截斷，兩者�
 from __future__ import annotations
 
 import base64
+import io
 import json
 import logging
 import os
 from pathlib import Path
 
 import anthropic
+from PIL import ExifTags, Image, ImageOps
 
 from models import DEFAULT_EMOTION, EMOTIONS
 
@@ -52,6 +54,14 @@ DEFAULT_PROFILES: dict[str, tuple[str, str]] = {
 # request 上限之下，留餘裕給文字。
 IMAGE_MAX_B64_BYTES = 10_000_000
 IMAGES_BUDGET_B64_BYTES = 24_000_000
+
+# 送給樹看的照片縮到 Claude 的標準解析度等級（長邊 1568px、約 115 萬像素，
+# 一張約 1,500 token）。Opus 5.5 屬於高解析度等級，手機原圖會吃到單張 4,784
+# token 的上限，比一次不附照片的種樹還貴——樹只要看懂你拍了什麼，不必數清
+# 每一片葉子。縮的只是送出去的那一份，原圖照樣留在磁碟上。
+IMAGE_MAX_EDGE = 1568
+IMAGE_MAX_PIXELS = 1_150_000
+JPEG_QUALITY = 85
 
 
 def resolve_profile(name: str) -> tuple[str, str]:
@@ -184,31 +194,64 @@ def sniff_media_type(data: bytes) -> str | None:
     return None
 
 
+def prepare_image(data: bytes) -> tuple[bytes, str] | None:
+    """把一張照片整理成要送出的 (bytes, media_type)；送不出去回 None。
+
+    夠小、方向正確、格式 API 認得的原檔照送；其餘縮圖、轉正後重新編碼。
+    先在本機解一次：壞掉的檔案若送出去，API 會讓整次請求 400，連帶那天
+    種不下去。
+    """
+    try:
+        img = Image.open(io.BytesIO(data))
+        w, h = img.size
+        scale = min(1.0, IMAGE_MAX_EDGE / max(w, h), (IMAGE_MAX_PIXELS / (w * h)) ** 0.5)
+        # 手機常把方向記在 EXIF 而不是真的轉像素，而模型不讀 metadata——
+        # 原檔照送的話，直拍的照片樹會看成躺著的
+        rotated = img.getexif().get(ExifTags.Base.Orientation, 1) != 1
+        media_type = sniff_media_type(data)
+        if media_type and scale == 1 and not rotated:
+            img.load()
+            return data, media_type
+        img.thumbnail((max(1, int(w * scale)), max(1, int(h * scale))))
+        img = ImageOps.exif_transpose(img)
+        buf = io.BytesIO()
+        if img.mode in ("RGBA", "LA") or "transparency" in img.info:
+            img.convert("RGBA").save(buf, "PNG")
+            return buf.getvalue(), "image/png"
+        img.convert("RGB").save(buf, "JPEG", quality=JPEG_QUALITY)
+        return buf.getvalue(), "image/jpeg"
+    except Exception:
+        # Pillow 解不開時丟的例外五花八門（UnidentifiedImageError、截斷檔的
+        # OSError、DecompressionBombError……），對這裡都是同一件事：這張送不出去
+        return None
+
+
 def image_blocks(paths: list[Path]) -> list[dict | None]:
     """把照片轉成 image block，順序與 paths 對齊；送不出去的位置放 None。
 
-    格式不支援（例如 HEIC）、單張過大、超出整體預算、檔案不見，都只是這張
-    樹看不到——一張照片不能拖垮整次種樹，否則那天會永遠種不下去。
+    格式不支援（例如 HEIC）、檔案損毀、單張過大、超出整體預算、檔案不見，
+    都只是這張樹看不到——一張照片不能拖垮整次種樹，否則那天會永遠種不下去。
     """
     blocks: list[dict | None] = []
     budget = IMAGES_BUDGET_B64_BYTES
     for path in paths:
         try:
-            data = path.read_bytes()
+            prepared = prepare_image(path.read_bytes())
         except OSError:
-            data = b""
-        media_type = sniff_media_type(data)
-        encoded = base64.b64encode(data).decode() if media_type else ""
-        if media_type and len(encoded) <= min(IMAGE_MAX_B64_BYTES, budget):
+            prepared = None
+        encoded = base64.b64encode(prepared[0]).decode() if prepared else ""
+        if prepared and len(encoded) <= min(IMAGE_MAX_B64_BYTES, budget):
             budget -= len(encoded)
             blocks.append(
                 {
                     "type": "image",
-                    "source": {"type": "base64", "media_type": media_type, "data": encoded},
+                    "source": {"type": "base64", "media_type": prepared[1], "data": encoded},
                 }
             )
         else:
-            logger.warning("照片 %s 無法送給樹看（格式不支援、太大或不見了），略過", path.name)
+            logger.warning(
+                "照片 %s 無法送給樹看（格式不支援、檔案損毀、太大或不見了），略過", path.name
+            )
             blocks.append(None)
     return blocks
 

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import contextlib
 import datetime
 import json
@@ -350,11 +351,9 @@ async def plant_day(db, date: datetime.date, now: datetime.datetime) -> dict:
 
     # 照片直接附進請求，prompt 裡只用編號指涉——本機路徑不必讓 AI 知道。
     # 送不出去的照片（格式不支援、太大）只標記樹看不到，種樹照常。
-    loaded = iter(
-        ai.image_blocks(
-            [models.PHOTOS_DIR / m.photo_path for m in day.messages if m.photo_path]
-        )
-    )
+    # 解碼與縮圖是 CPU 工作，丟到執行緒做，不卡住 event loop。
+    photo_paths = [models.PHOTOS_DIR / m.photo_path for m in day.messages if m.photo_path]
+    loaded = iter(await asyncio.to_thread(ai.image_blocks, photo_paths))
     images: list[dict] = []
     msgs = []
     for m in day.messages:

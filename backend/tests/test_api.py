@@ -2,17 +2,26 @@
 
 import base64
 import datetime
+import io
 import json
 from types import SimpleNamespace
 
 import pytest
 from fastapi.testclient import TestClient
+from PIL import Image
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 import ai
 import models
 import questions
+
+
+def image_bytes(fmt: str) -> bytes:
+    """Pillow 解得開的小圖——送出前會先在本機解一次，只有檔頭的假檔會被略過。"""
+    buf = io.BytesIO()
+    Image.new("RGB", (8, 6)).save(buf, fmt)
+    return buf.getvalue()
 
 
 class FakeClock:
@@ -446,7 +455,7 @@ class TestMessages:
         assert client.patch("/api/messages/999", json={"content": "改"}).status_code == 404
 
     def test_photo_upload_and_plant_sends_image(self, client, clock, mock_ai):
-        jpeg = b"\xff\xd8\xff\xe0fake-jpg-bytes"
+        jpeg = image_bytes("JPEG")
         r = client.post(
             "/api/messages",
             data={"content": "看看這張"},
@@ -477,7 +486,7 @@ class TestMessages:
         client.post(
             "/api/messages",
             data={"content": "這張可以"},
-            files={"photo": ("ok.png", b"\x89PNG\r\n\x1a\nbody", "image/png")},
+            files={"photo": ("ok.png", image_bytes("PNG"), "image/png")},
         )
         mock_ai(PLANT_RESULT)
         r = client.post("/api/today/plant")

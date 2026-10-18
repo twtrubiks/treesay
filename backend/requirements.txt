@@ -4,3 +4,4 @@ sqlalchemy>=2.0
 python-multipart>=0.0.32
 anthropic>=1.13
 python-dotenv>=1.2
+pillow>=12.3
