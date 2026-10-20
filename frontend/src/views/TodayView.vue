@@ -5,14 +5,15 @@ import { api, ApiError } from '@/api'
 import EmotionTree from '@/components/EmotionTree.vue'
 import TypeWriter from '@/components/TypeWriter.vue'
 import { EMOTION_META } from '@/emotions'
+import { reduceMotion } from '@/motion'
 import {
   effectiveDateNow,
   formatDateLabel,
   formatTime,
   greetingForNow,
-  isEveningNow,
   parseDate,
 } from '@/format'
+import { sky } from '@/season'
 import { useTodayStore } from '@/stores/today'
 import type { MessageOut } from '@/types'
 
@@ -36,13 +37,11 @@ const questionHidden = ref(false)
 const editingId = ref<number | null>(null)
 const editText = ref('')
 
-// 種樹按鈕跟著一天的節奏：入夜且說過話才暖起來。開著跨過 18:00 也要跟上，每分鐘對一次時，
-// 順便對日期——頁面開著跨過凌晨 4:00 的話，day 還停在前一天，不重抓就寫不了今天
-const evening = ref(isEveningNow())
-const minuteTimer = setInterval(() => {
-  evening.value = isEveningNow()
-  reloadIfStale()
-}, 60_000)
+// 種樹按鈕跟著一天的節奏：入夜且說過話才暖起來。入夜看 season.ts 的 sky，
+// 跟首頁的樹同一個節拍，開著跨過 18:00 時一起入夜
+const evening = computed(() => sky.value.night)
+// 每分鐘對一次日期——頁面開著跨過凌晨 4:00 的話，day 還停在前一天，不重抓就寫不了今天
+const minuteTimer = setInterval(reloadIfStale, 60_000)
 
 // 種樹全螢幕流程：none → growing →（成功）done
 const overlay = ref<'none' | 'growing' | 'done'>('none')
@@ -66,10 +65,12 @@ const backfillLabel = computed(() => {
   return diff === 1 ? '昨天' : '前天'
 })
 
-// 樹隨訊息數慢慢長大（中性樹，種樹後才有情緒）
+// 樹隨訊息數慢慢長大（中性樹，種樹後才有情緒）。
+// 起點 48px：再小風和來訪者就看不見了，34px 的樹頂被風推也只動 3px。
+// 起點拉高了每則就長少一點，跟從 34px 起算時一樣第 8 則才長到 90px
 const treeWidth = computed(() => {
   const n = day.value?.messages.length ?? 0
-  return Math.min(34 + n * 7, 90)
+  return Math.min(48 + n * 5.25, 90)
 })
 onMounted(async () => {
   // 筆電睡眠時 timer 不會跑，回到分頁那一刻先對一次日期，不讓過期畫面多留一分鐘
@@ -228,9 +229,8 @@ function focusInput() {
   answering.value = day.value?.question ?? null
   // preventScroll：讓下面的 smooth 捲動接手，否則瀏覽器會先瞬移一次
   textareaRef.value?.focus({ preventScroll: true })
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   composerRef.value?.scrollIntoView({
-    behavior: reduceMotion ? 'auto' : 'smooth',
+    behavior: reduceMotion.value ? 'auto' : 'smooth',
     block: 'center',
   })
   // 連按時重新播一次微光：先關掉，下一幀再開，動畫才會重跑
@@ -282,10 +282,14 @@ function dismissError() {
         </div>
       </div>
       <div class="header-right">
+        <!-- 還沒說話時樹也在：葉子被風推著晃（idle）、隨季節與入夜換樣貌（seasonal），
+             說過話才開始呼吸（breathe） -->
         <EmotionTree
           v-if="!isPlanted"
           :width="treeWidth"
           :breathe="day.messages.length > 0"
+          idle
+          seasonal
         />
         <!-- 三個狀態陪一天走：沒訊息時沉睡、有訊息後等著、入夜亮起。邀請，不是提醒 -->
         <button
@@ -326,7 +330,9 @@ function dismissError() {
     <div v-if="isPlanted" class="diary-area">
       <div class="diary-card">
         <div class="diary-head">
-          <EmotionTree :emotion="day.emotion" :width="34" breathe />
+          <!-- 種下後樹還是活的：呼吸、隨風擺。不開 seasonal——
+               這棵有情緒，情緒色不讓季節蓋；也就沒有來訪者，不讓它掉自己的葉子 -->
+          <EmotionTree :emotion="day.emotion" :width="34" breathe idle />
           <span v-if="emotionMeta" class="emotion-label">{{ emotionMeta.label }}</span>
         </div>
         <div class="diary-text">{{ day.diary }}</div>
@@ -375,7 +381,7 @@ function dismissError() {
     ></div>
 
     <!-- 輸入區 -->
-    <div v-if="isCollecting" ref="composerRef" class="composer" :class="{ nudge: composerNudge }">
+    <div v-if="isCollecting" ref="composerRef" class="composer" :class="{ nudge: composerNudge, quiet: reduceMotion }">
       <!-- 按了「聊聊這個」才出現：讓「這個」在寫的時候還看得見 -->
       <div v-if="answering" class="answering">
         <span class="answering-label">正在回應</span>
@@ -432,7 +438,7 @@ function dismissError() {
         {{ day.messages[day.messages.length - 1]!.content }}
       </div>
 
-      <div class="grow-tree">
+      <div class="grow-tree" :class="{ quiet: reduceMotion }">
         <div class="glow"></div>
         <div class="g-trunk"></div>
         <div class="g-c1"></div>
@@ -809,10 +815,8 @@ function dismissError() {
   background: transparent;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .composer {
-    transition: none;
-  }
+.composer.quiet {
+  transition: none;
 }
 
 .composer-input::placeholder {
@@ -947,7 +951,9 @@ function dismissError() {
   position: fixed;
   bottom: 28px;
   left: 50%;
-  transform: translateX(-50%);
+  /* 置中用 translate 個別屬性：ts-fade-in 動的是 transform，寫在 transform 裡會被蓋掉，
+     淡入那 0.4 秒提示會偏右半個寬度 */
+  translate: -50% 0;
   background: var(--ink);
   color: var(--bg-card);
   padding: 12px 26px;
@@ -1000,7 +1006,9 @@ function dismissError() {
   position: absolute;
   left: 50%;
   top: 20px;
-  transform: translateX(-50%);
+  /* 光暈和 .g-c1 置中用 translate 個別屬性：ts-breathe 動的是 transform，
+     寫在 transform 裡會被整個蓋掉，樹冠和光暈就一直偏右、沒對準樹幹 */
+  translate: -50% 0;
   width: 200px;
   height: 200px;
   border-radius: 50%;
@@ -1024,7 +1032,7 @@ function dismissError() {
   position: absolute;
   bottom: 56px;
   left: 50%;
-  transform: translateX(-50%);
+  translate: -50% 0;
   width: 110px;
   height: 110px;
   border-radius: 50%;
@@ -1082,6 +1090,16 @@ function dismissError() {
   width: 5px;
   height: 5px;
   animation: ts-rise 3.8s ease-in infinite 1.6s;
+}
+
+/* 畫面安靜時不呼吸、火花不飄 */
+.grow-tree.quiet * {
+  animation: none;
+}
+
+/* 火花不飄就收起來：停在起點、不透明，看起來只是三個卡在半空的點 */
+.grow-tree.quiet .spark {
+  display: none;
 }
 
 .grow-wait {

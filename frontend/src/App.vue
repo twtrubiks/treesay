@@ -2,6 +2,7 @@
 import { RouterLink, RouterView, useRoute } from 'vue-router'
 
 import EmotionTree from '@/components/EmotionTree.vue'
+import { MOTION_OPTIONS, motionPref, setMotionPref } from '@/motion'
 
 const route = useRoute()
 
@@ -53,6 +54,23 @@ function isActive(prefix: string): boolean {
       <RouterLink to="/usage" class="usage-link" :class="{ active: isActive('/usage') }">
         AI 費用
       </RouterLink>
+      <!-- 畫面要不要動由這裡決定，不交給作業系統（見 motion.ts）。
+           跟 AI 費用一樣是工具，放底部小字 -->
+      <!-- 一般按鈕＋aria-pressed：radio 角色要配方向鍵切換，這裡三顆按鈕各自 Tab 到就好 -->
+      <div class="motion-pref" role="group" aria-label="畫面動態">
+        <span class="motion-label">動態</span>
+        <button
+          v-for="opt in MOTION_OPTIONS"
+          :key="opt.value"
+          type="button"
+          class="motion-option"
+          :class="{ active: motionPref === opt.value }"
+          :aria-pressed="motionPref === opt.value"
+          @click="setMotionPref(opt.value)"
+        >
+          {{ opt.label }}
+        </button>
+      </div>
       <!-- 不寫「只有你和樹知道」——內容仍會送到 Anthropic 生成，只能說沒有別人看得到 -->
       <div class="sidebar-footer">沒有別人看得到。<br />不用登入，說完就好。</div>
     </aside>
@@ -235,6 +253,33 @@ function isActive(prefix: string): boolean {
 .usage-link:hover,
 .usage-link.active {
   color: var(--ink-soft);
+}
+
+.motion-pref {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 8px 10px;
+  font: 400 15px var(--sans);
+  color: var(--ink-mute);
+}
+
+.motion-label {
+  margin-right: 2px;
+}
+
+.motion-option {
+  font: inherit;
+  color: var(--ink-mute);
+}
+
+.motion-option:hover {
+  color: var(--ink-soft);
+}
+
+.motion-option.active {
+  color: var(--ink-soft);
+  font-weight: 600;
 }
 
 .sidebar-footer {

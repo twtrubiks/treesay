@@ -4,6 +4,7 @@ import { computed, onMounted, ref } from 'vue'
 import { api } from '@/api'
 import EmotionTree from '@/components/EmotionTree.vue'
 import { parseDate } from '@/format'
+import { reduceMotion } from '@/motion'
 import type { Emotion, ReportResponse } from '@/types'
 
 interface WeekOption {
@@ -125,7 +126,7 @@ onMounted(() => {
 
       <!-- 生成中：落葉飄動 -->
       <div v-if="loading" class="loading">
-        <div class="loading-bird">
+        <div class="loading-bird" :class="{ quiet: reduceMotion }">
           <div class="b b1"></div>
           <div class="b b2"></div>
           <div class="b b3"></div>
@@ -259,6 +260,10 @@ onMounted(() => {
   width: 90px;
   height: 64px;
   animation: ts-fly 3.5s ease-in-out infinite;
+}
+
+.loading-bird.quiet {
+  animation: none;
 }
 
 .b {
