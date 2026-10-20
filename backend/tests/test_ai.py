@@ -345,8 +345,16 @@ class TestImages:
         w, h = sent.size
         assert max(w, h) <= ai.IMAGE_MAX_EDGE
         assert w * h <= ai.IMAGE_MAX_PIXELS
+        assert w * h > ai.IMAGE_MAX_PIXELS * 0.95  # 縮到標準解析度就停，不縮過頭
         assert abs(w / h - 4032 / 3024) < 0.01
         assert photo.read_bytes() == original
+
+    def test_panorama_capped_by_long_edge(self):
+        """全景照的像素數還在預算內時，先撞到的是長邊上限。"""
+        sent, _ = ai.prepare_image(image_bytes("JPEG", size=(6000, 1000)))
+        w, h = Image.open(io.BytesIO(sent)).size
+        assert ai.IMAGE_MAX_EDGE * 0.98 < w <= ai.IMAGE_MAX_EDGE
+        assert abs(w / h - 6) < 0.05
 
     def test_exif_orientation_applied(self):
         """直拍的照片方向記在 EXIF，模型不讀 metadata，送出前要真的轉正。"""

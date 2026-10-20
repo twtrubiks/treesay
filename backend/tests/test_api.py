@@ -99,6 +99,7 @@ class TestMessageToPlant:
         # prompt 內含兩則訊息
         assert "今天好累" in mock_ai.calls[0]["prompt"]
         assert "晚餐很好吃" in mock_ai.calls[0]["prompt"]
+        assert mock_ai.calls[0]["profile"] == "plant"
 
         # 種完轉唯讀
         r = client.post("/api/messages", data={"content": "補一句"})
@@ -125,6 +126,17 @@ class TestMessageToPlant:
         assert "樹睡著了" in r.json()["detail"]
         # 失敗後回到 collecting，可以再丟訊息
         assert client.post("/api/messages", data={"content": "再試"}).status_code == 201
+
+    @pytest.mark.parametrize("field", ["diary", "tree_reply"])
+    def test_blank_diary_or_reply_returns_502_and_unlocks(
+        self, client, clock, mock_ai, field
+    ):
+        """schema 擋得住型別、擋不住空字串——種下一棵空白的樹比種不下去更糟。"""
+        client.post("/api/messages", data={"content": "嗨"})
+        mock_ai({**PLANT_RESULT, field: "  "})
+        r = client.post("/api/today/plant")
+        assert r.status_code == 502
+        assert client.get("/api/today").json()["status"] == "collecting"
 
     def test_invalid_key_returns_503_with_actionable_hint(
         self, client, clock, monkeypatch
@@ -165,6 +177,21 @@ class TestDayCutover:
 
 
 class TestPlantLock:
+    def test_lock_taken_before_calling_ai(self, client, clock, db_factory, monkeypatch):
+        """AI 要回好一陣子，鎖得在呼叫之前蓋好，連按第二下才擋得住。"""
+        client.post("/api/messages", data={"content": "嗨"})
+        seen = {}
+
+        async def watching(prompt, schema, images, profile):
+            with db_factory() as db:
+                day = db.query(models.Day).one()
+                seen.update(status=day.status, started=day.planting_started_at)
+            return api_response(json.dumps(PLANT_RESULT, ensure_ascii=False))
+
+        monkeypatch.setattr(ai, "_create", watching)
+        assert client.post("/api/today/plant").status_code == 200
+        assert seen == {"status": "planting", "started": clock.now}
+
     def test_duplicate_plant_blocked_while_planting(self, client, clock, db_factory, mock_ai):
         client.post("/api/messages", data={"content": "嗨"})
         with db_factory() as db:
@@ -235,6 +262,11 @@ class TestBackfill:
         assert client.get("/api/days/2026-07-24").json()["can_plant"] is True
         clock.now += datetime.timedelta(days=1)  # 走遠了
         assert client.get("/api/days/2026-07-24").json()["can_plant"] is False
+
+    def test_planted_day_is_not_offered_again(self, client, clock, mock_ai):
+        client.post("/api/messages", data={"content": "嗨"})
+        mock_ai(PLANT_RESULT)
+        assert client.post("/api/today/plant").json()["can_plant"] is False
 
     def test_day_without_messages_is_not_plantable(self, client, clock, mock_ai):
         client.post("/api/messages", data={"content": "留一句"})
@@ -393,11 +425,47 @@ class TestForest:
         client.delete(f"/api/messages/{mid}")
         assert client.get("/api/days?month=2026-07").json() == []
 
+    def test_month_lists_only_its_own_days(self, client, clock):
+        for now in [
+            datetime.datetime(2026, 6, 30, 12, 0),
+            datetime.datetime(2026, 7, 1, 12, 0),
+            datetime.datetime(2026, 8, 1, 12, 0),
+        ]:
+            clock.now = now
+            client.post("/api/messages", data={"content": "留一句"})
+        days = client.get("/api/days?month=2026-07").json()
+        assert [d["date"] for d in days] == ["2026-07-01"]
+
     def test_bad_month_format_rejected(self, client):
         assert client.get("/api/days?month=2026").status_code == 400
 
 
 class TestMessages:
+    def test_empty_message_rejected(self, client, clock):
+        assert client.post("/api/messages", data={"content": "  "}).status_code == 400
+        assert client.get("/api/today").json()["messages"] == []
+
+    def test_photo_only_message_accepted(self, client, clock):
+        """拍了照不想打字也是一則訊息。"""
+        r = client.post(
+            "/api/messages", files={"photo": ("sky.jpg", image_bytes("JPEG"), "image/jpeg")}
+        )
+        assert r.status_code == 201
+        assert r.json()["content"] == ""
+        assert r.json()["photo_url"]
+
+    def test_retract_removes_the_photo_file(self, client, clock):
+        """收回就是不留了，照片不該還躺在磁碟上。"""
+        msg = client.post(
+            "/api/messages",
+            data={"content": "拍錯了"},
+            files={"photo": ("oops.jpg", image_bytes("JPEG"), "image/jpeg")},
+        ).json()
+        saved = models.PHOTOS_DIR / msg["photo_url"].removeprefix("/photos/")
+        assert saved.is_file()
+        assert client.delete(f"/api/messages/{msg['id']}").status_code == 200
+        assert not saved.exists()
+
     def test_delete_only_when_collecting(self, client, clock, mock_ai):
         mid = client.post("/api/messages", data={"content": "刪我"}).json()["id"]
         assert client.delete(f"/api/messages/{mid}").status_code == 200
@@ -562,6 +630,37 @@ class TestMemory:
         client.post("/api/today/plant")
         assert "最近種下的日記" not in mock_ai.calls[1]["prompt"]
 
+    def test_recent_diaries_are_the_latest_three_planted(self, client, clock, mock_ai):
+        """取最近的三篇、由舊到新排；留了話沒種的那天沒有日記可帶。"""
+        for i in range(6):  # 07-24 到 07-29，07-27 那天沒收尾
+            if i:
+                clock.now += datetime.timedelta(days=1)
+            client.post("/api/messages", data={"content": f"第 {i} 天"})
+            if i != 3:
+                mock_ai({**PLANT_RESULT, "diary": f"第 {i} 天的日記"})
+                client.post("/api/today/plant")
+
+        prompt = mock_ai.calls[-1]["prompt"]
+        positions = [prompt.index(f"第 {i} 天的日記") for i in (1, 2, 4)]
+        assert positions == sorted(positions)
+        assert "第 0 天的日記" not in prompt
+        assert "2026-07-27" not in prompt
+
+    def test_memories_stay_when_recent_diaries_run_out(self, client, clock, mock_ai):
+        """隔了一陣子才回來，近期日記空了，樹也不能因此忘了你。"""
+        client.post("/api/messages", data={"content": "開始養貓"})
+        mock_ai({**PLANT_RESULT, "memory": ["養了一隻貓"]})
+        client.post("/api/today/plant")
+
+        clock.now += datetime.timedelta(days=10)
+        client.post("/api/messages", data={"content": "好久不見"})
+        mock_ai(PLANT_RESULT)
+        client.post("/api/today/plant")
+        prompt = mock_ai.calls[-1]["prompt"]
+        assert "最近種下的日記" not in prompt
+        assert "養了一隻貓" in prompt
+        assert "不追蹤進度、不對帳" in prompt
+
     def test_backfill_does_not_see_future_diaries(self, client, clock, mock_ai):
         """補種以「那一天」為基準往回看，樹不能引用未來的日記。"""
         client.post("/api/messages", data={"content": "忘了收尾的一天"})  # 07-24
@@ -609,16 +708,59 @@ class TestWeeklyReport:
         assert r.json()["status"] == "ready"
         assert r.json()["report"] == WEEKLY_RESULT
         assert len(mock_ai.calls) == 1
+        assert mock_ai.calls[0]["profile"] == "weekly"
 
-        # 快取命中：不再呼叫 AI
+        # 快取命中：不再呼叫 AI，拿到的是同一份週報
         r = client.get("/api/reports/2026-07-13")
         assert r.json()["status"] == "ready"
+        assert r.json()["report"] == WEEKLY_RESULT
         assert len(mock_ai.calls) == 1
+
+    def test_prompt_carries_this_weeks_planted_diaries(
+        self, client, clock, db_factory, mock_ai
+    ):
+        """週一到週日都算這週；隔壁週的日記、沒種下的天不混進來。"""
+        with db_factory() as db:
+            for d in [
+                datetime.date(2026, 7, 12),  # 上週日
+                datetime.date(2026, 7, 13),
+                datetime.date(2026, 7, 19),
+                datetime.date(2026, 7, 20),  # 下週一
+            ]:
+                db.add(
+                    models.Day(
+                        date=d,
+                        status="planted",
+                        diary_text=f"{d} 的日記",
+                        emotion="calm",
+                        tree_reply="辛苦了",
+                    )
+                )
+            db.add(models.Day(date=datetime.date(2026, 7, 16), status="collecting"))
+            db.commit()
+        mock_ai(WEEKLY_RESULT)
+
+        client.get("/api/reports/2026-07-13")
+        prompt = mock_ai.calls[0]["prompt"]
+        assert "2026-07-13 的日記" in prompt
+        assert "2026-07-19 的日記" in prompt
+        for outside in ["2026-07-12", "2026-07-16", "2026-07-20"]:
+            assert outside not in prompt
 
     def test_current_week_is_growing(self, client, clock, mock_ai):
         r = client.get("/api/reports/2026-07-20")
         assert r.json()["status"] == "growing"
         assert len(mock_ai.calls) == 0
+
+    def test_growing_until_its_sunday_is_over(self, client, clock, mock_ai):
+        """週日還沒過完（凌晨 4:00 前也還算週日）。週報永久快取，
+        早一步生成，那天就永遠不在週報裡。"""
+        for now in [datetime.datetime(2026, 7, 26, 23, 0), datetime.datetime(2026, 7, 27, 3, 59)]:
+            clock.now = now
+            assert client.get("/api/reports/2026-07-20").json()["status"] == "growing"
+        clock.now = datetime.datetime(2026, 7, 27, 4, 0)
+        assert client.get("/api/reports/2026-07-20").json()["status"] == "empty"
+        assert not mock_ai.calls
 
     def test_empty_past_week(self, client, clock, mock_ai):
         r = client.get("/api/reports/2026-07-06")
@@ -708,6 +850,15 @@ class TestExport:
         assert day["tree_reply"] == PLANT_RESULT["tree_reply"]
         assert [m["content"] for m in day["messages"]] == ["今天還行"]
 
+    def test_export_contains_unplanted_day(self, client, clock):
+        """留了話還沒種是最常見的狀態，備份不能偏偏在這裡斷掉。"""
+        client.post("/api/messages", data={"content": "還沒種"})
+
+        r = client.get("/api/export")
+        assert r.status_code == 200
+        day = r.json()["days"][0]
+        assert (day["status"], day["planted_at"]) == ("collecting", None)
+        assert [m["content"] for m in day["messages"]] == ["還沒種"]
 
 
 class TestImport:
@@ -755,6 +906,53 @@ class TestImport:
         assert r.json()["days_skipped"] == 1
         assert r.json()["memories_skipped"] == 1
         assert client.get("/api/days/2026-07-24").json()["diary"] == PLANT_RESULT["diary"]
+
+    def test_skipping_existing_keeps_importing_the_rest(self, client, clock):
+        """跳過本機已有的那筆之後，排在後面的照樣要加進來。"""
+
+        def day(date):
+            return {"date": date, "messages": [{"content": date, "created_at": f"{date}T10:00:00"}]}
+
+        def report(week_start):
+            return {"week_start": week_start, "report": {"advice": week_start}}
+
+        def memory(content):
+            return {"content": content, "source_date": "2026-07-20"}
+
+        self._upload(
+            client,
+            {"days": [day("2026-07-20")], "weekly_reports": [report("2026-07-06")], "memories": [memory("養了一隻貓")]},
+        )
+        r = self._upload(
+            client,
+            {
+                "days": [day("2026-07-20"), day("2026-07-21")],
+                "weekly_reports": [report("2026-07-06"), report("2026-07-13")],
+                "memories": [memory("養了一隻貓"), memory("在做樹說")],
+            },
+        ).json()
+
+        assert (r["days_added"], r["days_skipped"]) == (1, 1)
+        assert (r["reports_added"], r["reports_skipped"]) == (1, 1)
+        assert (r["memories_added"], r["memories_skipped"]) == (1, 1)
+        data = client.get("/api/export").json()
+        assert [d["date"] for d in data["days"]] == ["2026-07-20", "2026-07-21"]
+        assert [w["week_start"] for w in data["weekly_reports"]] == ["2026-07-06", "2026-07-13"]
+        assert [m["content"] for m in data["memories"]] == ["養了一隻貓", "在做樹說"]
+
+    def test_imported_question_kept_not_recomputed(self, client, clock):
+        """那天問過的題目跟著匯進來——兩台電腦的題庫不同，重算就會對不上。"""
+        payload = {
+            "days": [
+                {
+                    "date": "2026-07-20",
+                    "question": "那天真正問過的題目",
+                    "messages": [{"content": "嗨", "created_at": "2026-07-20T10:00:00"}],
+                }
+            ]
+        }
+        self._upload(client, payload)
+        assert client.get("/api/days/2026-07-20").json()["question"] == "那天真正問過的題目"
 
     def test_backup_written_before_import(self, client, clock, tmp_path):
         client.post("/api/messages", data={"content": "備份前就在的話"})
