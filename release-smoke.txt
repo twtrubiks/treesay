@@ -1,0 +1,7 @@
+Starting: Intent { cmp=com.twtrubiks.treesay/.MainActivity }
+Status: ok
+Activity: com.twtrubiks.treesay/.MainActivity
+ThisTime: 542
+TotalTime: 542
+WaitTime: 642
+Complete

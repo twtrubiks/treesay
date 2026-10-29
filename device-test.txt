@@ -1,0 +1,8 @@
+
+com.twtrubiks.treesay.DeviceTest:.....
+
+Time: 0.479
+
+OK (5 tests)
+
+

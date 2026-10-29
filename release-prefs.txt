@@ -1,0 +1,1 @@
+<map><string name="motion">off</string></map>

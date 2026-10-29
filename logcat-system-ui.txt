@@ -1,0 +1,1114 @@
+--------- beginning of main
+10-29 05:28:26.900  2536  2536 D MediaScannerReceiver: action: android.intent.action.MEDIA_SCANNER_SCAN_FILE path: /storage/emulated/0/demo.mp4
+10-29 05:28:26.902  3117  3117 D ScreenRecord: success
+10-29 05:28:27.153  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@66f160c)
+10-29 05:28:27.153  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@66f160c)
+10-29 05:28:28.153  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@f4c3b55)
+10-29 05:28:28.153  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@f4c3b55)
+--------- beginning of system
+10-29 05:28:28.443  1935  2053 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+10-29 05:28:28.527  2423  3092 I Dialer  : OmtpVvmCarrierCfgHlpr - OmtpEvent:CONFIG_STATUS_SMS_TIME_OUT
+10-29 05:28:28.528  2423  2423 I Dialer  : RetryPolicy - discarding deferred status: configuration_state=4
+10-29 05:28:28.528  2423  2423 I Dialer  : VvmTaskExecutor - no more tasks, stopping service if no task are added in 5000 millis
+10-29 05:28:28.529  2423  2423 I Dialer  : VvmTaskReceiver - task received
+10-29 05:28:28.529  2423  2423 I Dialer  : VvmTaskReceiver - TaskExecutor already running
+10-29 05:28:28.529  2423  2423 I Dialer  : Task.createTask - create task:com.android.voicemail.impl.ActivationTask
+10-29 05:28:28.529  2423  2423 I Dialer  : RetryPolicy - retry #2 for com.android.voicemail.impl.ActivationTask@d098b04 queued, executing in 5000
+10-29 05:28:28.529  2423  2423 I Dialer  : VvmTaskExecutor - com.android.voicemail.impl.ActivationTask@d098b04 added
+10-29 05:28:28.529  2423  2423 I Dialer  : VvmTaskExecutor - minimal wait time:4999
+10-29 05:28:28.529  2423  2423 I Dialer  : VvmTaskExecutor - sleep for 4999 millis
+10-29 05:28:29.153  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@b9b8e5b)
+10-29 05:28:29.154  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@b9b8e5b)
+10-29 05:28:29.874  1935  4117 I ActivityManager: Force stopping com.twtrubiks.treesay appid=10067 user=0: clear data
+10-29 05:28:29.875  1935  1950 I ActivityManager: Force stopping com.twtrubiks.treesay appid=10067 user=-1: clearApplicationUserData
+10-29 05:28:29.875  1935  2053 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+10-29 05:28:29.876  1935  4117 D ZenLog  : config: removeAutomaticZenRules,ZenModeConfig[user=0,allowAlarms=true,allowMedia=true,allowSystem=false,allowReminders=false,allowEvents=false,allowCalls=true,allowRepeatCallers=true,allowMessages=false,allowCallsFrom=stars,allowMessagesFrom=contacts,suppressedVisualEffects=511,areChannelsBypassingDnd=false,automaticRules={EVENTS_DEFAULT_RULE=ZenRule[enabled=false,snoozing=false,name=Event,zenMode=ZEN_MODE_IMPORTANT_INTERRUPTIONS,conditionId=condition://android/event?userId=-10000&calendar=&reply=1,condition=Condition[id=condition://android/event?userId=-10000&calendar=&reply=1,summary=...,line1=...,line2=...,icon=0,state=STATE_FALSE,flags=2],component=ComponentInfo{android/com.android.server.notification.EventConditionProvider},id=EVENTS_DEFAULT_RULE,creationTime=1793251574826,enabler=null], EVERY_NIGHT_DEFAULT_RULE=ZenRule[enabled=false,snoozing=false,name=Sleeping,zenMode=ZEN_MODE_IMPORTANT_INTERRUPTIONS,conditionId=condition://android/schedule?days=1.2.3.4.5.6.7&start=22.0&end=7.0&exitAtAlarm=true,condition=Condition[id=condition://android/schedule?days=1.2.3.4.5.6.7&start=22.0&end=7.0&exitAtAlarm=true,summary=...,line1=...,line2=...,icon=0,state=STATE_TRUE,flags=2],component=ComponentInfo{android/com.android.server.notification.ScheduleConditionProvider},id=EVERY_NIGHT_DEFAULT_RULE,creationTime=1793251574826,enabler=null]},manualRule=null],Diff[]
+10-29 05:28:29.876  1935  4117 I ConditionProviders: Disallowing condition provider com.twtrubiks.treesay
+10-29 05:28:29.876  1935  1935 D ZenLog  : set_zen_mode: off,removeAutomaticZenRules
+10-29 05:28:29.878  1716  1716 I keystore: clear_uid 10067
+10-29 05:28:29.885  2156  2156 D CarrierSvcBindHelper: No carrier app for: 0
+10-29 05:28:29.893  4614  4614 W oid.documentsu: Unexpected CPU variant for X86 using defaults: x86_64
+10-29 05:28:29.896  1935  1986 I ActivityManager: Start proc 4614:com.android.documentsui/u0a16 for broadcast com.android.documentsui/.PackageReceiver
+10-29 05:28:29.901  4614  4614 I oid.documentsu: The ClassLoaderContext is a special shared library.
+10-29 05:28:29.911  1935  4117 I ActivityManager: Killing 2880:com.android.contacts/u0a10 (adj 906): empty #17
+10-29 05:28:29.913  1935  1953 W libprocessgroup: kill(-2880, 9) failed: No such process
+10-29 05:28:29.914  4635  4635 W externalstorag: Unexpected CPU variant for X86 using defaults: x86_64
+10-29 05:28:29.919  1935  1952 I ActivityManager: Start proc 4635:com.android.externalstorage/u0a15 for content provider com.android.externalstorage/.ExternalStorageProvider
+10-29 05:28:29.921  1935  4117 I ActivityManager: Killing 2358:com.android.deskclock/u0a55 (adj 906): empty #17
+10-29 05:28:29.924  4635  4635 I externalstorag: The ClassLoaderContext is a special shared library.
+10-29 05:28:29.926  4635  4635 D ExternalStorage: After updating volumes, found 2 active roots
+10-29 05:28:29.926  4614  4614 I ProvidersCache: Updating roots due to change at content://com.android.externalstorage.documents
+10-29 05:28:29.938  1890  1890 I Zygote  : Process 2880 exited due to signal (9)
+10-29 05:28:29.939  4653  4653 W com.android.mt: Unexpected CPU variant for X86 using defaults: x86_64
+10-29 05:28:29.941  1935  1946 I ActivityManager: Start proc 4653:com.android.mtp/u0a9 for content provider com.android.mtp/.MtpDocumentsProvider
+10-29 05:28:29.942  1935  1946 I ActivityManager: Killing 2700:com.android.managedprovisioning/u0a33 (adj 906): empty #17
+10-29 05:28:29.950  4630  4630 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-29 05:28:29.951  4653  4653 I com.android.mt: The ClassLoaderContext is a special shared library.
+10-29 05:28:29.956  1935  1953 W libprocessgroup: kill(-2880, 9) failed: No such process
+10-29 05:28:29.956  1935  1953 I libprocessgroup: Successfully killed process cgroup uid 10010 pid 2880 in 43ms
+10-29 05:28:29.956  1935  1953 W libprocessgroup: kill(-2358, 9) failed: No such process
+10-29 05:28:29.957  1890  1890 I Zygote  : Process 2358 exited due to signal (9)
+10-29 05:28:29.967  1890  1890 I Zygote  : Process 2700 exited due to signal (9)
+10-29 05:28:29.973  4630  4630 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+10-29 05:28:29.973  4630  4630 I app_process: The ClassLoaderContext is a special shared library.
+10-29 05:28:29.981  4630  4630 D AndroidRuntime: Calling main entry com.android.commands.am.Am
+10-29 05:28:29.983  1935  4668 I ActivityManager: Force stopping com.twtrubiks.treesay appid=10067 user=0: start instr
+10-29 05:28:29.987  4678  4678 I trubiks.treesa: Late-enabling -Xcheck:jni
+10-29 05:28:29.992  4678  4678 W trubiks.treesa: Unexpected CPU variant for X86 using defaults: x86_64
+10-29 05:28:29.994  1935  1952 I ActivityManager: Start proc 4678:com.twtrubiks.treesay/u0a67 for added application com.twtrubiks.treesay
+10-29 05:28:29.996  1935  1953 W libprocessgroup: kill(-2358, 9) failed: No such process
+10-29 05:28:29.996  1935  1953 I libprocessgroup: Successfully killed process cgroup uid 10055 pid 2358 in 39ms
+10-29 05:28:29.996  1935  1953 W libprocessgroup: kill(-2700, 9) failed: No such process
+10-29 05:28:29.997  1935  1953 I libprocessgroup: Successfully killed process cgroup uid 10033 pid 2700 in 0ms
+10-29 05:28:30.004  4678  4678 W ActivityThread: Package uses different ABI(s) than its instrumentation: package[com.twtrubiks.treesay]: x86_64, null instrumentation[com.twtrubiks.treesay.test]: null, null
+10-29 05:28:30.005  4678  4678 W trubiks.treesa: ClassLoaderContext classpath size mismatch for position 0. expected=0, found=4 (PCL[] | PCL[/data/app/com.twtrubiks.treesay.test-nfk65FsHSi_WRq630vOoDg==/base.apk*410254319:/data/app/com.twtrubiks.treesay.test-nfk65FsHSi_WRq630vOoDg==/base.apk!classes2.dex*3360724059:/data/app/com.twtrubiks.treesay.test-nfk65FsHSi_WRq630vOoDg==/base.apk!classes3.dex*2633675987:/data/app/com.twtrubiks.treesay.test-nfk65FsHSi_WRq630vOoDg==/base.apk!classes4.dex*1144132602])
+10-29 05:28:30.005  4678  4678 W trubiks.treesa: Found duplicate classes, falling back to extracting from APK : /data/app/com.twtrubiks.treesay-LcQxacEJn43lrOP-KLMUvA==/base.apk
+10-29 05:28:30.006  4678  4678 W trubiks.treesa: NOTE: This wastes RAM and hurts startup performance.
+10-29 05:28:30.006  4678  4678 W trubiks.treesa: Found duplicated class when checking oat files: 'Landroid/accessibilityservice/AccessibilityService$TakeScreenshotCallback;' in /data/app/com.twtrubiks.treesay-LcQxacEJn43lrOP-KLMUvA==/base.apk!classes4.dex and /data/app/com.twtrubiks.treesay.test-nfk65FsHSi_WRq630vOoDg==/base.apk!classes4.dex
+10-29 05:28:30.006  4678  4678 W trubiks.treesa: 
+10-29 05:28:30.153  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@145142f)
+10-29 05:28:30.154  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@145142f)
+10-29 05:28:30.552  4678  4678 W trubiks.treesa: ClassLoaderContext size mismatch. expected=1, actual=2 (PCL[] | PCL[];PCL[/data/app/com.twtrubiks.treesay.test-nfk65FsHSi_WRq630vOoDg==/base.apk*410254319:/data/app/com.twtrubiks.treesay.test-nfk65FsHSi_WRq630vOoDg==/base.apk!classes2.dex*3360724059:/data/app/com.twtrubiks.treesay.test-nfk65FsHSi_WRq630vOoDg==/base.apk!classes3.dex*2633675987:/data/app/com.twtrubiks.treesay.test-nfk65FsHSi_WRq630vOoDg==/base.apk!classes4.dex*1144132602:/data/app/com.twtrubiks.treesay-LcQxacEJn43lrOP-KLMUvA==/base.apk*2005979006:/data/app/com.twtrubiks.treesay-LcQxacEJn43lrOP-KLMUvA==/base.apk!classes2.dex*114896020:/data/app/com.twtrubiks.treesay-LcQxacEJn43lrOP-KLMUvA==/base.apk!classes3.dex*1391443349:/data/app/com.twtrubiks.treesay-LcQxacEJn43lrOP-KLMUvA==/base.apk!classes4.dex*1144132602:/data/app/com.twtrubiks.treesay-LcQxacEJn43lrOP-KLMUvA==/base.apk!classes5.dex*3166259864:/data/app/com.twtrubiks.treesay-LcQxacEJn43lrOP-KLMUvA==/base.apk!classes6.dex*1299505334:/data/app/com.twtrubiks.treesay-LcQxacEJn43lrOP-KLMUvA==/
+10-29 05:28:30.553  4678  4678 W trubiks.treesa: Found duplicate classes, falling back to extracting from APK : /data/app/com.twtrubiks.treesay.test-nfk65FsHSi_WRq630vOoDg==/base.apk
+10-29 05:28:30.553  4678  4678 W trubiks.treesa: NOTE: This wastes RAM and hurts startup performance.
+10-29 05:28:30.553  4678  4678 W trubiks.treesa: Found duplicated class when checking oat files: 'Landroid/accessibilityservice/AccessibilityService$TakeScreenshotCallback;' in /data/app/com.twtrubiks.treesay.test-nfk65FsHSi_WRq630vOoDg==/base.apk!classes4.dex and /data/app/com.twtrubiks.treesay-LcQxacEJn43lrOP-KLMUvA==/base.apk!classes4.dex
+10-29 05:28:30.553  4678  4678 W trubiks.treesa: 
+10-29 05:28:30.565  4678  4678 W trubiks.treesa: ClassLoaderContext size mismatch. expected=1, actual=2 (PCL[] | PCL[/data/app/com.twtrubiks.treesay.test-nfk65FsHSi_WRq630vOoDg==/base.apk*410254319:/data/app/com.twtrubiks.treesay.test-nfk65FsHSi_WRq630vOoDg==/base.apk!classes2.dex*3360724059:/data/app/com.twtrubiks.treesay.test-nfk65FsHSi_WRq630vOoDg==/base.apk!classes3.dex*2633675987:/data/app/com.twtrubiks.treesay.test-nfk65FsHSi_WRq630vOoDg==/base.apk!classes4.dex*1144132602];PCL[/data/app/com.twtrubiks.treesay.test-nfk65FsHSi_WRq630vOoDg==/base.apk*410254319:/data/app/com.twtrubiks.treesay.test-nfk65FsHSi_WRq630vOoDg==/base.apk!classes2.dex*3360724059:/data/app/com.twtrubiks.treesay.test-nfk65FsHSi_WRq630vOoDg==/base.apk!classes3.dex*2633675987:/data/app/com.twtrubiks.treesay.test-nfk65FsHSi_WRq630vOoDg==/base.apk!classes4.dex*1144132602:/data/app/com.twtrubiks.treesay-LcQxacEJn43lrOP-KLMUvA==/base.apk*2005979006:/data/app/com.twtrubiks.treesay-LcQxacEJn43lrOP-KLMUvA==/base.apk!classes2.dex*114896020:/data/app/com.twtrubiks.treesay-LcQxacEJn43lrOP-KLMU
+10-29 05:28:30.566  4678  4678 W trubiks.treesa: Found duplicate classes, falling back to extracting from APK : /data/app/com.twtrubiks.treesay-LcQxacEJn43lrOP-KLMUvA==/base.apk
+10-29 05:28:30.566  4678  4678 W trubiks.treesa: NOTE: This wastes RAM and hurts startup performance.
+10-29 05:28:30.566  4678  4678 W trubiks.treesa: Found duplicated class when checking oat files: 'L_COROUTINE/ArtificialStackFrames;' in /data/app/com.twtrubiks.treesay-LcQxacEJn43lrOP-KLMUvA==/base.apk and /data/app/com.twtrubiks.treesay-LcQxacEJn43lrOP-KLMUvA==/base.apk
+10-29 05:28:30.566  4678  4678 W trubiks.treesa: 
+10-29 05:28:31.161  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@1ea1a3c)
+10-29 05:28:31.161  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@1ea1a3c)
+10-29 05:28:31.401  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/app/Instrumentation;->execStartActivity(Landroid/content/Context;Landroid/os/IBinder;Landroid/os/IBinder;Landroid/app/Activity;Landroid/content/Intent;ILandroid/os/Bundle;)Landroid/app/Instrumentation$ActivityResult; (light greylist, linking)
+10-29 05:28:31.401  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/app/Instrumentation;->execStartActivity(Landroid/content/Context;Landroid/os/IBinder;Landroid/os/IBinder;Ljava/lang/String;Landroid/content/Intent;ILandroid/os/Bundle;)Landroid/app/Instrumentation$ActivityResult; (light greylist, linking)
+10-29 05:28:31.403  4678  4678 I AndroidJUnitRunner: newApplication com.twtrubiks.treesay.TreeSayApplication
+10-29 05:28:31.408  4678  4678 W trubiks.treesa: Accessing hidden field Landroid/os/Trace;->TRACE_TAG_APP:J (light greylist, reflection)
+10-29 05:28:31.408  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/os/Trace;->isTagEnabled(J)Z (light greylist, reflection)
+10-29 05:28:31.410  4678  4678 D WM-WrkMgrInitializer: Initializing WorkManager with default configuration.
+10-29 05:28:31.481  4678  4678 D WM-Schedulers: Created SystemJobScheduler and enabled SystemJobService
+10-29 05:28:31.492  4678  4694 D WM-ForceStopRunnable: The default process name was not specified.
+10-29 05:28:31.493  4678  4694 D WM-ForceStopRunnable: Performing cleanup operations.
+10-29 05:28:31.522  4678  4678 I AndroidJUnitRunner: onCreate Bundle[mParcelledData.dataSize=100]
+10-29 05:28:31.522  4678  4678 D AndroidJUnitRunner: Use the raw file system for managing file I/O.
+10-29 05:28:31.526  4678  4678 V TestEventClient: No service name argument was given (testDiscoveryService, testRunEventService or orchestratorService)
+10-29 05:28:31.527  4678  4696 D AndroidJUnitRunner: onStart is called.
+10-29 05:28:31.535  4678  4696 I TestRunner: run started: 2 tests
+10-29 05:28:31.535  4678  4696 I TestRunner: started: photoPickerAndBackupFilesScreens(com.twtrubiks.treesay.SystemUiTest)
+10-29 05:28:31.539  4678  4696 I UiDevice: Creating a new instance, old instance exists: false
+10-29 05:28:31.541  1935  1935 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+10-29 05:28:31.544  4678  4696 D UiDevice: Setting accessibility service flags: 65618
+10-29 05:28:31.559  4678  4696 D OpenGLRenderer: Skia GL Pipeline
+10-29 05:28:31.572  4678  4696 D UiDevice: Executing shell command: cp /storage/emulated/0/Android/data/com.twtrubiks.treesay/files/treesay-picker.jpg /sdcard/Pictures/treesay-picker.jpg
+10-29 05:28:31.578  4678  4696 D UiDevice: Executing shell command: am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file:///sdcard/Pictures/treesay-picker.jpg
+10-29 05:28:31.597  2536  2536 D MediaScannerReceiver: action: android.intent.action.MEDIA_SCANNER_SCAN_FILE path: /storage/emulated/0/Pictures/treesay-picker.jpg
+10-29 05:28:31.743  4614  4614 I ProvidersCache: Updating roots due to change at content://com.android.providers.media.documents/root
+10-29 05:28:32.159  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@2f174d4)
+10-29 05:28:32.159  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@2f174d4)
+10-29 05:28:33.167  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@f548972)
+10-29 05:28:33.168  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@f548972)
+10-29 05:28:33.562  2423  3092 I Dialer  : VvmTaskExecutor - executing task com.android.voicemail.impl.ActivationTask@d098b04
+10-29 05:28:33.563  2423  3092 I Dialer  : PreOMigrationHandler - ComponentInfo{com.android.phone/com.android.services.telephony.TelephonyConnectionService}, ***, UserHandle{0} already migrated
+10-29 05:28:33.583  2472  2495 I VoicemailNotifier: receivers for android.intent.action.PROVIDER_CHANGED :[]
+10-29 05:28:33.584  2423  3092 I Dialer  : VvmActivationTask - VVM content provider configured - vvm_type_cvvm
+10-29 05:28:33.585  2423  3092 I Dialer  : OmtpVvmCarrierCfgHlpr - OmtpEvent:CONFIG_ACTIVATING
+10-29 05:28:33.589  2472  2495 I VoicemailNotifier: receivers for android.intent.action.PROVIDER_CHANGED :[]
+10-29 05:28:33.591  2423  3092 I Dialer  : TelephonyMangerCompat.setVisualVoicemailSmsFilterSettings - using TelephonyManager
+10-29 05:28:33.593  2423  3092 I Dialer  : TelephonyMangerCompat.sendVisualVoicemailSms - using TelephonyManager
+10-29 05:28:33.604  4678  4696 D UiDevice: Retrieving node with selector: BySelector [RES='\Qandroid:id/aerr_close\E'].
+10-29 05:28:33.605  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:33.621  4678  4696 D UiDevice: Node not found with selector: BySelector [RES='\Qandroid:id/aerr_close\E'].
+10-29 05:28:33.621  1935  1986 I ActivityManager: START u0 {flg=0x10008000 cmp=com.twtrubiks.treesay/.MainActivity} from uid 10067
+10-29 05:28:33.625  4678  4696 D UiDevice: Retrieving node with selector: BySelector [RES='\Qphoto_button\E'].
+10-29 05:28:33.626  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:33.627  4678  4678 W ActivityThread: handleWindowVisibility: no activity for token android.os.BinderProxy@45a542b
+10-29 05:28:33.685  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@9dd78a0 in: PRE_ON_CREATE
+10-29 05:28:33.691  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:28:33.722  4678  4696 D UiDevice: Node not found with selector: BySelector [RES='\Qphoto_button\E'].
+10-29 05:28:33.821  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@9dd78a0 in: CREATED
+10-29 05:28:33.822  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@9dd78a0 in: STARTED
+10-29 05:28:33.822  4678  4696 D UiDevice: Retrieving node with selector: BySelector [RES='\Qphoto_button\E'].
+10-29 05:28:33.822  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:33.823  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@9dd78a0 in: RESUMED
+10-29 05:28:33.851  1889  2010 E SurfaceFlinger: ro.sf.lcd_density must be defined as a build property
+10-29 05:28:33.883  4678  4696 D UiDevice: Node not found with selector: BySelector [RES='\Qphoto_button\E'].
+10-29 05:28:33.986  4678  4696 D UiDevice: Retrieving node with selector: BySelector [RES='\Qphoto_button\E'].
+10-29 05:28:33.986  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:34.015  4678  4696 D UiDevice: Node not found with selector: BySelector [RES='\Qphoto_button\E'].
+10-29 05:28:34.115  4678  4696 D UiDevice: Retrieving node with selector: BySelector [RES='\Qphoto_button\E'].
+10-29 05:28:34.115  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:34.141  4678  4696 D UiDevice: Node not found with selector: BySelector [RES='\Qphoto_button\E'].
+10-29 05:28:34.162  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@ad7c515)
+10-29 05:28:34.165  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@ad7c515)
+10-29 05:28:34.202  2559  2731 D EGL_emulation: eglMakeCurrent: 0x7a6d5eaaaca0: ver 3 0 (tinfo 0x7a6d5eb42220)
+10-29 05:28:34.209  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:28:34.228  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:28:34.243  4678  4696 D UiDevice: Retrieving node with selector: BySelector [RES='\Qphoto_button\E'].
+10-29 05:28:34.243  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:34.244  4678  4696 W UiDevice: Active window root not found.
+10-29 05:28:34.251  4678  4696 W UiDevice: Skipping null root node for window: AccessibilityWindowInfo[title=Quickstep, id=17, type=TYPE_APPLICATION, layer=0, bounds=Rect(0, 0 - 1440, 3120), focused=true, active=true, pictureInPicture=false, hasParent=false, isAnchored=false, hasChildren=false]
+10-29 05:28:34.253  4678  4696 D UiDevice: Node not found with selector: BySelector [RES='\Qphoto_button\E'].
+10-29 05:28:34.271  4678  4678 W trubiks.treesa: Accessing hidden field Landroid/view/WindowInsets;->CONSUMED:Landroid/view/WindowInsets; (light greylist, reflection)
+10-29 05:28:34.276  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/View;->getViewRootImpl()Landroid/view/ViewRootImpl; (light greylist, reflection)
+10-29 05:28:34.276  4678  4678 W trubiks.treesa: Accessing hidden field Landroid/view/View$AttachInfo;->mVisibleInsets:Landroid/graphics/Rect; (light greylist, reflection)
+10-29 05:28:34.276  4678  4678 W trubiks.treesa: Accessing hidden field Landroid/view/ViewRootImpl;->mAttachInfo:Landroid/view/View$AttachInfo; (light greylist, reflection)
+10-29 05:28:34.277  4678  4678 W trubiks.treesa: Accessing hidden field Landroid/graphics/Insets;->left:I (light greylist, linking)
+10-29 05:28:34.277  4678  4678 W trubiks.treesa: Accessing hidden field Landroid/graphics/Insets;->top:I (light greylist, linking)
+10-29 05:28:34.277  4678  4678 W trubiks.treesa: Accessing hidden field Landroid/graphics/Insets;->right:I (light greylist, linking)
+10-29 05:28:34.277  4678  4678 W trubiks.treesa: Accessing hidden field Landroid/graphics/Insets;->bottom:I (light greylist, linking)
+10-29 05:28:34.353  4678  4696 D UiDevice: Retrieving node with selector: BySelector [RES='\Qphoto_button\E'].
+10-29 05:28:34.353  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:34.354  4678  4696 W UiDevice: Active window root not found.
+10-29 05:28:34.431  4678  4696 W UiDevice: Skipping null root node for window: AccessibilityWindowInfo[title=Quickstep, id=17, type=TYPE_APPLICATION, layer=0, bounds=Rect(0, 0 - 1440, 3120), focused=true, active=true, pictureInPicture=false, hasParent=false, isAnchored=false, hasChildren=false]
+10-29 05:28:34.434  4678  4696 D UiDevice: Node not found with selector: BySelector [RES='\Qphoto_button\E'].
+10-29 05:28:34.534  4678  4696 D UiDevice: Retrieving node with selector: BySelector [RES='\Qphoto_button\E'].
+10-29 05:28:34.534  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:34.535  4678  4696 W UiDevice: Active window root not found.
+10-29 05:28:34.599  4678  4696 W UiDevice: Skipping null root node for window: AccessibilityWindowInfo[title=Quickstep, id=17, type=TYPE_APPLICATION, layer=0, bounds=Rect(0, 0 - 1440, 3120), focused=true, active=true, pictureInPicture=false, hasParent=false, isAnchored=false, hasChildren=false]
+10-29 05:28:34.601  4678  4696 D UiDevice: Node not found with selector: BySelector [RES='\Qphoto_button\E'].
+10-29 05:28:34.702  4678  4696 D UiDevice: Retrieving node with selector: BySelector [RES='\Qphoto_button\E'].
+10-29 05:28:34.702  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:34.704  4678  4696 W UiDevice: Active window root not found.
+10-29 05:28:34.744  4678  4696 W UiDevice: Skipping null root node for window: AccessibilityWindowInfo[title=Quickstep, id=17, type=TYPE_APPLICATION, layer=0, bounds=Rect(0, 0 - 1440, 3120), focused=true, active=true, pictureInPicture=false, hasParent=false, isAnchored=false, hasChildren=false]
+10-29 05:28:34.746  4678  4696 D UiDevice: Node not found with selector: BySelector [RES='\Qphoto_button\E'].
+10-29 05:28:34.847  4678  4696 D UiDevice: Retrieving node with selector: BySelector [RES='\Qphoto_button\E'].
+10-29 05:28:34.847  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:34.848  4678  4696 W UiDevice: Active window root not found.
+10-29 05:28:34.960  4678  4696 W UiDevice: Skipping null root node for window: AccessibilityWindowInfo[title=Quickstep, id=17, type=TYPE_APPLICATION, layer=0, bounds=Rect(0, 0 - 1440, 3120), focused=true, active=true, pictureInPicture=false, hasParent=false, isAnchored=false, hasChildren=false]
+10-29 05:28:34.966  4678  4696 D UiDevice: Node not found with selector: BySelector [RES='\Qphoto_button\E'].
+10-29 05:28:34.966  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/text/SpannableStringInternal;->length()I (light greylist, linking)
+10-29 05:28:34.967  4635  4649 I externalstorag: Waiting for a blocking GC ProfileSaver
+10-29 05:28:34.972  4635  4649 I externalstorag: WaitForGcToComplete blocked ProfileSaver on HeapTrim for 5.444ms
+10-29 05:28:34.987  4653  4667 I com.android.mt: Waiting for a blocking GC ProfileSaver
+10-29 05:28:34.994  4653  4667 I com.android.mt: WaitForGcToComplete blocked ProfileSaver on HeapTrim for 7.613ms
+10-29 05:28:35.041  4678  4718 D         : HostConnection::get() New Host Connection established 0x7a6d68c4e900, tid 4718
+10-29 05:28:35.041  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:28:35.065  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:28:35.066  4678  4696 D UiDevice: Retrieving node with selector: BySelector [RES='\Qphoto_button\E'].
+10-29 05:28:35.067  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:35.070  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:28:35.073  4678  4718 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasWideColorDisplay retrieved: 0
+10-29 05:28:35.073  4678  4718 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasHDRDisplay retrieved: 0
+10-29 05:28:35.073  4678  4718 I OpenGLRenderer: Initialized EGL, version 1.4
+10-29 05:28:35.073  4678  4718 D OpenGLRenderer: Swap behavior 1
+10-29 05:28:35.087  4678  4718 D EGL_emulation: eglCreateContext: 0x7a6d68c3e3a0: maj 3 min 0 rcv 3
+10-29 05:28:35.100  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/RenderNode;->create(Ljava/lang/String;Landroid/view/View;)Landroid/view/RenderNode; (light greylist, linking)
+10-29 05:28:35.100  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/RenderNode;->getScaleX()F (dark greylist, linking)
+10-29 05:28:35.100  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/RenderNode;->setClipToBounds(Z)Z (light greylist, linking)
+10-29 05:28:35.100  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/RenderNode;->setClipToOutline(Z)Z (dark greylist, linking)
+10-29 05:28:35.100  4678  4678 I chatty  : uid=10067(com.twtrubiks.treesay) identical 1 line
+10-29 05:28:35.100  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/RenderNode;->setClipToOutline(Z)Z (dark greylist, linking)
+10-29 05:28:35.100  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/RenderNode;->setLayerType(I)Z (dark greylist, linking)
+10-29 05:28:35.100  4678  4678 I chatty  : uid=10067(com.twtrubiks.treesay) identical 1 line
+10-29 05:28:35.100  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/RenderNode;->setLayerType(I)Z (dark greylist, linking)
+10-29 05:28:35.100  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/RenderNode;->setPivotX(F)Z (dark greylist, linking)
+10-29 05:28:35.100  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/RenderNode;->setPivotX(F)Z (dark greylist, linking)
+10-29 05:28:35.100  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/RenderNode;->setLeftTopRightBottom(IIII)Z (light greylist, linking)
+10-29 05:28:35.100  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/RenderNode;->getMatrix(Landroid/graphics/Matrix;)V (dark greylist, linking)
+10-29 05:28:35.100  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/DisplayListCanvas;->drawRenderNode(Landroid/view/RenderNode;)V (light greylist, linking)
+10-29 05:28:35.100  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/RenderNode;->isValid()Z (light greylist, linking)
+10-29 05:28:35.101  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/RenderNode;->start(II)Landroid/view/DisplayListCanvas; (light greylist, linking)
+10-29 05:28:35.101  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/RenderNode;->end(Landroid/view/DisplayListCanvas;)V (light greylist, linking)
+10-29 05:28:35.101  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/RenderNode;->setAlpha(F)Z (dark greylist, linking)
+10-29 05:28:35.101  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/RenderNode;->setCameraDistance(F)Z (dark greylist, linking)
+10-29 05:28:35.101  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/RenderNode;->setLayerPaint(Landroid/graphics/Paint;)Z (dark greylist, linking)
+10-29 05:28:35.101  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/RenderNode;->setOutline(Landroid/graphics/Outline;)Z (dark greylist, linking)
+10-29 05:28:35.102  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/RenderNode;->setPivotX(F)Z (dark greylist, linking)
+10-29 05:28:35.102  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/RenderNode;->setRotationX(F)Z (dark greylist, linking)
+10-29 05:28:35.102  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/RenderNode;->setRotationY(F)Z (dark greylist, linking)
+10-29 05:28:35.102  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/RenderNode;->setRotation(F)Z (dark greylist, linking)
+10-29 05:28:35.102  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/RenderNode;->setScaleX(F)Z (dark greylist, linking)
+10-29 05:28:35.102  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/RenderNode;->setScaleY(F)Z (dark greylist, linking)
+10-29 05:28:35.102  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/RenderNode;->setElevation(F)Z (dark greylist, linking)
+10-29 05:28:35.102  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/RenderNode;->setTranslationX(F)Z (dark greylist, linking)
+10-29 05:28:35.102  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/RenderNode;->setTranslationY(F)Z (dark greylist, linking)
+10-29 05:28:35.103  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/RenderNode;->getScaleX()F (dark greylist, linking)
+10-29 05:28:35.101  4678  4718 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e3a0: ver 3 0 (tinfo 0x7a6d68ca2240)
+10-29 05:28:35.108  1889  2376 E SurfaceFlinger: ro.sf.lcd_density must be defined as a build property
+10-29 05:28:35.146  4678  4678 I Choreographer: Skipped 71 frames!  The application may be doing too much work on its main thread.
+10-29 05:28:35.167  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@f29802a)
+10-29 05:28:35.168  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@f29802a)
+10-29 05:28:35.584  4678  4718 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e3a0: ver 3 0 (tinfo 0x7a6d68ca2240)
+10-29 05:28:36.067  4678  4718 I OpenGLRenderer: Davey! duration=2069ms; Flags=0, IntendedVsync=166843350921, Vsync=168026684207, OldestInputEvent=9223372036854775807, NewestInputEvent=0, HandleInputStart=168030145710, AnimationStart=168030189870, PerformTraversalsStart=168318508620, DrawStart=168320164770, SyncQueued=168456526120, SyncStart=168494441690, IssueDrawCommandsStart=168507153340, SwapBuffers=168871029640, FrameCompleted=168950362490, DequeueBufferDuration=30000, QueueBufferDuration=949000, 
+10-29 05:28:36.068  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/os/Trace;->asyncTraceBegin(JLjava/lang/String;I)V (light greylist, reflection)
+10-29 05:28:36.068  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/os/Trace;->asyncTraceEnd(JLjava/lang/String;I)V (light greylist, reflection)
+10-29 05:28:36.068  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/os/Trace;->traceCounter(JLjava/lang/String;I)V (light greylist, reflection)
+10-29 05:28:36.071  1935  1958 I ActivityManager: Displayed com.twtrubiks.treesay/.MainActivity: +2s442ms
+10-29 05:28:36.165  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@25dea82)
+10-29 05:28:36.166  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@25dea82)
+10-29 05:28:36.239  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/View;->getAccessibilityViewId()I (light greylist, reflection)
+10-29 05:28:36.281  4678  4696 I GestureController: can't find MotionEvent#setDisplayId(int)
+10-29 05:28:36.281  4678  4696 I GestureController: java.lang.NoSuchMethodException: setDisplayId [int]
+10-29 05:28:36.281  4678  4696 I GestureController: 	at java.lang.Class.getMethod(Class.java:2068)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at java.lang.Class.getMethod(Class.java:1690)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at androidx.test.uiautomator.GestureController.<clinit>(GestureController.java:64)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at androidx.test.uiautomator.GestureController.getInstance(GestureController.java:116)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at androidx.test.uiautomator.UiObject2.<init>(UiObject2.java:101)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at androidx.test.uiautomator.UiObject2.create(UiObject2.java:122)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at androidx.test.uiautomator.UiDevice.findObject(UiDevice.java:171)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at com.twtrubiks.treesay.UiTest.waitFor$lambda$0(UiTest.kt:50)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at com.twtrubiks.treesay.UiTest$$ExternalSyntheticLambda1.invoke(D8$$SyntheticClass:0)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at com.twtrubiks.treesay.UiTest.poll(UiTest.kt:59)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at com.twtrubiks.treesay.UiTest.waitFor(UiTest.kt:50)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at com.twtrubiks.treesay.UiTest.waitFor$default(UiTest.kt:49)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at com.twtrubiks.treesay.UiTest.find(UiTest.kt:46)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at com.twtrubiks.treesay.SystemUiTest.photoPickerAndBackupFilesScreens(SystemUiTest.kt:85)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at java.lang.reflect.Method.invoke(Native Method)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at androidx.test.internal.runner.junit4.statement.RunBefores.evaluate(RunBefores.java:80)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at androidx.test.internal.runner.junit4.statement.RunAfters.evaluate(RunAfters.java:61)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at androidx.test.ext.junit.runners.AndroidJUnit4.run(AndroidJUnit4.java:162)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at org.junit.runners.Suite.runChild(Suite.java:128)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at org.junit.runners.Suite.runChild(Suite.java:27)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at androidx.test.internal.runner.TestExecutor.execute(TestExecutor.java:68)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at androidx.test.internal.runner.TestExecutor.execute(TestExecutor.java:59)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at androidx.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:467)
+10-29 05:28:36.281  4678  4696 I GestureController: 	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2145)
+10-29 05:28:36.291  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:36.347  1889  2388 W SurfaceFlinger: Attempting to set client state on removed layer: Splash Screen com.twtrubiks.treesay#0
+10-29 05:28:36.347  1889  2388 W SurfaceFlinger: Attempting to destroy on removed layer: Splash Screen com.twtrubiks.treesay#0
+10-29 05:28:36.359  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:28:36.494  2076  2313 I chatty  : uid=10013(com.android.systemui) RenderThread identical 3 lines
+10-29 05:28:36.529  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:28:36.565  4678  4696 D UiObject2: Clicking on (917, 2433).
+10-29 05:28:36.581  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:28:36.593  4678  4696 D UiDevice: Retrieving node with selector: BySelector [TEXT='\Qtreesay-picker.jpg\E'].
+10-29 05:28:36.593  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:36.652  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/content/Context;->getOpPackageName()Ljava/lang/String; (light greylist, linking)
+10-29 05:28:36.654  1845  3296 W audio_hw_generic: Not supplying enough data to HAL, expected position 3209871 , only wrote 3209760
+10-29 05:28:36.657  1935  2059 I ActivityManager: START u0 {act=android.intent.action.OPEN_DOCUMENT typ=image/* cmp=com.android.documentsui/.picker.PickActivity} from uid 10067
+10-29 05:28:36.728  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@9dd78a0 in: PAUSED
+10-29 05:28:36.732  4614  4614 W ActivityThread: handleWindowVisibility: no activity for token android.os.BinderProxy@3c7663b
+10-29 05:28:36.751  4614  4614 D PickActivity: Created new state object: State{action=3, acceptMimes=[image/*], allowMultiple=false, localOnly=false, showDeviceStorageOption=true, showAdvanced=false, stack=DocumentStack{root=null, docStack=[], stackTouched=false}, dirConfigs={}, excludedAuthorities=[], openableOnly=false, sortModel=SortModel{dimensions={16908304=SortDimension{id=16908304, labelId=2131755226, dataType=0, sortCapability=0, defaultSortDirection=1, sortDirection=0, visibility=4}, 16908310=SortDimension{id=16908310, labelId=2131755224, dataType=0, sortCapability=3, defaultSortDirection=1, sortDirection=0, visibility=0}, 2131296333=SortDimension{id=2131296333, labelId=2131755222, dataType=1, sortCapability=3, defaultSortDirection=2, sortDirection=0, visibility=0}, 2131296375=SortDimension{id=2131296375, labelId=2131755223, dataType=0, sortCapability=3, defaultSortDirection=1, sortDirection=0, visibility=0}, 2131296509=SortDimension{id=2131296509, labelId=2131755225, dataType=1, sortCapability=3, defaultSortDirection=1, sortDirection=0, visibility=0}}, defaultDimensionId=0, sortedDimension=null}}
+10-29 05:28:36.754  4614  4614 D DrawerController: Calculated drawer width:280.0
+10-29 05:28:36.755  4614  4614 D Metrics : docsui_launch_action: 2
+10-29 05:28:36.755  4614  4614 D Metrics : docsui_open_mime: 5
+10-29 05:28:36.760  4678  4721 D ProfileInstaller: Installing profile for com.twtrubiks.treesay
+10-29 05:28:36.766  4614  4614 D PickerActionHandler: Load last accessed stack.
+10-29 05:28:36.766  4614  4614 D PickerActionHandler: Attempting to load last used stack for calling package.
+10-29 05:28:36.769  4614  4614 D OpenGLRenderer: Skia GL Pipeline
+10-29 05:28:36.770  4614  4632 D ProvidersAccess: Matched roots: [Root{authority=null, rootId=null, title=Recent, isUsb=false, isSd=false, isMtp=false} @ content:/root/null, Root{authority=com.android.providers.downloads.documents, rootId=downloads, title=Downloads, isUsb=false, isSd=false, isMtp=false} @ content://com.android.providers.downloads.documents/root/downloads, Root{authority=com.android.providers.media.documents, rootId=images_root, title=Images, isUsb=false, isSd=false, isMtp=false} @ content://com.android.providers.media.documents/root/images_root, Root{authority=com.android.externalstorage.documents, rootId=home, title=Documents, isUsb=false, isSd=false, isMtp=false} @ content://com.android.externalstorage.documents/root/home]
+10-29 05:28:36.770  1889  2388 E SurfaceFlinger: ro.sf.lcd_density must be defined as a build property
+10-29 05:28:36.792  4614  4650 D ProvidersAccess: Matched roots: [Root{authority=null, rootId=null, title=Recent, isUsb=false, isSd=false, isMtp=false} @ content:/root/null, Root{authority=com.android.providers.downloads.documents, rootId=downloads, title=Downloads, isUsb=false, isSd=false, isMtp=false} @ content://com.android.providers.downloads.documents/root/downloads, Root{authority=com.android.providers.media.documents, rootId=images_root, title=Images, isUsb=false, isSd=false, isMtp=false} @ content://com.android.providers.media.documents/root/images_root, Root{authority=com.android.externalstorage.documents, rootId=home, title=Documents, isUsb=false, isSd=false, isMtp=false} @ content://com.android.externalstorage.documents/root/home]
+10-29 05:28:36.873  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:28:36.875  4614  4724 D         : HostConnection::get() New Host Connection established 0x7a6d68c4a600, tid 4724
+10-29 05:28:36.877  4614  4724 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasWideColorDisplay retrieved: 0
+10-29 05:28:36.877  4614  4724 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasHDRDisplay retrieved: 0
+10-29 05:28:36.877  4614  4724 I OpenGLRenderer: Initialized EGL, version 1.4
+10-29 05:28:36.877  4614  4724 D OpenGLRenderer: Swap behavior 1
+10-29 05:28:36.877  4614  4724 D EGL_emulation: eglCreateContext: 0x7a6d68c3dea0: maj 3 min 0 rcv 3
+10-29 05:28:36.877  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:28:36.879  4614  4724 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3dea0: ver 3 0 (tinfo 0x7a6d68cd5100)
+10-29 05:28:36.880  1889  1928 E SurfaceFlinger: ro.sf.lcd_density must be defined as a build property
+10-29 05:28:36.891  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:28:36.904  4614  4614 D DocumentStack: Root changed to: Root{authority=null, rootId=null, title=Recent, isUsb=false, isSd=false, isMtp=false} @ content:/root/null
+10-29 05:28:36.904  4614  4614 D DirectoryFragment: Creating new fragment null directory
+10-29 05:28:36.952  4678  4696 W ByMatcher: Node returned null child: android.view.accessibility.AccessibilityNodeInfo@80006cd4; boundsInParent: Rect(0, 0 - 1440, 3120); boundsInScreen: Rect(0, 0 - 1440, 3120); packageName: com.twtrubiks.treesay; className: android.widget.FrameLayout; text: null; error: null; maxTextLength: -1; contentDescription: null; tooltipText: null; viewIdResName: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; importantForAccessibility: true; visible: true; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]
+10-29 05:28:36.952  4678  4696 W ByMatcher: Skipping null child (0 of 1)
+10-29 05:28:36.963  4678  4696 D UiDevice: Node not found with selector: BySelector [TEXT='\Qtreesay-picker.jpg\E'].
+10-29 05:28:36.963  4678  4696 D UiDevice: Retrieving node with selector: BySelector [RES='.*:id/icon_thumbnail'].
+10-29 05:28:36.964  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:36.982  4614  4724 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3dea0: ver 3 0 (tinfo 0x7a6d68cd5100)
+10-29 05:28:37.165  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@570b2e8)
+10-29 05:28:37.166  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@570b2e8)
+10-29 05:28:37.218  1935  2053 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+10-29 05:28:37.531  1935  1958 I ActivityManager: Displayed com.android.documentsui/.picker.PickActivity: +788ms
+10-29 05:28:37.547  4614  4614 D AbstractActionHandler: Creating new loader recents.
+10-29 05:28:37.548  4614  4632 D ProvidersAccess: Matched roots: [Root{authority=null, rootId=null, title=Recent, isUsb=false, isSd=false, isMtp=false} @ content:/root/null, Root{authority=com.android.providers.downloads.documents, rootId=downloads, title=Downloads, isUsb=false, isSd=false, isMtp=false} @ content://com.android.providers.downloads.documents/root/downloads, Root{authority=com.android.providers.media.documents, rootId=images_root, title=Images, isUsb=false, isSd=false, isMtp=false} @ content://com.android.providers.media.documents/root/images_root, Root{authority=com.android.externalstorage.documents, rootId=home, title=Documents, isUsb=false, isSd=false, isMtp=false} @ content://com.android.externalstorage.documents/root/home]
+10-29 05:28:37.555  4614  4614 I Choreographer: Skipped 33 frames!  The application may be doing too much work on its main thread.
+10-29 05:28:37.597  4614  4632 D Documents: Found 2 of 2 recent queries done
+10-29 05:28:37.754  4614  4724 I OpenGLRenderer: Davey! duration=761ms; Flags=1, IntendedVsync=169876207113, Vsync=170426207091, OldestInputEvent=9223372036854775807, NewestInputEvent=0, HandleInputStart=170438466610, AnimationStart=170438495970, PerformTraversalsStart=170438519710, DrawStart=170441928450, SyncQueued=170442320150, SyncStart=170442350830, IssueDrawCommandsStart=170442402800, SwapBuffers=170567897760, FrameCompleted=170638022760, DequeueBufferDuration=41000, QueueBufferDuration=163000, 
+10-29 05:28:37.769  4614  4614 D AbstractActionHandler: Loader has finished for: <null DocumentInfo>
+10-29 05:28:37.769  4614  4614 I Model   : Updating model with new result set.
+10-29 05:28:37.772  4614  4614 D DirectoryFragment: Received model update. Loading=false
+10-29 05:28:37.779  4678  4696 D UiDevice: Node not found with selector: BySelector [RES='.*:id/icon_thumbnail'].
+10-29 05:28:37.779  4678  4696 D UiDevice: Retrieving node with selector: BySelector [DESC='^\QPhoto taken\E.*$'].
+10-29 05:28:37.780  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:37.798  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:28:37.818  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:28:37.836  2536  2671 D OpenGLRenderer: Skia GL Pipeline
+10-29 05:28:37.848  2536  2578 V MediaStore: Create the thumbnail in memory: origId=11, kind=1, isVideo=false
+10-29 05:28:37.861  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:28:38.031  2076  2313 I chatty  : uid=10013(com.android.systemui) RenderThread identical 2 lines
+10-29 05:28:38.099  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:28:38.163  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@aaaa618)
+10-29 05:28:38.164  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@aaaa618)
+10-29 05:28:38.210  4678  4718 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e3a0: ver 3 0 (tinfo 0x7a6d68ca2240)
+10-29 05:28:38.260  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@9dd78a0 in: STOPPED
+10-29 05:28:38.291  4614  4614 D Metrics : docsui_startup_ms: 1549
+10-29 05:28:38.294  4678  4696 D UiDevice: Node not found with selector: BySelector [DESC='^\QPhoto taken\E.*$'].
+10-29 05:28:38.395  4678  4696 D UiDevice: Retrieving node with selector: BySelector [TEXT='\Qtreesay-picker.jpg\E'].
+10-29 05:28:38.396  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:39.163  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@7d43871)
+10-29 05:28:39.164  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@7d43871)
+10-29 05:28:39.404  4678  4696 D UiDevice: Taking screenshot (scale=0.500000, quality=90) and storing at /storage/emulated/0/Android/data/com.twtrubiks.treesay/files/screenshots/system-02-picker.png.
+10-29 05:28:39.406  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:28:39.421  4630  4710 D         : HostConnection::get() New Host Connection established 0x7965d06451e0, tid 4710
+10-29 05:28:39.422  4630  4710 D OpenGLRenderer: Skia GL Pipeline
+10-29 05:28:39.423  1889  1928 E SurfaceFlinger: ro.sf.lcd_density must be defined as a build property
+10-29 05:28:39.423  4630  4731 D libEGL  : Emulator has host GPU support, qemu.gles is set to 1.
+10-29 05:28:39.429  4630  4731 W libc    : Unable to set property "qemu.gles" to "1": error code: 0x18
+10-29 05:28:39.429  4630  4731 E vndksupport: Could not load /vendor/lib64/egl/libGLES_emulation.so from sphal namespace: dlopen failed: library "/vendor/lib64/egl/libGLES_emulation.so" not found.
+10-29 05:28:39.430  4630  4731 E libEGL  : load_driver(/vendor/lib64/egl/libGLES_emulation.so): unknown
+10-29 05:28:39.430  4630  4731 D libEGL  : loaded /vendor/lib64/egl/libEGL_emulation.so
+10-29 05:28:39.430  4630  4731 D libEGL  : loaded /vendor/lib64/egl/libGLESv1_CM_emulation.so
+10-29 05:28:39.432  4630  4731 D libEGL  : loaded /vendor/lib64/egl/libGLESv2_emulation.so
+10-29 05:28:39.435  4630  4731 D         : HostConnection::get() New Host Connection established 0x7965d6bbb780, tid 4731
+10-29 05:28:39.436  4630  4731 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasWideColorDisplay retrieved: 0
+10-29 05:28:39.436  4630  4731 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasHDRDisplay retrieved: 0
+10-29 05:28:39.436  4630  4731 I OpenGLRenderer: Initialized EGL, version 1.4
+10-29 05:28:39.436  4630  4731 D OpenGLRenderer: Swap behavior 1
+10-29 05:28:39.436  4630  4731 D EGL_emulation: eglCreateContext: 0x7965d6aa3e00: maj 3 min 0 rcv 3
+10-29 05:28:39.437  4630  4731 D EGL_emulation: eglMakeCurrent: 0x7965d6aa3e00: ver 3 0 (tinfo 0x7965d6be1300)
+10-29 05:28:39.438  1889  1928 E SurfaceFlinger: ro.sf.lcd_density must be defined as a build property
+10-29 05:28:39.581  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:39.582  4678  4696 D UiObject2: Clicking on (444, 1255).
+10-29 05:28:39.582  4678  4696 W UiObject2: Clicking on non-clickable object: android.view.accessibility.AccessibilityNodeInfo@f038; boundsInParent: Rect(0, 0 - 426, 76); boundsInScreen: Rect(231, 1217 - 657, 1293); packageName: com.android.documentsui; className: android.widget.TextView; text: treesay-picker.jpg; error: null; maxTextLength: -1; contentDescription: null; tooltipText: null; viewIdResName: android:id/title; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; importantForAccessibility: true; visible: true; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_NEXT_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_SET_SELECTION - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]
+10-29 05:28:39.594  4614  4614 D PickerActionHandler: onFinished() [content://com.android.providers.media.documents/document/image%3A11]
+10-29 05:28:39.602  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@9dd78a0 in: RESTARTED
+10-29 05:28:39.602  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@9dd78a0 in: STARTED
+10-29 05:28:39.603  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@9dd78a0 in: RESUMED
+10-29 05:28:39.603  4678  4696 D UiDevice: Retrieving node with selector: BySelector [TEXT='\Q✕\E'].
+10-29 05:28:39.603  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:39.624  4678  4696 D UiDevice: Node not found with selector: BySelector [TEXT='\Q✕\E'].
+10-29 05:28:39.645  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:28:39.663  4678  4683 I trubiks.treesa: JIT allocated 110KB for stack maps of void com.twtrubiks.treesay.TodayScreenKt.TodayScreen(kotlin.jvm.functions.Function1, kotlin.jvm.functions.Function0, java.time.LocalDate, kotlin.jvm.functions.Function0, kotlin.jvm.functions.Function2, androidx.compose.runtime.Composer, int)
+10-29 05:28:39.665  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:28:39.666  4678  4683 I trubiks.treesa: Compiler allocated 9MB to compile void com.twtrubiks.treesay.TodayScreenKt.TodayScreen(kotlin.jvm.functions.Function1, kotlin.jvm.functions.Function0, java.time.LocalDate, kotlin.jvm.functions.Function0, kotlin.jvm.functions.Function2, androidx.compose.runtime.Composer, int)
+10-29 05:28:39.668  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:28:39.701  4678  4718 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e3a0: ver 3 0 (tinfo 0x7a6d68ca2240)
+10-29 05:28:39.726  4678  4696 D UiDevice: Retrieving node with selector: BySelector [TEXT='\Q✕\E'].
+10-29 05:28:39.727  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:39.909  1845  1845 W audio_hw_generic: Not supplying enough data to HAL, expected position 3520178 , only wrote 3366000
+10-29 05:28:40.006  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:28:40.122  2076  2313 I chatty  : uid=10013(com.android.systemui) RenderThread identical 3 lines
+10-29 05:28:40.149  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:28:40.170  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@b2724bf)
+10-29 05:28:40.171  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@b2724bf)
+10-29 05:28:40.189  4614  4724 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3dea0: ver 3 0 (tinfo 0x7a6d68cd5100)
+10-29 05:28:40.192  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:28:41.170  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@797078c)
+10-29 05:28:41.172  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@797078c)
+10-29 05:28:41.469  4678  4696 D UiDevice: Taking screenshot (scale=0.500000, quality=90) and storing at /storage/emulated/0/Android/data/com.twtrubiks.treesay/files/screenshots/system-03-photo-picked.png.
+10-29 05:28:41.471  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:28:41.579  4630  4672 D         : HostConnection::get() New Host Connection established 0x7965d0645480, tid 4672
+10-29 05:28:41.737  4678  4696 D UiDevice: Retrieving node with selector: BySelector [RES='\Qcomposer_input\E'].
+10-29 05:28:41.738  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:41.926  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:41.959  4678  4696 D UiObject2: Setting text to '從相簿挑的天空'.
+10-29 05:28:42.006  4678  4696 D UiDevice: Executing shell command: dumpsys input_method
+10-29 05:28:42.060  4678  4696 D UiDevice: Retrieving node with selector: BySelector [TEXT='\Q丟給樹\E'].
+10-29 05:28:42.060  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:42.171  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@eecb7)
+10-29 05:28:42.172  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@eecb7)
+10-29 05:28:42.234  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:42.298  4678  4696 D UiObject2: Clicking on (1170, 2433).
+10-29 05:28:42.320  4678  4696 D UiDevice: Retrieving node with selector: BySelector [TEXT='\Q從相簿挑的天空\E'].
+10-29 05:28:42.320  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:42.358  1845  3296 W audio_hw_generic: Not supplying enough data to HAL, expected position 3366109 , only wrote 3366000
+10-29 05:28:43.170  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@f04bc24)
+10-29 05:28:43.170  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@f04bc24)
+10-29 05:28:44.021  4678  4696 D UiDevice: Taking screenshot (scale=0.500000, quality=90) and storing at /storage/emulated/0/Android/data/com.twtrubiks.treesay/files/screenshots/system-04-photo-sent.png.
+10-29 05:28:44.031  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:28:44.171  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@e2f438d)
+10-29 05:28:44.173  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@e2f438d)
+10-29 05:28:44.275  4678  4696 D UiDevice: Retrieving node with selector: BySelector [TEXT='\Q設定\E'].
+10-29 05:28:44.275  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:44.540  4678  4696 I chatty  : uid=10067(com.twtrubiks.treesay) identical 1 line
+10-29 05:28:44.710  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:44.886  4678  4696 D UiObject2: Clicking on (1295, 201).
+10-29 05:28:44.908  4678  4696 D UiDevice: Retrieving node with selector: BySelector [TEXT='\Q匯出日記\E'].
+10-29 05:28:44.908  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:45.146  4678  4696 D UiDevice: Node not found with selector: BySelector [TEXT='\Q匯出日記\E'].
+10-29 05:28:45.146  4678  4696 D UiDevice: Retrieving node with selector: BySelector [SCROLLABLE='true'].
+10-29 05:28:45.148  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:45.170  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@cc2e942)
+10-29 05:28:45.171  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@cc2e942)
+10-29 05:28:45.176  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:45.180  4678  4696 D UiObject2: Scrolling down (bounds=Rect(144, 345 - 1296, 2442), percent=0.500000) at 5250px/s.
+10-29 05:28:45.181  4678  4696 D UiDevice: Performing action [[Pause(point=Point(720, 2442), duration=0ms), Move(start=Point(720, 2442), end=Point(720, 1394), duration=199ms), Pause(point=Point(720, 1394), duration=250ms)]] and waiting 1000ms for EventCondition[scrollFinished=DOWN].
+10-29 05:28:45.225  4678  4678 W trubiks.treesa: Accessing hidden method Landroid/view/ViewTreeObserver;->dispatchOnScrollChanged()V (light greylist, reflection)
+10-29 05:28:46.169  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@d1b9d53)
+10-29 05:28:46.169  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@d1b9d53)
+10-29 05:28:46.756  4678  4696 W UiDevice: Timed out waiting 1000ms on the condition.
+10-29 05:28:46.756  4678  4696 W UiDevice: java.util.concurrent.TimeoutException: Expected event not received within: 1000 ms among: [EventType: TYPE_WINDOW_CONTENT_CHANGED; EventTime: 178109; PackageName: com.twtrubiks.treesay; MovementGranularity: 0; Action: 0; ContentChangeTypes: [CONTENT_CHANGE_TYPE_SUBTREE]; WindowChangeTypes: [] [ ClassName: android.view.View; Text: []; ContentDescription: null; ItemCount: -1; CurrentItemIndex: -1; Enabled: true; Password: false; Checked: false; FullScreen: false; Scrollable: false; BeforeText: null; FromIndex: -1; ToIndex: -1; ScrollX: -1; ScrollY: -1; MaxScrollX: -1; MaxScrollY: -1; AddedCount: -1; RemovedCount: -1; ParcelableData: null ]; recordCount: 0, EventType: TYPE_WINDOW_CONTENT_CHANGED; EventTime: 178267; PackageName: com.twtrubiks.treesay; MovementGranularity: 0; Action: 0; ContentChangeTypes: [CONTENT_CHANGE_TYPE_SUBTREE]; WindowChangeTypes: [] [ ClassName: android.view.View; Text: []; ContentDescription: null; ItemCount: -1; CurrentItemIndex: -1; Enabled: true; Password: false; Checked: false; FullScreen: false; Scrollable: false; BeforeText: null; FromIndex: -1; ToIndex: -1; ScrollX: -1; ScrollY: -1; MaxScrollX: -1; MaxScrollY: -1; AddedCount: -1; RemovedCount: -1; ParcelableData: null ]; recordCount: 0, EventType: TYPE_WINDOW_CONTENT_CHANGED; EventTime: 178418; PackageName: com.twtrubiks.treesay; MovementGranularity: 0; Action: 0; ContentChangeTypes: [CONTENT_CHANGE_TYPE_SUBTREE]; WindowChangeTypes: [] [ ClassName: android.view.View; Text: []; ContentDescription: null; ItemCount: -1; CurrentItemIndex: -1; Enabled: true; Password: false; Checked: false; FullScreen: false; Scrollable: false; BeforeText: null; FromIndex: -1; ToIndex: -1; ScrollX: -1; ScrollY: -1; MaxScrollX: -1; MaxScrollY: -1; AddedCount: -1; RemovedCount: -1; ParcelableData: null ]; recordCount: 0]
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at android.app.UiAutomation.executeAndWaitForEvent(UiAutomation.java:625)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at androidx.test.uiautomator.UiDevice.performActionAndWait(UiDevice.java:289)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at androidx.test.uiautomator.GestureController.performGestureAndWait(GestureController.java:133)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at androidx.test.uiautomator.UiObject2.scroll(UiObject2.java:801)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at androidx.test.uiautomator.UiObject2.scroll(UiObject2.java:764)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at com.twtrubiks.treesay.UiTest.reveal(UiTest.kt:69)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at com.twtrubiks.treesay.UiTest.reveal$default(UiTest.kt:66)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at com.twtrubiks.treesay.SystemUiTest.photoPickerAndBackupFilesScreens(SystemUiTest.kt:104)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at java.lang.reflect.Method.invoke(Native Method)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at androidx.test.internal.runner.junit4.statement.RunBefores.evaluate(RunBefores.java:80)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at androidx.test.internal.runner.junit4.statement.RunAfters.evaluate(RunAfters.java:61)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at androidx.test.ext.junit.runners.AndroidJUnit4.run(AndroidJUnit4.java:162)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at org.junit.runners.Suite.runChild(Suite.java:128)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at org.junit.runners.Suite.runChild(Suite.java:27)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at androidx.test.internal.runner.TestExecutor.execute(TestExecutor.java:68)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at androidx.test.internal.runner.TestExecutor.execute(TestExecutor.java:59)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at androidx.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:467)
+10-29 05:28:46.756  4678  4696 W UiDevice: 	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2145)
+10-29 05:28:46.756  4678  4696 I UiObject2: No scroll event received after scroll.
+10-29 05:28:47.056  4678  4696 D UiDevice: Retrieving node with selector: BySelector [TEXT='\Q匯出日記\E'].
+10-29 05:28:47.057  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:47.079  4678  4696 D UiDevice: Node not found with selector: BySelector [TEXT='\Q匯出日記\E'].
+10-29 05:28:47.079  4678  4696 D UiDevice: Retrieving node with selector: BySelector [SCROLLABLE='true'].
+10-29 05:28:47.079  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:47.088  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:47.089  4678  4696 D UiObject2: Scrolling down (bounds=Rect(144, 345 - 1296, 2442), percent=0.500000) at 5250px/s.
+10-29 05:28:47.090  4678  4696 D UiDevice: Performing action [[Pause(point=Point(720, 2442), duration=0ms), Move(start=Point(720, 2442), end=Point(720, 1394), duration=199ms), Pause(point=Point(720, 1394), duration=250ms)]] and waiting 1000ms for EventCondition[scrollFinished=DOWN].
+10-29 05:28:47.124  1771  1784 D hwcomposer: hw_composer sent 98 syncs in 60s
+10-29 05:28:47.171  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@fe37690)
+10-29 05:28:47.171  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@fe37690)
+10-29 05:28:48.163  1845  1845 W audio_hw_generic: Not supplying enough data to HAL, expected position 3921244 , only wrote 3644640
+10-29 05:28:48.171  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@5598b89)
+10-29 05:28:48.171  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@5598b89)
+10-29 05:28:48.668  4678  4696 W UiDevice: Timed out waiting 1000ms on the condition.
+10-29 05:28:48.668  4678  4696 W UiDevice: java.util.concurrent.TimeoutException: Expected event not received within: 1000 ms among: [EventType: TYPE_WINDOW_CONTENT_CHANGED; EventTime: 179993; PackageName: com.twtrubiks.treesay; MovementGranularity: 0; Action: 0; ContentChangeTypes: [CONTENT_CHANGE_TYPE_SUBTREE]; WindowChangeTypes: [] [ ClassName: android.view.View; Text: []; ContentDescription: null; ItemCount: -1; CurrentItemIndex: -1; Enabled: true; Password: false; Checked: false; FullScreen: false; Scrollable: false; BeforeText: null; FromIndex: -1; ToIndex: -1; ScrollX: -1; ScrollY: -1; MaxScrollX: -1; MaxScrollY: -1; AddedCount: -1; RemovedCount: -1; ParcelableData: null ]; recordCount: 0, EventType: TYPE_WINDOW_CONTENT_CHANGED; EventTime: 180154; PackageName: com.twtrubiks.treesay; MovementGranularity: 0; Action: 0; ContentChangeTypes: [CONTENT_CHANGE_TYPE_SUBTREE]; WindowChangeTypes: [] [ ClassName: android.view.View; Text: []; ContentDescription: null; ItemCount: -1; CurrentItemIndex: -1; Enabled: true; Password: false; Checked: false; FullScreen: false; Scrollable: false; BeforeText: null; FromIndex: -1; ToIndex: -1; ScrollX: -1; ScrollY: -1; MaxScrollX: -1; MaxScrollY: -1; AddedCount: -1; RemovedCount: -1; ParcelableData: null ]; recordCount: 0, EventType: TYPE_WINDOW_CONTENT_CHANGED; EventTime: 180300; PackageName: com.twtrubiks.treesay; MovementGranularity: 0; Action: 0; ContentChangeTypes: [CONTENT_CHANGE_TYPE_SUBTREE]; WindowChangeTypes: [] [ ClassName: android.view.View; Text: []; ContentDescription: null; ItemCount: -1; CurrentItemIndex: -1; Enabled: true; Password: false; Checked: false; FullScreen: false; Scrollable: false; BeforeText: null; FromIndex: -1; ToIndex: -1; ScrollX: -1; ScrollY: -1; MaxScrollX: -1; MaxScrollY: -1; AddedCount: -1; RemovedCount: -1; ParcelableData: null ]; recordCount: 0]
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at android.app.UiAutomation.executeAndWaitForEvent(UiAutomation.java:625)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at androidx.test.uiautomator.UiDevice.performActionAndWait(UiDevice.java:289)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at androidx.test.uiautomator.GestureController.performGestureAndWait(GestureController.java:133)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at androidx.test.uiautomator.UiObject2.scroll(UiObject2.java:801)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at androidx.test.uiautomator.UiObject2.scroll(UiObject2.java:764)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at com.twtrubiks.treesay.UiTest.reveal(UiTest.kt:69)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at com.twtrubiks.treesay.UiTest.reveal$default(UiTest.kt:66)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at com.twtrubiks.treesay.SystemUiTest.photoPickerAndBackupFilesScreens(SystemUiTest.kt:104)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at java.lang.reflect.Method.invoke(Native Method)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at androidx.test.internal.runner.junit4.statement.RunBefores.evaluate(RunBefores.java:80)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at androidx.test.internal.runner.junit4.statement.RunAfters.evaluate(RunAfters.java:61)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at androidx.test.ext.junit.runners.AndroidJUnit4.run(AndroidJUnit4.java:162)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at org.junit.runners.Suite.runChild(Suite.java:128)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at org.junit.runners.Suite.runChild(Suite.java:27)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at androidx.test.internal.runner.TestExecutor.execute(TestExecutor.java:68)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at androidx.test.internal.runner.TestExecutor.execute(TestExecutor.java:59)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at androidx.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:467)
+10-29 05:28:48.668  4678  4696 W UiDevice: 	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2145)
+10-29 05:28:48.668  4678  4696 I UiObject2: No scroll event received after scroll.
+10-29 05:28:48.969  4678  4696 D UiDevice: Retrieving node with selector: BySelector [TEXT='\Q匯出日記\E'].
+10-29 05:28:48.969  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:48.990  4678  4696 D UiDevice: Node not found with selector: BySelector [TEXT='\Q匯出日記\E'].
+10-29 05:28:48.990  4678  4696 D UiDevice: Retrieving node with selector: BySelector [SCROLLABLE='true'].
+10-29 05:28:48.991  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:48.997  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:48.998  4678  4696 D UiObject2: Scrolling down (bounds=Rect(144, 345 - 1296, 2442), percent=0.500000) at 5250px/s.
+10-29 05:28:48.999  4678  4696 D UiDevice: Performing action [[Pause(point=Point(720, 2442), duration=0ms), Move(start=Point(720, 2442), end=Point(720, 1394), duration=199ms), Pause(point=Point(720, 1394), duration=250ms)]] and waiting 1000ms for EventCondition[scrollFinished=DOWN].
+10-29 05:28:49.176  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@49a578e)
+10-29 05:28:49.176  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@49a578e)
+10-29 05:28:50.174  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@238bbaf)
+10-29 05:28:50.175  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@238bbaf)
+10-29 05:28:50.597  4678  4696 W UiDevice: Timed out waiting 1000ms on the condition.
+10-29 05:28:50.597  4678  4696 W UiDevice: java.util.concurrent.TimeoutException: Expected event not received within: 1000 ms among: [EventType: TYPE_WINDOW_CONTENT_CHANGED; EventTime: 181899; PackageName: com.twtrubiks.treesay; MovementGranularity: 0; Action: 0; ContentChangeTypes: [CONTENT_CHANGE_TYPE_SUBTREE]; WindowChangeTypes: [] [ ClassName: android.view.View; Text: []; ContentDescription: null; ItemCount: -1; CurrentItemIndex: -1; Enabled: true; Password: false; Checked: false; FullScreen: false; Scrollable: false; BeforeText: null; FromIndex: -1; ToIndex: -1; ScrollX: -1; ScrollY: -1; MaxScrollX: -1; MaxScrollY: -1; AddedCount: -1; RemovedCount: -1; ParcelableData: null ]; recordCount: 0, EventType: TYPE_WINDOW_CONTENT_CHANGED; EventTime: 182062; PackageName: com.twtrubiks.treesay; MovementGranularity: 0; Action: 0; ContentChangeTypes: [CONTENT_CHANGE_TYPE_SUBTREE]; WindowChangeTypes: [] [ ClassName: android.view.View; Text: []; ContentDescription: null; ItemCount: -1; CurrentItemIndex: -1; Enabled: true; Password: false; Checked: false; FullScreen: false; Scrollable: false; BeforeText: null; FromIndex: -1; ToIndex: -1; ScrollX: -1; ScrollY: -1; MaxScrollX: -1; MaxScrollY: -1; AddedCount: -1; RemovedCount: -1; ParcelableData: null ]; recordCount: 0, EventType: TYPE_WINDOW_CONTENT_CHANGED; EventTime: 182264; PackageName: com.twtrubiks.treesay; MovementGranularity: 0; Action: 0; ContentChangeTypes: [CONTENT_CHANGE_TYPE_SUBTREE]; WindowChangeTypes: [] [ ClassName: android.view.ViewGroup; Text: []; ContentDescription: null; ItemCount: -1; CurrentItemIndex: -1; Enabled: true; Password: false; Checked: false; FullScreen: false; Scrollable: false; BeforeText: null; FromIndex: -1; ToIndex: -1; ScrollX: -1; ScrollY: -1; MaxScrollX: -1; MaxScrollY: -1; AddedCount: -1; RemovedCount: -1; ParcelableData: null ]; recordCount: 0, EventType: TYPE_WINDOW_CONTENT_CHANGED; EventTime: 182411; PackageName: com.twtrubiks.treesay; MovementGranularity: 0; Action: 0; ContentChangeTypes: [CONTENT_CHANGE_TYPE_SUBTREE]; WindowChangeTypes: [] [ ClassName: android.view.ViewGroup; Text: []; ContentDescription: null; ItemCount: -1; CurrentItemIndex: -1; Enabled: true; Password: false; Checked: false; FullScreen: false; Scrollable: false; BeforeText: null; FromIndex: -1; ToIndex: -1; ScrollX: -1; ScrollY: -1; MaxScrollX: -1; MaxScrollY: -1; AddedCount: -1; RemovedCount: -1; ParcelableData: null ]; recordCount: 0, EventType: TYPE_WINDOW_CONTENT_CHANGED; EventTime: 182563; PackageName: com.twtrubiks.treesay; MovementGranularity: 0; Action: 0; ContentChangeTypes: [CONTENT_CHANGE_TYPE_SUBTREE]; WindowChangeTypes: [] [ ClassName: android.view.ViewGroup; Text: []; ContentDescription: null; ItemCount: -1; CurrentItemIndex: -1; Enabled: true; Password: false; Checked: false; FullScreen: false; Scrollable: false; BeforeText: null; FromIndex: -1; ToIndex: -1; ScrollX: -1; ScrollY: -1; MaxScrollX: -1; MaxScrollY: -1; AddedCount: -1; RemovedCount: -1; ParcelableData: null ]; recordCount: 0, EventType: TYPE_WINDOW_CONTENT_CHANGED; EventTime: 182718; PackageName: com.twtrubiks.treesay; MovementGranularity: 0; Action: 0; ContentChangeTypes: [CONTENT_CHANGE_TYPE_SUBTREE]; WindowChangeTypes: [] [ ClassName: android.view.ViewGroup; Text: []; ContentDescription: null; ItemCount: -1; CurrentItemIndex: -1; Enabled: true; Password: false; Checked: false; FullScreen: false; Scrollable: false; BeforeText: null; FromIndex: -1; ToIndex: -1; ScrollX: -1; ScrollY: -1; MaxScrollX: -1; MaxScrollY: -1; AddedCount: -1; RemovedCount: -1; ParcelableData: null ]; recordCount: 0, EventType: TYPE_WINDOW_CONTENT_CHANGED; EventTime: 182868; PackageName: com.twtrubiks.treesay; MovementGranularity: 0; Action: 0; ContentChangeTypes: [CONTENT_CHANGE_TYPE_SUBTREE]; WindowChangeTypes: [] [ ClassName: android.view.ViewGroup; Text: []; ContentDescription: null; ItemCount: -1; CurrentItemIndex: -1; Enabled: true; Password: false; Checked: false; FullScreen: false; Scrollable: false; BeforeText: null; FromIndex: -1; ToIndex: -1; ScrollX: -1; ScrollY: -1; MaxScrollX: 
+10-29 05:28:50.597  4678  4696 W UiDevice: -1; MaxScrollY: -1; AddedCount: -1; RemovedCount: -1; ParcelableData: null ]; recordCount: 0, EventType: TYPE_WINDOW_CONTENT_CHANGED; EventTime: 183012; PackageName: com.twtrubiks.treesay; MovementGranularity: 0; Action: 0; ContentChangeTypes: [CONTENT_CHANGE_TYPE_SUBTREE]; WindowChangeTypes: [] [ ClassName: android.view.ViewGroup; Text: []; ContentDescription: null; ItemCount: -1; CurrentItemIndex: -1; Enabled: true; Password: false; Checked: false; FullScreen: false; Scrollable: false; BeforeText: null; FromIndex: -1; ToIndex: -1; ScrollX: -1; ScrollY: -1; MaxScrollX: -1; MaxScrollY: -1; AddedCount: -1; RemovedCount: -1; ParcelableData: null ]; recordCount: 0, EventType: TYPE_WINDOW_CONTENT_CHANGED; EventTime: 183165; PackageName: com.twtrubiks.treesay; MovementGranularity: 0; Action: 0; ContentChangeTypes: [CONTENT_CHANGE_TYPE_SUBTREE]; WindowChangeTypes: [] [ ClassName: android.view.ViewGroup; Text: []; ContentDescription: null; ItemCount: -1; CurrentItemIndex: -1; Enabled: true; Password: false; Checked: false; FullScreen: false; Scrollable: false; BeforeText: null; FromIndex: -1; ToIndex: -1; ScrollX: -1; ScrollY: -1; MaxScrollX: -1; MaxScrollY: -1; AddedCount: -1; RemovedCount: -1; ParcelableData: null ]; recordCount: 0]
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at android.app.UiAutomation.executeAndWaitForEvent(UiAutomation.java:625)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at androidx.test.uiautomator.UiDevice.performActionAndWait(UiDevice.java:289)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at androidx.test.uiautomator.GestureController.performGestureAndWait(GestureController.java:133)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at androidx.test.uiautomator.UiObject2.scroll(UiObject2.java:801)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at androidx.test.uiautomator.UiObject2.scroll(UiObject2.java:764)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at com.twtrubiks.treesay.UiTest.reveal(UiTest.kt:69)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at com.twtrubiks.treesay.UiTest.reveal$default(UiTest.kt:66)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at com.twtrubiks.treesay.SystemUiTest.photoPickerAndBackupFilesScreens(SystemUiTest.kt:104)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at java.lang.reflect.Method.invoke(Native Method)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at androidx.test.internal.runner.junit4.statement.RunBefores.evaluate(RunBefores.java:80)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at androidx.test.internal.runner.junit4.statement.RunAfters.evaluate(RunAfters.java:61)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at androidx.test.ext.junit.runners.AndroidJUnit4.run(AndroidJUnit4.java:162)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at org.junit.runners.Suite.runChild(Suite.java:128)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at org.junit.runners.Suite.runChild(Suite.java:27)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at androidx.test.internal.runner.TestExecutor.execute(TestExecutor.java:68)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at androidx.test.internal.runner.TestExecutor.execute(TestExecutor.java:59)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at androidx.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:467)
+10-29 05:28:50.597  4678  4696 W UiDevice: 	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2145)
+10-29 05:28:50.598  4678  4696 I UiObject2: No scroll event received after scroll.
+10-29 05:28:50.898  4678  4696 D UiDevice: Retrieving node with selector: BySelector [TEXT='\Q匯出日記\E'].
+10-29 05:28:50.898  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:50.911  4678  4696 I chatty  : uid=10067(com.twtrubiks.treesay) identical 1 line
+10-29 05:28:50.912  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:50.913  4678  4696 D UiObject2: Clicking on (266, 2304).
+10-29 05:28:50.913  4678  4696 W UiObject2: Clicking on non-clickable object: android.view.accessibility.AccessibilityNodeInfo@99e0; boundsInParent: Rect(0, 0 - 0, 0); boundsInScreen: Rect(168, 2267 - 365, 2341); packageName: com.twtrubiks.treesay; className: android.widget.TextView; text: 匯出日記; error: null; maxTextLength: -1; contentDescription: null; tooltipText: null; viewIdResName: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; importantForAccessibility: true; visible: true; actions: [AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SET_SELECTION - null, AccessibilityAction: ACTION_NEXT_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY - null]
+10-29 05:28:48.174  1935  2053 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+10-29 05:28:50.923  1935  2587 I ActivityManager: START u0 {act=android.intent.action.CREATE_DOCUMENT typ=application/json cmp=com.android.documentsui/.picker.PickActivity (has extras)} from uid 10067
+10-29 05:28:50.925  1845  3296 W audio_hw_generic: Not supplying enough data to HAL, expected position 3644699 , only wrote 3644640
+10-29 05:28:50.929  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@9dd78a0 in: PAUSED
+10-29 05:28:50.931  4614  4614 W ActivityThread: handleWindowVisibility: no activity for token android.os.BinderProxy@b14f4e3
+10-29 05:28:50.933  4678  4696 D UiDevice: Retrieving node with selector: BySelector [DESC='\QShow roots\E'].
+10-29 05:28:50.934  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:50.945  4614  4614 D PickActivity: Created new state object: State{action=4, acceptMimes=[application/json], allowMultiple=false, localOnly=false, showDeviceStorageOption=true, showAdvanced=false, stack=DocumentStack{root=null, docStack=[], stackTouched=false}, dirConfigs={}, excludedAuthorities=[], openableOnly=false, sortModel=SortModel{dimensions={16908304=SortDimension{id=16908304, labelId=2131755226, dataType=0, sortCapability=0, defaultSortDirection=1, sortDirection=0, visibility=4}, 16908310=SortDimension{id=16908310, labelId=2131755224, dataType=0, sortCapability=3, defaultSortDirection=1, sortDirection=0, visibility=0}, 2131296333=SortDimension{id=2131296333, labelId=2131755222, dataType=1, sortCapability=3, defaultSortDirection=2, sortDirection=0, visibility=0}, 2131296375=SortDimension{id=2131296375, labelId=2131755223, dataType=0, sortCapability=3, defaultSortDirection=1, sortDirection=0, visibility=0}, 2131296509=SortDimension{id=2131296509, labelId=2131755225, dataType=1, sortCapability=3, defaultSortDirection=1, sortDirection=0, visibility=0}}, defaultDimensionId=0, sortedDimension=null}}
+10-29 05:28:50.946  4614  4614 D DrawerController: Calculated drawer width:280.0
+10-29 05:28:50.946  4614  4614 D Metrics : docsui_launch_action: 3
+10-29 05:28:50.946  4614  4614 D Metrics : docsui_create_mime: 3
+10-29 05:28:50.947  4614  4614 D PickerActionHandler: Load last accessed stack.
+10-29 05:28:50.947  4614  4614 D PickerActionHandler: Attempting to load last used stack for calling package.
+10-29 05:28:50.951  1935  1949 E memtrack: Couldn't load memtrack module
+10-29 05:28:50.951  1935  1949 W android.os.Debug: failed to get memory consumption info: -1
+10-29 05:28:50.952  4614  4632 D ProvidersAccess: Matched roots: [Root{authority=com.android.providers.downloads.documents, rootId=downloads, title=Downloads, isUsb=false, isSd=false, isMtp=false} @ content://com.android.providers.downloads.documents/root/downloads, Root{authority=com.android.externalstorage.documents, rootId=home, title=Documents, isUsb=false, isSd=false, isMtp=false} @ content://com.android.externalstorage.documents/root/home]
+10-29 05:28:50.952  4614  4632 W LastAccessedStorage: Failed to resume: 
+10-29 05:28:50.952  4614  4632 W LastAccessedStorage: java.io.FileNotFoundException: Failed to find matching mRoot for Root{authority=null, rootId=null, title=Recent, isUsb=false, isSd=false, isMtp=false} @ content:/root/null
+10-29 05:28:50.952  4614  4632 W LastAccessedStorage: 	at com.android.documentsui.base.DocumentStack.updateRoot(DocumentStack.java:212)
+10-29 05:28:50.952  4614  4632 W LastAccessedStorage: 	at com.android.documentsui.base.DocumentStack.fromLastAccessedCursor(DocumentStack.java:235)
+10-29 05:28:50.952  4614  4632 W LastAccessedStorage: 	at com.android.documentsui.picker.LastAccessedStorage$RuntimeLastAccessedStorage.getLastAccessed(LastAccessedStorage.java:67)
+10-29 05:28:50.952  4614  4632 W LastAccessedStorage: 	at com.android.documentsui.picker.LoadLastAccessedStackTask.run(LoadLastAccessedStackTask.java:60)
+10-29 05:28:50.952  4614  4632 W LastAccessedStorage: 	at com.android.documentsui.picker.LoadLastAccessedStackTask.run(LoadLastAccessedStackTask.java:37)
+10-29 05:28:50.952  4614  4632 W LastAccessedStorage: 	at com.android.documentsui.base.CheckedTask.doInBackground(CheckedTask.java:65)
+10-29 05:28:50.952  4614  4632 W LastAccessedStorage: 	at android.os.AsyncTask$2.call(AsyncTask.java:333)
+10-29 05:28:50.952  4614  4632 W LastAccessedStorage: 	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+10-29 05:28:50.952  4614  4632 W LastAccessedStorage: 	at android.os.AsyncTask$SerialExecutor$1.run(AsyncTask.java:245)
+10-29 05:28:50.952  4614  4632 W LastAccessedStorage: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167)
+10-29 05:28:50.952  4614  4632 W LastAccessedStorage: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641)
+10-29 05:28:50.952  4614  4632 W LastAccessedStorage: 	at java.lang.Thread.run(Thread.java:764)
+10-29 05:28:50.969  4614  4650 D ProvidersAccess: Matched roots: [Root{authority=com.android.providers.downloads.documents, rootId=downloads, title=Downloads, isUsb=false, isSd=false, isMtp=false} @ content://com.android.providers.downloads.documents/root/downloads, Root{authority=com.android.externalstorage.documents, rootId=home, title=Documents, isUsb=false, isSd=false, isMtp=false} @ content://com.android.externalstorage.documents/root/home]
+10-29 05:28:50.972  1935  1949 E memtrack: Couldn't load memtrack module
+10-29 05:28:50.972  1935  1949 W android.os.Debug: failed to get memory consumption info: -1
+10-29 05:28:50.978  1935  1949 E memtrack: Couldn't load memtrack module
+10-29 05:28:50.978  1935  1949 W android.os.Debug: failed to get memory consumption info: -1
+10-29 05:28:50.992  4614  4727 D LoadRootTask: Loading root: content://com.android.providers.downloads.documents/root/downloads
+10-29 05:28:51.029  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:28:51.034  1564  1564 I chatty  : uid=1000(system) allocator@2.0-s identical 1 line
+10-29 05:28:51.047  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:28:51.074  4614  4614 D LoadRootTask: Loaded root: Root{authority=com.android.providers.downloads.documents, rootId=downloads, title=Downloads, isUsb=false, isSd=false, isMtp=false} @ content://com.android.providers.downloads.documents/root/downloads
+10-29 05:28:51.075  4614  4614 W ActionModeController: Tried to finish a null action mode.
+10-29 05:28:51.075  4614  4614 D DocumentStack: Root changed to: Root{authority=com.android.providers.downloads.documents, rootId=downloads, title=Downloads, isUsb=false, isSd=false, isMtp=false} @ content://com.android.providers.downloads.documents/root/downloads
+10-29 05:28:51.091  4678  4696 W ByMatcher: Node returned null child: android.view.accessibility.AccessibilityNodeInfo@99a2; boundsInParent: Rect(0, 0 - 0, 0); boundsInScreen: Rect(84, 2220 - 449, 2388); packageName: com.twtrubiks.treesay; className: android.view.View; text: null; error: null; maxTextLength: -1; contentDescription: null; tooltipText: null; viewIdResName: null; checkable: false; checked: false; focusable: true; focused: false; selected: false; clickable: true; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; importantForAccessibility: true; visible: true; actions: [AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_FOCUS - null, AccessibilityAction: ACTION_CLICK - null]
+10-29 05:28:51.091  4678  4696 W ByMatcher: Skipping null child (0 of 2)
+10-29 05:28:51.091  4678  4696 W ByMatcher: Skipping null child (1 of 2)
+10-29 05:28:51.091  4678  4696 W ByMatcher: Node returned null child: android.view.accessibility.AccessibilityNodeInfo@99ff; boundsInParent: Rect(0, 0 - 0, 0); boundsInScreen: Rect(491, 2220 - 758, 2388); packageName: com.twtrubiks.treesay; className: android.view.View; text: null; error: null; maxTextLength: -1; contentDescription: null; tooltipText: null; viewIdResName: null; checkable: false; checked: false; focusable: true; focused: false; selected: false; clickable: true; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; importantForAccessibility: true; visible: true; actions: [AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_FOCUS - null, AccessibilityAction: ACTION_CLICK - null]
+10-29 05:28:51.091  4678  4696 W ByMatcher: Skipping null child (0 of 2)
+10-29 05:28:51.091  4678  4696 W ByMatcher: Skipping null child (1 of 2)
+10-29 05:28:51.092  4678  4696 W ByMatcher: Node returned null child: android.view.accessibility.AccessibilityNodeInfo@8414; boundsInParent: Rect(0, 0 - 0, 0); boundsInScreen: Rect(0, 2703 - 1440, 2952); packageName: com.twtrubiks.treesay; className: android.view.View; text: null; error: null; maxTextLength: -1; contentDescription: null; tooltipText: null; viewIdResName: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; importantForAccessibility: false; visible: true; actions: [AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null]
+10-29 05:28:51.092  4678  4696 W ByMatcher: Skipping null child (0 of 4)
+10-29 05:28:51.092  4678  4696 W ByMatcher: Skipping null child (1 of 4)
+10-29 05:28:51.092  4678  4696 W ByMatcher: Skipping null child (2 of 4)
+10-29 05:28:51.092  4678  4696 W ByMatcher: Skipping null child (3 of 4)
+10-29 05:28:51.115  4614  4724 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3dea0: ver 3 0 (tinfo 0x7a6d68cd5100)
+10-29 05:28:51.116  4678  4696 D UiDevice: Node not found with selector: BySelector [DESC='\QShow roots\E'].
+10-29 05:28:51.176  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@eddca66)
+10-29 05:28:51.177  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@eddca66)
+10-29 05:28:51.221  4678  4696 D UiDevice: Retrieving node with selector: BySelector [DESC='\QShow roots\E'].
+10-29 05:28:51.223  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:51.408  1935  1958 I ActivityManager: Displayed com.android.documentsui/.picker.PickActivity: +472ms
+10-29 05:28:51.436  4614  4614 D DocumentStack: Adding doc to stack: DocumentInfo{docId=downloads, name=Downloads, mimeType=vnd.android.document/directory, isContainer=true, isDirectory=true, isArchive=false, isInArchive=false, isPartial=false, isVirtual=false, isDeleteSupported=false, isCreateSupported=true, isRenameSupported=false, isMetadataSupported=false} @ content://com.android.providers.downloads.documents/document/downloads
+10-29 05:28:51.436  4614  4614 D DirectoryFragment: Showing directory: content://com.android.providers.downloads.documents/document/downloads
+10-29 05:28:51.436  4614  4614 D DirectoryFragment: Creating new fragment for directory: content://com.android.providers.downloads.documents/document/downloads
+10-29 05:28:51.444  4614  4614 D AbstractActionHandler: Creating new directory loader for: content://com.android.providers.downloads.documents/document/downloads
+10-29 05:28:51.502  4614  4614 D AbstractActionHandler: Loader has finished for: content://com.android.providers.downloads.documents/document/downloads
+10-29 05:28:51.502  4614  4614 I Model   : Updating model with new result set.
+10-29 05:28:51.508  4614  4614 D DirectoryFragment: Received model update. Loading=false
+10-29 05:28:51.513  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:51.581  4614  4614 D Metrics : docsui_startup_ms: 642
+10-29 05:28:51.593  4678  4696 D UiObject2: Clicking on (98, 182).
+10-29 05:28:51.620  4678  4696 D UiDevice: Retrieving node with selector: BySelector [TEXT='\QDownloads\E'].
+10-29 05:28:51.621  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:51.686  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:28:51.852  2076  2313 I chatty  : uid=10013(com.android.systemui) RenderThread identical 3 lines
+10-29 05:28:51.885  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:28:51.919  4678  4718 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e3a0: ver 3 0 (tinfo 0x7a6d68ca2240)
+10-29 05:28:51.989  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:28:51.998  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@9dd78a0 in: STOPPED
+10-29 05:28:52.177  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@2303e31)
+10-29 05:28:52.178  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@2303e31)
+10-29 05:28:52.499  4678  4696 D UiDevice: Retrieving nodes with selector: BySelector [TEXT='\QDownloads\E'].
+10-29 05:28:52.500  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:52.513  4678  4696 I chatty  : uid=10067(com.twtrubiks.treesay) identical 2 lines
+10-29 05:28:52.514  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:52.516  4678  4696 D UiObject2: Clicking on (560, 392).
+10-29 05:28:52.516  4678  4696 W UiObject2: Clicking on non-clickable object: android.view.accessibility.AccessibilityNodeInfo@1afac; boundsInParent: Rect(0, 0 - 559, 66); boundsInScreen: Rect(281, 359 - 840, 425); packageName: com.android.documentsui; className: android.widget.TextView; text: Downloads; error: null; maxTextLength: -1; contentDescription: null; tooltipText: null; viewIdResName: android:id/title; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; importantForAccessibility: true; visible: true; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_NEXT_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_SET_SELECTION - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]
+10-29 05:28:52.534  4678  4696 D UiDevice: Retrieving node with selector: BySelector [TEXT='Save to|Open from'].
+10-29 05:28:52.534  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:52.592  4614  4614 D Metrics : docsui_root_visited_in_picker: 5
+10-29 05:28:52.655  4678  4696 D UiDevice: Retrieving node with selector: BySelector [TEXT='Save to|Open from'].
+10-29 05:28:52.655  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:53.028  4678  4696 D UiDevice: Node not found with selector: BySelector [TEXT='Save to|Open from'].
+10-29 05:28:53.176  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@c639916)
+10-29 05:28:53.176  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@c639916)
+10-29 05:28:54.175  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@c111297)
+10-29 05:28:54.176  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@c111297)
+10-29 05:28:54.468  1935  2053 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+10-29 05:28:54.528  4678  4696 D UiDevice: Taking screenshot (scale=0.500000, quality=90) and storing at /storage/emulated/0/Android/data/com.twtrubiks.treesay/files/screenshots/system-05-export-screen.png.
+10-29 05:28:54.530  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:28:54.608  4678  4696 D UiDevice: Retrieving node with selector: BySelector [TEXT='(?i)save|儲存'].
+10-29 05:28:54.608  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:54.614  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:54.615  4678  4696 D UiObject2: Clicking on (1277, 2854).
+10-29 05:28:54.634  4678  4696 D UiDevice: Retrieving node with selector: BySelector [TEXT='^.*\Q匯出好了\E.*$'].
+10-29 05:28:54.634  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:54.665  4614  4614 D PickerActionHandler: onFinished() [content://com.android.providers.downloads.documents/document/1]
+10-29 05:28:54.692  4678  4696 D UiDevice: Node not found with selector: BySelector [TEXT='^.*\Q匯出好了\E.*$'].
+10-29 05:28:54.696  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@9dd78a0 in: RESTARTED
+10-29 05:28:54.696  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@9dd78a0 in: STARTED
+10-29 05:28:54.697  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@9dd78a0 in: RESUMED
+10-29 05:28:54.742  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:28:54.746  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:28:54.754  1564  1624 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:28:54.777  4614  4614 D AbstractActionHandler: Loader has finished for: content://com.android.providers.downloads.documents/document/downloads
+10-29 05:28:54.777  4614  4614 I Model   : Updating model with new result set.
+10-29 05:28:54.777  4614  4614 D DirectoryFragment: Received model update. Loading=false
+10-29 05:28:54.784  4678  4718 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e3a0: ver 3 0 (tinfo 0x7a6d68ca2240)
+10-29 05:28:54.793  4678  4696 D UiDevice: Retrieving node with selector: BySelector [TEXT='^.*\Q匯出好了\E.*$'].
+10-29 05:28:54.793  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:54.801  2536  2536 D MediaScannerReceiver: action: android.intent.action.MEDIA_SCANNER_SCAN_FILE path: /storage/emulated/0/Download/treesay-20261029.json
+10-29 05:28:54.821  4614  4614 D AbstractActionHandler: Loader has finished for: content://com.android.providers.downloads.documents/document/downloads
+10-29 05:28:54.821  4614  4614 I Model   : Updating model with new result set.
+10-29 05:28:54.822  4614  4614 D DirectoryFragment: Received model update. Loading=false
+10-29 05:28:54.979  4678  4696 D UiDevice: Executing shell command: cat /sdcard/Download/treesay-20261029.json
+10-29 05:28:55.176  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@225dd23)
+10-29 05:28:55.178  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@225dd23)
+10-29 05:28:55.184  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:28:55.319  2076  2313 I chatty  : uid=10013(com.android.systemui) RenderThread identical 6 lines
+10-29 05:28:55.345  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:28:55.373  4614  4724 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3dea0: ver 3 0 (tinfo 0x7a6d68cd5100)
+10-29 05:28:55.386  1889  2388 D         : HostConnection::get() New Host Connection established 0x7f41a90b8840, tid 2388
+10-29 05:28:56.028  4678  4696 D UiDevice: Retrieving node with selector: BySelector [TEXT='\Q匯入\E'].
+10-29 05:28:56.028  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:56.037  4678  4696 I chatty  : uid=10067(com.twtrubiks.treesay) identical 1 line
+10-29 05:28:56.038  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:56.039  4678  4696 D UiObject2: Clicking on (624, 2304).
+10-29 05:28:56.039  4678  4696 W UiObject2: Clicking on non-clickable object: android.view.accessibility.AccessibilityNodeInfo@9a3d; boundsInParent: Rect(0, 0 - 0, 0); boundsInScreen: Rect(575, 2267 - 674, 2341); packageName: com.twtrubiks.treesay; className: android.widget.TextView; text: 匯入; error: null; maxTextLength: -1; contentDescription: null; tooltipText: null; viewIdResName: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; importantForAccessibility: true; visible: true; actions: [AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SET_SELECTION - null, AccessibilityAction: ACTION_NEXT_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY - null]
+10-29 05:28:56.052  1935  2587 I ActivityManager: START u0 {act=android.intent.action.OPEN_DOCUMENT typ=*/* cmp=com.android.documentsui/.picker.PickActivity (has extras)} from uid 10067
+10-29 05:28:56.055  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@9dd78a0 in: PAUSED
+10-29 05:28:56.056  4614  4614 W ActivityThread: handleWindowVisibility: no activity for token android.os.BinderProxy@fbec1dd
+10-29 05:28:56.058  4678  4696 D UiDevice: Retrieving node with selector: BySelector [DESC='\QShow roots\E'].
+10-29 05:28:56.060  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:56.062  4614  4614 D PickActivity: Created new state object: State{action=3, acceptMimes=[application/json, text/*, application/octet-stream], allowMultiple=false, localOnly=false, showDeviceStorageOption=true, showAdvanced=false, stack=DocumentStack{root=null, docStack=[], stackTouched=false}, dirConfigs={}, excludedAuthorities=[], openableOnly=false, sortModel=SortModel{dimensions={16908304=SortDimension{id=16908304, labelId=2131755226, dataType=0, sortCapability=0, defaultSortDirection=1, sortDirection=0, visibility=4}, 16908310=SortDimension{id=16908310, labelId=2131755224, dataType=0, sortCapability=3, defaultSortDirection=1, sortDirection=0, visibility=0}, 2131296333=SortDimension{id=2131296333, labelId=2131755222, dataType=1, sortCapability=3, defaultSortDirection=2, sortDirection=0, visibility=0}, 2131296375=SortDimension{id=2131296375, labelId=2131755223, dataType=0, sortCapability=3, defaultSortDirection=1, sortDirection=0, visibility=0}, 2131296509=SortDimension{id=2131296509, labelId=2131755225, dataType=1, sortCapability=3, defaultSortDirection=1, sortDirection=0, visibility=0}}, defaultDimensionId=0, sortedDimension=null}}
+10-29 05:28:56.062  4614  4614 D DrawerController: Calculated drawer width:280.0
+10-29 05:28:56.062  4614  4614 D Metrics : docsui_launch_action: 2
+10-29 05:28:56.062  4614  4614 D Metrics : docsui_open_mime: 2
+10-29 05:28:56.064  4614  4614 D PickerActionHandler: Load last accessed stack.
+10-29 05:28:56.064  4614  4614 D PickerActionHandler: Attempting to load last used stack for calling package.
+10-29 05:28:56.065  4614  4650 D ProvidersAccess: Matched roots: [Root{authority=null, rootId=null, title=Recent, isUsb=false, isSd=false, isMtp=false} @ content:/root/null, Root{authority=com.android.providers.downloads.documents, rootId=downloads, title=Downloads, isUsb=false, isSd=false, isMtp=false} @ content://com.android.providers.downloads.documents/root/downloads, Root{authority=com.android.externalstorage.documents, rootId=home, title=Documents, isUsb=false, isSd=false, isMtp=false} @ content://com.android.externalstorage.documents/root/home]
+10-29 05:28:56.067  4614  4632 D ProvidersAccess: Matched roots: [Root{authority=null, rootId=null, title=Recent, isUsb=false, isSd=false, isMtp=false} @ content:/root/null, Root{authority=com.android.providers.downloads.documents, rootId=downloads, title=Downloads, isUsb=false, isSd=false, isMtp=false} @ content://com.android.providers.downloads.documents/root/downloads, Root{authority=com.android.externalstorage.documents, rootId=home, title=Documents, isUsb=false, isSd=false, isMtp=false} @ content://com.android.externalstorage.documents/root/home]
+10-29 05:28:56.122  1564  1624 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:28:56.131  1564  1624 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:28:56.133  4678  4696 W UiDevice: Skipping null root node for window: AccessibilityWindowInfo[title=樹說, id=22, type=TYPE_APPLICATION, layer=0, bounds=Rect(0, 0 - 1440, 3120), focused=true, active=true, pictureInPicture=false, hasParent=false, isAnchored=false, hasChildren=false]
+10-29 05:28:56.133  4678  4696 W ByMatcher: Node returned null child: android.view.accessibility.AccessibilityNodeInfo@80006cd4; boundsInParent: Rect(0, 0 - 1440, 3120); boundsInScreen: Rect(0, 0 - 1440, 3120); packageName: com.twtrubiks.treesay; className: android.widget.FrameLayout; text: null; error: null; maxTextLength: -1; contentDescription: null; tooltipText: null; viewIdResName: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; importantForAccessibility: true; visible: true; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]
+10-29 05:28:56.133  4678  4696 W ByMatcher: Skipping null child (0 of 1)
+10-29 05:28:56.134  4678  4696 W ByMatcher: Node returned null child: android.view.accessibility.AccessibilityNodeInfo@80006cd4; boundsInParent: Rect(0, 0 - 1440, 3120); boundsInScreen: Rect(0, 0 - 1440, 3120); packageName: com.twtrubiks.treesay; className: android.widget.FrameLayout; text: null; error: null; maxTextLength: -1; contentDescription: null; tooltipText: null; viewIdResName: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; importantForAccessibility: true; visible: true; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]
+10-29 05:28:56.134  4678  4696 W ByMatcher: Skipping null child (0 of 1)
+10-29 05:28:56.145  4678  4696 D UiDevice: Node not found with selector: BySelector [DESC='\QShow roots\E'].
+10-29 05:28:56.148  1564  1624 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:28:56.177  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@469f538)
+10-29 05:28:56.177  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@469f538)
+10-29 05:28:56.178  4614  4614 D DocumentStack: Resetting the whole darn stack to: DocumentStack{root=Root{authority=com.android.providers.downloads.documents, rootId=downloads, title=Downloads, isUsb=false, isSd=false, isMtp=false} @ content://com.android.providers.downloads.documents/root/downloads, docStack=[DocumentInfo{docId=downloads, name=Downloads, mimeType=vnd.android.document/directory, isContainer=true, isDirectory=true, isArchive=false, isInArchive=false, isPartial=false, isVirtual=false, isDeleteSupported=false, isCreateSupported=true, isRenameSupported=false, isMetadataSupported=false} @ content://com.android.providers.downloads.documents/document/downloads], stackTouched=true}
+10-29 05:28:56.178  4614  4614 D DirectoryFragment: Showing directory: content://com.android.providers.downloads.documents/document/downloads
+10-29 05:28:56.178  4614  4614 D DirectoryFragment: Creating new fragment for directory: content://com.android.providers.downloads.documents/document/downloads
+10-29 05:28:56.202  4614  4724 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3dea0: ver 3 0 (tinfo 0x7a6d68cd5100)
+10-29 05:28:56.246  4678  4696 D UiDevice: Retrieving node with selector: BySelector [DESC='\QShow roots\E'].
+10-29 05:28:56.246  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:56.252  4614  4614 D AbstractActionHandler: Creating new directory loader for: content://com.android.providers.downloads.documents/document/downloads
+10-29 05:28:56.308  1935  1958 I ActivityManager: Displayed com.android.documentsui/.picker.PickActivity: +244ms
+10-29 05:28:56.353  4614  4614 D AbstractActionHandler: Loader has finished for: content://com.android.providers.downloads.documents/document/downloads
+10-29 05:28:56.353  4614  4614 I Model   : Updating model with new result set.
+10-29 05:28:56.353  4614  4614 D DirectoryFragment: Received model update. Loading=false
+10-29 05:28:56.362  4614  4614 D Metrics : docsui_startup_ms: 303
+10-29 05:28:56.374  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:56.375  4678  4696 D UiObject2: Clicking on (98, 182).
+10-29 05:28:56.398  4678  4696 D UiDevice: Retrieving node with selector: BySelector [TEXT='\QDownloads\E'].
+10-29 05:28:56.398  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:56.585  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:28:56.756  2076  2313 I chatty  : uid=10013(com.android.systemui) RenderThread identical 3 lines
+10-29 05:28:56.800  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:28:56.823  4678  4718 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e3a0: ver 3 0 (tinfo 0x7a6d68ca2240)
+10-29 05:28:56.835  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@9dd78a0 in: STOPPED
+10-29 05:28:56.871  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:28:57.177  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@483538b)
+10-29 05:28:57.177  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@483538b)
+10-29 05:28:57.526  4678  4696 D UiDevice: Retrieving nodes with selector: BySelector [TEXT='\QDownloads\E'].
+10-29 05:28:57.527  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:57.538  4678  4696 I chatty  : uid=10067(com.twtrubiks.treesay) identical 2 lines
+10-29 05:28:57.539  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:57.539  4678  4696 D UiObject2: Clicking on (560, 648).
+10-29 05:28:57.539  4678  4696 W UiObject2: Clicking on non-clickable object: android.view.accessibility.AccessibilityNodeInfo@2b673; boundsInParent: Rect(0, 0 - 559, 66); boundsInScreen: Rect(281, 615 - 840, 681); packageName: com.android.documentsui; className: android.widget.TextView; text: Downloads; error: null; maxTextLength: -1; contentDescription: null; tooltipText: null; viewIdResName: android:id/title; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; importantForAccessibility: true; visible: true; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_NEXT_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_SET_SELECTION - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]
+10-29 05:28:57.558  4678  4696 D UiDevice: Retrieving node with selector: BySelector [TEXT='Save to|Open from'].
+10-29 05:28:57.559  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:57.617  4614  4614 D Metrics : docsui_root_visited_in_picker: 5
+10-29 05:28:57.675  4678  4696 D UiDevice: Retrieving node with selector: BySelector [TEXT='Save to|Open from'].
+10-29 05:28:57.675  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:57.986  4678  4696 D UiDevice: Node not found with selector: BySelector [TEXT='Save to|Open from'].
+10-29 05:28:58.179  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@4174d26)
+10-29 05:28:58.179  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@4174d26)
+10-29 05:28:58.973  1935  2053 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+10-29 05:28:59.183  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@8d19d67)
+10-29 05:28:59.183  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@8d19d67)
+10-29 05:28:59.486  4678  4696 D UiDevice: Taking screenshot (scale=0.500000, quality=90) and storing at /storage/emulated/0/Android/data/com.twtrubiks.treesay/files/screenshots/system-06-import-screen.png.
+10-29 05:28:59.488  1564  1624 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:28:59.563  4678  4696 D UiDevice: Retrieving node with selector: BySelector [TEXT='\Qtreesay-20261029.json\E'].
+10-29 05:28:59.564  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:59.570  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:59.571  4678  4696 D UiObject2: Clicking on (444, 1255).
+10-29 05:28:59.571  4678  4696 W UiObject2: Clicking on non-clickable object: android.view.accessibility.AccessibilityNodeInfo@26b5f; boundsInParent: Rect(0, 0 - 426, 76); boundsInScreen: Rect(231, 1217 - 657, 1293); packageName: com.android.documentsui; className: android.widget.TextView; text: treesay-20261029.json; error: null; maxTextLength: -1; contentDescription: null; tooltipText: null; viewIdResName: android:id/title; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; importantForAccessibility: true; visible: true; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_NEXT_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_SET_SELECTION - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]
+10-29 05:28:59.582  4614  4614 D PickerActionHandler: onFinished() [content://com.android.providers.downloads.documents/document/1]
+10-29 05:28:59.590  4678  4696 D UiDevice: Retrieving node with selector: BySelector [TEXT='^.*\Q留著原樣\E.*$'].
+10-29 05:28:59.590  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:59.598  4678  4696 D UiDevice: Node not found with selector: BySelector [TEXT='^.*\Q留著原樣\E.*$'].
+10-29 05:28:59.604  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@9dd78a0 in: RESTARTED
+10-29 05:28:59.604  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@9dd78a0 in: STARTED
+10-29 05:28:59.605  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@9dd78a0 in: RESUMED
+10-29 05:28:59.623  1564  1624 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:28:59.624  1564  1624 I chatty  : uid=1000(system) HwBinder:1564_2 identical 1 line
+10-29 05:28:59.624  1564  1624 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:28:59.675  4678  4718 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e3a0: ver 3 0 (tinfo 0x7a6d68ca2240)
+10-29 05:28:59.699  4678  4696 D UiDevice: Retrieving node with selector: BySelector [TEXT='^.*\Q留著原樣\E.*$'].
+10-29 05:28:59.700  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:28:59.978  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:00.131  2076  2313 I chatty  : uid=10013(com.android.systemui) RenderThread identical 5 lines
+10-29 05:29:00.157  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:00.183  4614  4724 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3dea0: ver 3 0 (tinfo 0x7a6d68cd5100)
+10-29 05:29:00.183  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@fe6ae57)
+10-29 05:29:00.185  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@fe6ae57)
+10-29 05:29:00.185  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:00.210  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:00.745  4678  4696 D UiDevice: Taking screenshot (scale=0.500000, quality=90) and storing at /storage/emulated/0/Android/data/com.twtrubiks.treesay/files/screenshots/system-07-imported.png.
+10-29 05:29:00.747  1564  1624 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:29:00.810  1845  1845 W audio_hw_generic: Not supplying enough data to HAL, expected position 4592118 , only wrote 4119120
+10-29 05:29:00.827  4678  4696 D UiDevice: Executing shell command: settings put global animator_duration_scale 1
+10-29 05:29:00.833  1935  1935 V SettingsProvider: Notifying for 0: content://settings/global/animator_duration_scale
+10-29 05:29:00.835  4678  4696 I TestRunner: finished: photoPickerAndBackupFilesScreens(com.twtrubiks.treesay.SystemUiTest)
+10-29 05:29:00.836  4678  4696 I MonitoringInstr: Unstopped activity count: 1
+10-29 05:29:00.836  4678  4678 I MonitoringInstr: Finishing activity: com.twtrubiks.treesay.MainActivity@9dd78a0
+10-29 05:29:00.838  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@9dd78a0 in: PAUSED
+10-29 05:29:00.856  1935  1943 D         : HostConnection::get() New Host Connection established 0x7a6d4ded7220, tid 1943
+10-29 05:29:00.875  1564  1624 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:29:00.887  4678  4696 I MonitoringInstr: Unstopped activity count: 1
+10-29 05:29:00.893  1564  1624 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:29:00.908  1564  1624 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:29:00.938  4678  4696 I MonitoringInstr: Unstopped activity count: 1
+10-29 05:29:00.940  2559  2731 D EGL_emulation: eglMakeCurrent: 0x7a6d5eaaaca0: ver 3 0 (tinfo 0x7a6d5eb42220)
+10-29 05:29:00.965  1564  1624 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:29:00.983  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:00.988  4678  4696 I MonitoringInstr: Unstopped activity count: 1
+10-29 05:29:00.989  2076  2332 D         : HostConnection::get() New Host Connection established 0x7a6d68c417e0, tid 2332
+10-29 05:29:00.990  2559  2586 D         : HostConnection::get() New Host Connection established 0x7a6d73fc2be0, tid 2586
+10-29 05:29:01.040  4678  4696 I MonitoringInstr: Unstopped activity count: 1
+10-29 05:29:01.060  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:01.090  4678  4696 I MonitoringInstr: Unstopped activity count: 1
+10-29 05:29:01.142  4678  4696 I MonitoringInstr: Unstopped activity count: 1
+10-29 05:29:01.182  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@1d5b5e5)
+10-29 05:29:01.182  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@1d5b5e5)
+10-29 05:29:01.192  4678  4696 I MonitoringInstr: Unstopped activity count: 1
+10-29 05:29:01.208  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:01.239  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:01.243  4678  4696 I MonitoringInstr: Unstopped activity count: 1
+10-29 05:29:01.283  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:01.293  4678  4696 I MonitoringInstr: Unstopped activity count: 1
+10-29 05:29:01.398  4678  4696 I chatty  : uid=10067(com.twtrubiks.treesay) identical 2 lines
+10-29 05:29:01.449  4678  4696 I MonitoringInstr: Unstopped activity count: 1
+10-29 05:29:01.485  4678  4718 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e3a0: ver 3 0 (tinfo 0x7a6d68ca2240)
+10-29 05:29:01.499  4678  4696 I MonitoringInstr: Unstopped activity count: 1
+10-29 05:29:01.534  1935  4577 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasWideColorDisplay retrieved: 0
+10-29 05:29:01.535  1935  4577 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasHDRDisplay retrieved: 0
+10-29 05:29:01.535  1935  4577 I OpenGLRenderer: Initialized EGL, version 1.4
+10-29 05:29:01.535  1935  4577 D OpenGLRenderer: Swap behavior 1
+10-29 05:29:01.536  1935  4577 D EGL_emulation: eglCreateContext: 0x7a6d68c6e820: maj 3 min 0 rcv 3
+10-29 05:29:01.536  1935  4577 D EGL_emulation: eglMakeCurrent: 0x7a6d68c6e820: ver 3 0 (tinfo 0x7a6d52719060)
+10-29 05:29:01.550  4678  4696 I MonitoringInstr: Unstopped activity count: 1
+10-29 05:29:01.552  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@9dd78a0 in: STOPPED
+10-29 05:29:01.582  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@9dd78a0 in: DESTROYED
+10-29 05:29:01.595  1889  2376 W SurfaceFlinger: Attempting to destroy on removed layer: AppWindowToken{e7e0835 token=Token{a068a6c ActivityRecord{229671f u0 com.twtrubiks.treesay/.MainActivity t7}}}#0
+10-29 05:29:01.601  4678  4696 I TestRunner: started: appMotionSwitchWinsOverSystemRemoveAnimations(com.twtrubiks.treesay.SystemUiTest)
+10-29 05:29:01.604  4678  4696 D UiDevice: Executing shell command: settings put global animator_duration_scale 0
+10-29 05:29:01.613  4678  4696 D UiDevice: Retrieving node with selector: BySelector [RES='\Qandroid:id/aerr_close\E'].
+10-29 05:29:01.613  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:29:01.624  4678  4696 D UiDevice: Node not found with selector: BySelector [RES='\Qandroid:id/aerr_close\E'].
+10-29 05:29:01.612  1935  1935 V SettingsProvider: Notifying for 0: content://settings/global/animator_duration_scale
+10-29 05:29:01.625  1935  2589 I ActivityManager: START u0 {flg=0x10008000 cmp=com.twtrubiks.treesay/.MainActivity} from uid 10067
+10-29 05:29:01.738  1935  3430 D WificondControl: Scan result ready event
+10-29 05:29:01.858  4678  4696 D UiDevice: Retrieving node with selector: BySelector [RES='\Qcomposer_input\E'].
+10-29 05:29:01.858  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:29:01.861  4678  4678 W ActivityThread: handleWindowVisibility: no activity for token android.os.BinderProxy@e031139
+10-29 05:29:01.890  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@cb8ae71 in: PRE_ON_CREATE
+10-29 05:29:01.901  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@cb8ae71 in: CREATED
+10-29 05:29:01.902  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@cb8ae71 in: STARTED
+10-29 05:29:01.902  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@cb8ae71 in: RESUMED
+10-29 05:29:02.000  1564  1624 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:29:02.008  4678  4696 D UiDevice: Node not found with selector: BySelector [RES='\Qcomposer_input\E'].
+10-29 05:29:02.068  1564  1624 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:29:02.101  1564  1624 I chatty  : uid=1000(system) HwBinder:1564_2 identical 1 line
+10-29 05:29:02.102  1564  1624 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:29:02.109  4678  4696 D UiDevice: Retrieving node with selector: BySelector [RES='\Qcomposer_input\E'].
+10-29 05:29:02.109  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:29:02.151  1564  1624 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:29:02.179  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@7a33d40)
+10-29 05:29:02.179  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@7a33d40)
+10-29 05:29:02.184  4678  4718 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e3a0: ver 3 0 (tinfo 0x7a6d68ca2240)
+10-29 05:29:02.385  1935  1958 I ActivityManager: Displayed com.twtrubiks.treesay/.MainActivity: +441ms
+10-29 05:29:02.508  2559  2731 D EGL_emulation: eglMakeCurrent: 0x7a6d5eaaaca0: ver 3 0 (tinfo 0x7a6d5eb42220)
+10-29 05:29:02.508  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:02.557  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:02.613  1889  1928 W SurfaceFlinger: Attempting to set client state on removed layer: Splash Screen com.twtrubiks.treesay#0
+10-29 05:29:02.613  1889  1928 W SurfaceFlinger: Attempting to destroy on removed layer: Splash Screen com.twtrubiks.treesay#0
+10-29 05:29:02.631  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:02.667  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:03.182  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@f277e04)
+10-29 05:29:03.182  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@f277e04)
+10-29 05:29:03.187  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@74e0fed)
+10-29 05:29:03.187  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@74e0fed)
+10-29 05:29:04.187  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@3652e22)
+10-29 05:29:04.188  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@3652e22)
+10-29 05:29:04.292  1935  2053 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+10-29 05:29:04.403  4678  4696 D UiDevice: Taking screenshot (scale=0.500000, quality=90) and storing at /storage/emulated/0/Android/data/com.twtrubiks.treesay/files/screenshots/system-01-motion-on.png.
+10-29 05:29:04.406  1564  1624 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:29:04.633  1564  1624 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:29:05.185  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@66f30b3)
+10-29 05:29:05.186  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@66f30b3)
+10-29 05:29:05.521  1564  1624 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:29:05.680  4678  4696 D UiDevice: Retrieving node with selector: BySelector [RES='\Qandroid:id/aerr_close\E'].
+10-29 05:29:05.680  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:29:05.866  4678  4696 D UiDevice: Node not found with selector: BySelector [RES='\Qandroid:id/aerr_close\E'].
+10-29 05:29:05.867  1935  2589 I ActivityManager: START u0 {flg=0x10008000 cmp=com.twtrubiks.treesay/.MainActivity} from uid 10067
+10-29 05:29:05.924  4678  4696 D UiDevice: Retrieving node with selector: BySelector [RES='\Qcomposer_input\E'].
+10-29 05:29:05.924  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:29:05.941  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@cb8ae71 in: PAUSED
+10-29 05:29:05.992  4678  4678 W ActivityThread: handleWindowVisibility: no activity for token android.os.BinderProxy@c11851a
+10-29 05:29:06.027  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@bc39d72 in: PRE_ON_CREATE
+10-29 05:29:06.031  1564  1624 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:29:06.033  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@bc39d72 in: CREATED
+10-29 05:29:06.036  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@bc39d72 in: STARTED
+10-29 05:29:06.036  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@bc39d72 in: RESUMED
+10-29 05:29:06.152  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:06.154  1889  1889 D SurfaceFlinger: duplicate layer name: changing com.twtrubiks.treesay/com.twtrubiks.treesay.MainActivity to com.twtrubiks.treesay/com.twtrubiks.treesay.MainActivity#1
+10-29 05:29:06.159  1564  1624 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:29:06.184  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:06.185  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:29:06.189  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@32b0493)
+10-29 05:29:06.189  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:29:06.189  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@32b0493)
+10-29 05:29:06.228  4678  4696 W ByMatcher: Node returned null child: android.view.accessibility.AccessibilityNodeInfo@80006cd9; boundsInParent: Rect(0, 0 - 1440, 3120); boundsInScreen: Rect(0, 0 - 1440, 3120); packageName: com.twtrubiks.treesay; className: android.widget.FrameLayout; text: null; error: null; maxTextLength: -1; contentDescription: null; tooltipText: null; viewIdResName: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; importantForAccessibility: true; visible: true; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]
+10-29 05:29:06.228  4678  4696 W ByMatcher: Skipping null child (0 of 1)
+10-29 05:29:06.230  4678  4696 W ByMatcher: Node returned null child: android.view.accessibility.AccessibilityNodeInfo@80006cd9; boundsInParent: Rect(0, 0 - 1440, 3120); boundsInScreen: Rect(0, 0 - 1440, 3120); packageName: com.twtrubiks.treesay; className: android.widget.FrameLayout; text: null; error: null; maxTextLength: -1; contentDescription: null; tooltipText: null; viewIdResName: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; importantForAccessibility: true; visible: true; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]
+10-29 05:29:06.230  4678  4696 W ByMatcher: Skipping null child (0 of 1)
+10-29 05:29:06.238  4678  4696 D UiDevice: Node not found with selector: BySelector [RES='\Qcomposer_input\E'].
+10-29 05:29:06.280  4678  4718 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e3a0: ver 3 0 (tinfo 0x7a6d68ca2240)
+10-29 05:29:06.325  1935  1958 I ActivityManager: Displayed com.twtrubiks.treesay/.MainActivity: +352ms
+10-29 05:29:06.338  4678  4696 D UiDevice: Retrieving node with selector: BySelector [RES='\Qcomposer_input\E'].
+10-29 05:29:06.339  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:29:06.355  4678  4718 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e3a0: ver 3 0 (tinfo 0x7a6d68ca2240)
+10-29 05:29:06.444  4678  4718 I chatty  : uid=10067(com.twtrubiks.treesay) identical 1 line
+10-29 05:29:06.484  4678  4718 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e3a0: ver 3 0 (tinfo 0x7a6d68ca2240)
+10-29 05:29:06.519  1889  2388 W SurfaceFlinger: Attempting to set client state on removed layer: Splash Screen com.twtrubiks.treesay#0
+10-29 05:29:06.519  1889  2388 W SurfaceFlinger: Attempting to destroy on removed layer: Splash Screen com.twtrubiks.treesay#0
+10-29 05:29:06.532  4678  4718 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e3a0: ver 3 0 (tinfo 0x7a6d68ca2240)
+10-29 05:29:06.567  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:06.597  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:06.613  4678  4718 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e3a0: ver 3 0 (tinfo 0x7a6d68ca2240)
+10-29 05:29:06.704  4678  4718 I chatty  : uid=10067(com.twtrubiks.treesay) identical 2 lines
+10-29 05:29:06.782  4678  4718 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e3a0: ver 3 0 (tinfo 0x7a6d68ca2240)
+10-29 05:29:06.810  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:06.813  4678  4718 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e3a0: ver 3 0 (tinfo 0x7a6d68ca2240)
+10-29 05:29:06.869  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:06.872  4678  4718 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e3a0: ver 3 0 (tinfo 0x7a6d68ca2240)
+10-29 05:29:06.909  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@cb8ae71 in: STOPPED
+10-29 05:29:06.914  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@cb8ae71 in: DESTROYED
+10-29 05:29:07.188  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@25c85e8)
+10-29 05:29:07.188  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@25c85e8)
+10-29 05:29:08.188  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@ba1e401)
+10-29 05:29:08.189  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@ba1e401)
+10-29 05:29:08.904  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:29:09.188  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@12c92a6)
+10-29 05:29:09.189  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@12c92a6)
+10-29 05:29:09.425  1935  2053 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+10-29 05:29:09.656  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:29:09.711  4678  4696 D UiDevice: Retrieving node with selector: BySelector [RES='\Qandroid:id/aerr_close\E'].
+10-29 05:29:09.712  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:29:09.719  4678  4696 D UiDevice: Node not found with selector: BySelector [RES='\Qandroid:id/aerr_close\E'].
+10-29 05:29:09.720  1935  3430 I ActivityManager: START u0 {flg=0x10008000 cmp=com.twtrubiks.treesay/.MainActivity} from uid 10067
+10-29 05:29:09.721  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@bc39d72 in: PAUSED
+10-29 05:29:09.723  4678  4696 D UiDevice: Retrieving node with selector: BySelector [RES='\Qcomposer_input\E'].
+10-29 05:29:09.723  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:29:09.727  4678  4678 W ActivityThread: handleWindowVisibility: no activity for token android.os.BinderProxy@e720fa
+10-29 05:29:09.754  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@e74d552 in: PRE_ON_CREATE
+10-29 05:29:09.764  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@e74d552 in: CREATED
+10-29 05:29:09.767  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@e74d552 in: STARTED
+10-29 05:29:09.768  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@e74d552 in: RESUMED
+10-29 05:29:09.798  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:29:09.813  4678  4718 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e3a0: ver 3 0 (tinfo 0x7a6d68ca2240)
+10-29 05:29:09.879  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:29:09.899  1564  1564 I chatty  : uid=1000(system) allocator@2.0-s identical 2 lines
+10-29 05:29:09.954  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:29:09.955  4678  4696 W ByMatcher: Node returned null child: android.view.accessibility.AccessibilityNodeInfo@80006cdb; boundsInParent: Rect(0, 0 - 1440, 3120); boundsInScreen: Rect(0, 0 - 1440, 3120); packageName: com.twtrubiks.treesay; className: android.widget.FrameLayout; text: null; error: null; maxTextLength: -1; contentDescription: null; tooltipText: null; viewIdResName: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; importantForAccessibility: true; visible: true; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]
+10-29 05:29:09.955  4678  4696 W ByMatcher: Skipping null child (0 of 1)
+10-29 05:29:09.955  4678  4696 W ByMatcher: Node returned null child: android.view.accessibility.AccessibilityNodeInfo@80006cdb; boundsInParent: Rect(0, 0 - 1440, 3120); boundsInScreen: Rect(0, 0 - 1440, 3120); packageName: com.twtrubiks.treesay; className: android.widget.FrameLayout; text: null; error: null; maxTextLength: -1; contentDescription: null; tooltipText: null; viewIdResName: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; importantForAccessibility: true; visible: true; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]
+10-29 05:29:09.955  4678  4696 W ByMatcher: Skipping null child (0 of 1)
+10-29 05:29:10.009  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:10.009  4678  4718 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e3a0: ver 3 0 (tinfo 0x7a6d68ca2240)
+10-29 05:29:10.030  4678  4696 D UiDevice: Node not found with selector: BySelector [RES='\Qcomposer_input\E'].
+10-29 05:29:10.048  1935  1958 I ActivityManager: Displayed com.twtrubiks.treesay/.MainActivity: +308ms
+10-29 05:29:10.091  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:10.130  4678  4696 D UiDevice: Retrieving node with selector: BySelector [RES='\Qcomposer_input\E'].
+10-29 05:29:10.131  4678  4696 W QueryController: Could not detect idle state.
+10-29 05:29:10.191  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@b2a3463)
+10-29 05:29:10.191  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@b2a3463)
+10-29 05:29:10.236  1889  2376 W SurfaceFlinger: Attempting to set client state on removed layer: Splash Screen com.twtrubiks.treesay#0
+10-29 05:29:10.236  1889  2376 W SurfaceFlinger: Attempting to destroy on removed layer: Splash Screen com.twtrubiks.treesay#0
+10-29 05:29:10.248  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:10.284  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:10.566  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@bc39d72 in: STOPPED
+10-29 05:29:10.571  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@bc39d72 in: DESTROYED
+10-29 05:29:10.577  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:10.599  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:11.190  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@881b3bf)
+10-29 05:29:11.190  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@881b3bf)
+10-29 05:29:12.182  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:29:12.195  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@8b7ea8c)
+10-29 05:29:12.196  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@8b7ea8c)
+10-29 05:29:12.932  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:29:12.987  4678  4696 D UiDevice: Executing shell command: settings put global animator_duration_scale 1
+10-29 05:29:12.994  1935  1935 V SettingsProvider: Notifying for 0: content://settings/global/animator_duration_scale
+10-29 05:29:12.995  4678  4696 I TestRunner: finished: appMotionSwitchWinsOverSystemRemoveAnimations(com.twtrubiks.treesay.SystemUiTest)
+10-29 05:29:12.996  4678  4696 I MonitoringInstr: Unstopped activity count: 1
+10-29 05:29:12.996  4678  4678 I MonitoringInstr: Finishing activity: com.twtrubiks.treesay.MainActivity@e74d552
+10-29 05:29:12.998  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@e74d552 in: PAUSED
+10-29 05:29:13.001  1935  1949 E memtrack: Couldn't load memtrack module
+10-29 05:29:13.002  1935  1949 W android.os.Debug: failed to get memory consumption info: -1
+10-29 05:29:13.012  1935  1949 E memtrack: Couldn't load memtrack module
+10-29 05:29:13.012  1935  1949 W android.os.Debug: failed to get memory consumption info: -1
+10-29 05:29:13.043  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:29:13.047  4678  4696 I MonitoringInstr: Unstopped activity count: 1
+10-29 05:29:13.064  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:29:13.067  1564  1624 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:29:13.097  4678  4696 I MonitoringInstr: Unstopped activity count: 1
+10-29 05:29:13.114  2559  2731 D EGL_emulation: eglMakeCurrent: 0x7a6d5eaaaca0: ver 3 0 (tinfo 0x7a6d5eb42220)
+10-29 05:29:13.139  1564  1564 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 17973248
+10-29 05:29:13.148  4678  4696 I MonitoringInstr: Unstopped activity count: 1
+10-29 05:29:13.184  2559  2585 I droid.launcher: NativeAlloc concurrent copying GC freed 5998(383KB) AllocSpace objects, 0(0B) LOS objects, 50% free, 2MB/5MB, paused 5.570ms total 10.999ms
+10-29 05:29:13.187  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:13.193  1935  2327 I GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@827ca8d)
+10-29 05:29:13.194  1935  1949 I GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@827ca8d)
+10-29 05:29:13.200  4678  4696 I MonitoringInstr: Unstopped activity count: 1
+10-29 05:29:13.285  1935  2053 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+10-29 05:29:13.251  4678  4696 I chatty  : uid=10067(com.twtrubiks.treesay) identical 1 line
+10-29 05:29:13.307  4678  4696 I MonitoringInstr: Unstopped activity count: 1
+10-29 05:29:13.309  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:13.315  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:13.357  4678  4696 I MonitoringInstr: Unstopped activity count: 1
+10-29 05:29:13.391  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:13.408  4678  4696 I MonitoringInstr: Unstopped activity count: 1
+10-29 05:29:13.439  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:13.458  4678  4696 I MonitoringInstr: Unstopped activity count: 1
+10-29 05:29:13.492  2076  2313 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e580: ver 3 0 (tinfo 0x7a6d68c7f9e0)
+10-29 05:29:13.509  4678  4696 I MonitoringInstr: Unstopped activity count: 1
+10-29 05:29:13.559  4678  4696 I chatty  : uid=10067(com.twtrubiks.treesay) identical 1 line
+10-29 05:29:13.609  4678  4696 I MonitoringInstr: Unstopped activity count: 1
+10-29 05:29:13.638  4678  4718 D EGL_emulation: eglMakeCurrent: 0x7a6d68c3e3a0: ver 3 0 (tinfo 0x7a6d68ca2240)
+10-29 05:29:13.650  4678  4678 D LifecycleMonitor: Lifecycle status change: com.twtrubiks.treesay.MainActivity@e74d552 in: STOPPED
+10-29 05:29:13.660  4678  4696 I TestRunner: run finished: 2 tests, 0 failed, 0 ignored
+10-29 05:29:13.662  1935  1986 W WindowManager: removeWindowToken: Attempted to remove non-existing token: android.os.Binder@f5c9e28
+10-29 05:29:13.663  1935  1935 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+10-29 05:29:13.664  1935  2589 I ActivityManager: Force stopping com.twtrubiks.treesay appid=10067 user=0: finished inst
+10-29 05:29:13.665  1935  2589 I ActivityManager: Killing 4678:com.twtrubiks.treesay/u0a67 (adj 0): stop com.twtrubiks.treesay
+10-29 05:29:13.665  1935  1953 W libprocessgroup: kill(-4678, 9) failed: No such process
+10-29 05:29:13.666  1889  2376 W SurfaceFlinger: Attempting to destroy on removed layer: AppWindowToken{247bf3d token=Token{8681894 ActivityRecord{70d34e7 u0 com.twtrubiks.treesay/.MainActivity t8}}}#0
+10-29 05:29:13.669  1935  4775 W Binder  : Outgoing transactions from this process must be FLAG_ONEWAY
+10-29 05:29:13.669  1935  4775 W Binder  : java.lang.Throwable
+10-29 05:29:13.669  1935  4775 W Binder  : 	at android.os.BinderProxy.transact(Binder.java:1114)
+10-29 05:29:13.669  1935  4775 W Binder  : 	at android.app.IInstrumentationWatcher$Stub$Proxy.instrumentationFinished(IInstrumentationWatcher.java:164)
+10-29 05:29:13.669  1935  4775 W Binder  : 	at com.android.server.am.InstrumentationReporter$MyThread.run(InstrumentationReporter.java:86)
+10-29 05:29:13.670  4630  4630 D AndroidRuntime: Shutting down VM
+10-29 05:29:13.673  1935  4577 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasWideColorDisplay retrieved: 0
+10-29 05:29:13.673  1935  4577 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasHDRDisplay retrieved: 0
+10-29 05:29:13.673  1935  4577 I OpenGLRenderer: Initialized EGL, version 1.4
+10-29 05:29:13.673  1935  4577 D OpenGLRenderer: Swap behavior 1
+10-29 05:29:13.674  1935  4577 D EGL_emulation: eglCreateContext: 0x7a6d68c6e820: maj 3 min 0 rcv 3
+10-29 05:29:13.674  1935  4577 D EGL_emulation: eglMakeCurrent: 0x7a6d68c6e820: ver 3 0 (tinfo 0x7a6d52719060)
+10-29 05:29:13.708  1935  1953 W libprocessgroup: kill(-4678, 9) failed: No such process
+10-29 05:29:13.721  1890  1890 I Zygote  : Process 4678 exited due to signal (9)
+10-29 05:29:13.722  1935  1958 W ActivityManager: setHasOverlayUi called on unknown pid: 4678
+10-29 05:29:13.747  1935  1953 W libprocessgroup: kill(-4678, 9) failed: No such process
+10-29 05:29:13.747  1935  1953 I libprocessgroup: Successfully killed process cgroup uid 10067 pid 4678 in 81ms
