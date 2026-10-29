@@ -5,11 +5,15 @@
 [![SQLite](https://img.shields.io/badge/SQLite-3-003b57.svg)](https://www.sqlite.org/)
 [![Vue](https://img.shields.io/badge/Vue-3-4fc08d.svg)](https://vuejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-6-3178c6.svg)](https://www.typescriptlang.org/)
+[![Kotlin](https://img.shields.io/badge/Kotlin-2.4-7f52ff.svg)](https://kotlinlang.org/)
+[![Android](https://img.shields.io/badge/Android-9+-3ddc84.svg)](https://developer.android.com/)
 
 [![Claude API](https://img.shields.io/badge/Claude%20API-必要-d97757.svg)](https://platform.claude.com/)
 
-單人本機、無登入的療癒日記 Web App。像傳訊息一樣把想法丟給「樹」，
+單人本機、無登入的療癒日記 App。像傳訊息一樣把想法丟給「樹」，
 AI 整理成日記並溫暖回覆。
+
+有網頁版，也有 [Android 版](#手機版android)。
 
 命名取「訴說」諧音——把心事說給樹聽。
 
@@ -49,6 +53,8 @@ AI 整理成日記並溫暖回覆。
 | ![週報](docs/images/report.png) | ![記憶](docs/images/memories.png) |
 
 首頁的樹會隨風輕擺、偶爾有小東西來訪，也會跟著真實季節與入夜換樣貌。這些只是「它在這裡」，不反映你說了多少、心情如何。畫面要不要動由側邊欄底部的「動態」決定：開（預設）、關、跟系統；選擇記在這個瀏覽器裡。
+
+手機版的畫面見[手機版（Android）](#手機版android)。
 
 ## 前置需求
 
@@ -133,7 +139,7 @@ TREESAY_DATA_DIR=/path/to/somewhere python main.py
 ## 花多少錢
 
 AI 按 Claude API 用量計費，**一天一次種樹，一週一次週報**。側邊欄底部的「AI 費用」頁
-會按月顯示估算花費，實際帳單以 [Claude Console](https://platform.claude.com/) 為準。
+（手機版在「設定」裡）會按月顯示估算花費，實際帳單以 [Claude Console](https://platform.claude.com/) 為準。
 
 以預設檔次實測（2026 年 10 月）：
 
@@ -181,6 +187,76 @@ curl -F "file=@treesay-YYYYMMDD.json" http://127.0.0.1:8000/api/import
 動筆前會先把整個資料庫複製成 `~/.treesay/treesay.db.bak-<時間>`，匯壞了把它改回
 `treesay.db` 就回到匯入前。相片請自己把 `photos/` 複製回去，檔名對得上就會重新顯示。
 
+## 手機版（Android）
+
+[`android/`](android/) 是原生的 Android App（Kotlin ＋ Jetpack Compose，Android 9 以上）。
+不用開電腦，路上想到什麼就丟給樹；今日、種樹、森林、補種、週報、記憶、AI 費用、匯出匯入都有。
+
+| 首頁 | 種下之後 | 森林 | 週報 |
+|---|---|---|---|
+| <img src="docs/images/android/today.png" width="200" alt="首頁"> | <img src="docs/images/android/planted.png" width="200" alt="種下之後"> | <img src="docs/images/android/forest.png" width="200" alt="森林"> | <img src="docs/images/android/report.png" width="200" alt="週報"> |
+
+| 記憶 | 補種昨天 | 種樹時才要 key | 設定 |
+|---|---|---|---|
+| <img src="docs/images/android/memories.png" width="200" alt="記憶"> | <img src="docs/images/android/backfill.png" width="200" alt="補種昨天"> | <img src="docs/images/android/key.png" width="200" alt="種樹時才要 key"> | <img src="docs/images/android/settings.png" width="200" alt="設定"> |
+
+截圖是 CI 在 Android 16 模擬器上跑展示流程時拍的，日記內容是測試資料。
+
+### 跟網頁版一樣的地方
+
+規則照搬網頁版，兩邊有測試盯著：
+
+- 白天只收集，按「種下今天的樹」才呼叫一次 AI；凌晨 4:00 換日；忘了種的那天 48 小時內可以補種
+- 記憶的界線一樣：只用來理解你，不追蹤進度、不對帳；每一條都看得到、刪得掉
+- prompt、JSON schema、今日問題的題庫逐字相同。網頁版改了 prompt，Android 的測試會失敗提醒
+- 預設檔次一樣（種樹 `claude-opus-5-5`、週報 `claude-sonnet-5-5`，effort 都是 `medium`）
+- 「本機」一樣只涵蓋儲存：日記存在手機上，但種樹與週報時，那天的話與照片會送到 Anthropic
+
+### 不一樣的地方
+
+| | 網頁版 | 手機版 |
+|---|---|---|
+| 怎麼跑 | 在自己電腦上跑後端，瀏覽器開 `127.0.0.1:8000` | 裝 APK，手機自己呼叫 Claude API，不需要電腦 |
+| API key | 寫在 `.env` 的 `TREESAY_ANTHROPIC_API_KEY` | 在 App 裡貼上，先試一次打得開門，再用 Android Keystore 加密存在手機。沒有 key 也能先寫，第一次按「種下今天的樹」時才要 |
+| 模型與 effort | 環境變數（`TREESAY_PLANT_MODEL` 等） | 「設定」裡直接選 |
+| 設定、AI 費用、畫面動態 | 側邊欄底部的小字 | 首頁右上角的「設定」 |
+| 日記存在哪 | `~/.treesay/` | 手機上 App 自己的資料夾，其他 App 讀不到；關掉了 Android 的雲端備份，不會備份到 Google 雲端硬碟 |
+| 備份 | `curl` 打 `/api/export`、`/api/import` | 「設定」→「匯出日記」／「匯入」，用系統的存檔與開檔畫面 |
+| 照片 | 上傳檔案 | 系統的照片挑選器；手機拍的 HEIC 送出前轉成 JPEG |
+| 種樹 | 開著頁面等它長好 | 在背景種，切走 App、關掉螢幕也會種完 |
+| 出國 | 時間存電腦的本地時間 | 時間連時差一起存，訊息顯示說話當地的時間，換日照當地的凌晨 4:00 |
+
+> [!WARNING]
+> **移除 App 會連日記一起刪掉。** 要移除、換手機，或從下載的版本改裝自己 build 的 APK（簽章不同，得先移除舊版）之前，
+> 先到「設定」匯出一份。
+
+### 手機和電腦之間搬日記
+
+兩邊各存各的，不會自動同步。匯出的 JSON 格式相同，可以互相匯入：手機匯出、電腦用
+`curl -F "file=@treesay-YYYYMMDD.json" http://127.0.0.1:8000/api/import` 匯入，反過來也行。
+一樣只加不蓋：另一邊已經有的那一天、那一週、同一條記憶會保留原樣。照片不在 JSON 裡，只記檔名。
+
+### 安裝 APK
+
+**[⬇️ 下載最新版 treesay.apk](https://github.com/twtrubiks/treesay/releases/latest/download/treesay.apk)**（[所有版本](https://github.com/twtrubiks/treesay/releases)）
+
+用手機打開上面的連結，下載完點開就能安裝；第一次會要你允許瀏覽器「安裝不明來源的應用程式」。
+
+還沒有上架 Google Play，所以安裝時 Google Play 安全防護可能會先掃描一下。
+
+每一版都用同一把金鑰簽名，Release 頁面列了簽章憑證的 SHA-256，可以用來核對。
+
+想自己 build 也可以（需要 JDK 17 以上與 Android SDK）：
+
+```bash
+cd android
+./gradlew assembleRelease
+```
+
+自己 build 的 APK 用你電腦的 debug 金鑰簽名，跟上面下載的版本簽章不同，不能互相直接更新（見上面的提醒）。
+
+Android 版的開發約定、模擬器測試與錄影流程見 [`android/CLAUDE.md`](android/CLAUDE.md)。
+
 ## 開發
 
 前端改動想要熱重載時，用 vite dev server（會 proxy `/api` 到後端）：
@@ -197,11 +273,18 @@ pip install -r backend/requirements-dev.txt
 cd backend && pytest
 ```
 
+Android 版的單元測試（從 repo 根目錄）：
+
+```bash
+cd android && ./gradlew testDebugUnitTest
+```
+
 ## 技術棧
 
 - **後端**：FastAPI ＋ SQLAlchemy ＋ SQLite（uvicorn 僅綁 `127.0.0.1`）
 - **前端**：Vue 3 ＋ Vite ＋ TypeScript ＋ Pinia
 - **AI**：Claude API（官方 `anthropic` SDK，structured outputs）
+- **Android**：Kotlin ＋ Jetpack Compose ＋ SQLite，官方 `anthropic-java` SDK，背景種樹用 WorkManager
 
 設計文件見 [`docs/plans/`](docs/plans/)。
 

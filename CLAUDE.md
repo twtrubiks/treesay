@@ -34,8 +34,11 @@ treesay/
 │   ├── questions.py   # 今日問題內建題庫（依日期定題，不耗 AI）
 │   └── tests/         # pytest（mock API，不真呼叫 Claude）
 ├── frontend/          # Vue 3 + Vite + TS + Pinia
+├── android/           # Android 版（Kotlin + Compose，跟網頁版資料各自獨立）
 └── docs/plans/        # 設計文件
 ```
+
+動到 `android/` 之前先讀 `android/CLAUDE.md`：Android 版的約定、雲端開發與模擬器錄影流程都寫在那裡。
 
 日記與照片不在 repo 裡：預設落在 `~/.treesay/`（`treesay.db` ＋ `photos/`），
 可用 `TREESAY_DATA_DIR` 覆寫。

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 取自網頁版 frontend/src/assets/main.css 的色票（oklch 換算成 sRGB）。
+     XML 註解裡不能出現兩個連字號，所以變數名稱不寫前綴 -->
+<resources>
+    <!-- bg-app -->
+    <color name="bg_app">#FFFBF4E8</color>
+    <!-- trunk -->
+    <color name="trunk">#FF634632</color>
+    <!-- 夏天的大葉（season.ts） -->
+    <color name="leaf">#FF60A563</color>
+    <color name="leaf_light">#FF85BC79</color>
+    <color name="ic_launcher_background">#FFFBF4E8</color>
+</resources>

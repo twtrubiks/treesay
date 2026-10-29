@@ -1,0 +1,2 @@
+# gradle init 產生的預設：Windows 的批次檔保留 CRLF
+*.bat text eol=crlf

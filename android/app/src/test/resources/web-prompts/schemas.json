@@ -1,0 +1,118 @@
+{
+  "plant": {
+    "type": "object",
+    "properties": {
+      "diary": {
+        "type": "string"
+      },
+      "emotion": {
+        "type": "string",
+        "enum": [
+          "happy",
+          "calm",
+          "excited",
+          "tired",
+          "sad",
+          "anxious",
+          "angry"
+        ]
+      },
+      "tree_reply": {
+        "type": "string"
+      },
+      "memory": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "keywords": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "required": [
+      "diary",
+      "emotion",
+      "tree_reply",
+      "memory",
+      "keywords"
+    ],
+    "additionalProperties": false
+  },
+  "weekly_with_memories": {
+    "type": "object",
+    "properties": {
+      "good_things": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "bad_things": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "keywords": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "advice": {
+        "type": "string"
+      },
+      "memories": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "required": [
+      "good_things",
+      "bad_things",
+      "keywords",
+      "advice",
+      "memories"
+    ],
+    "additionalProperties": false
+  },
+  "weekly_without_memories": {
+    "type": "object",
+    "properties": {
+      "good_things": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "bad_things": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "keywords": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "advice": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "good_things",
+      "bad_things",
+      "keywords",
+      "advice"
+    ],
+    "additionalProperties": false
+  }
+}

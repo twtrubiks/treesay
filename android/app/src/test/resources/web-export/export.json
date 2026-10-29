@@ -1,0 +1,123 @@
+{
+  "exported_at": "2026-07-20T21:00:00",
+  "data_dir": "~/.treesay",
+  "days": [
+    {
+      "date": "2026-07-13",
+      "status": "planted",
+      "question": "最近有什麼事情，讓你覺得時間過得特別快或特別慢？",
+      "diary": "早上在河堤跑了一圈，中午的牛肉麵湯有點鹹。",
+      "emotion": "calm",
+      "tree_reply": "跑完步的早晨和一碗麵，平平穩穩的一天。",
+      "keywords": [
+        "河堤",
+        "牛肉麵"
+      ],
+      "planted_at": "2026-07-13T22:00:00",
+      "messages": [
+        {
+          "content": "早上去河堤跑了一圈",
+          "photo": "2026-07-13/e70473a6f7af41d0b78b61e1db97bb49.jpg",
+          "created_at": "2026-07-13T08:10:00"
+        },
+        {
+          "content": "中午吃了牛肉麵，湯有點鹹",
+          "photo": null,
+          "created_at": "2026-07-13T08:10:00"
+        }
+      ]
+    },
+    {
+      "date": "2026-07-14",
+      "status": "collecting",
+      "question": "今天有沒有想逃走的瞬間？後來呢？",
+      "diary": null,
+      "emotion": null,
+      "tree_reply": null,
+      "keywords": [],
+      "planted_at": null,
+      "messages": [
+        {
+          "content": "在改簡報",
+          "photo": null,
+          "created_at": "2026-07-14T21:00:00"
+        },
+        {
+          "content": "終於改完了，好睏",
+          "photo": null,
+          "created_at": "2026-07-15T01:30:00"
+        }
+      ]
+    },
+    {
+      "date": "2026-07-15",
+      "status": "planted",
+      "question": "如果你的心裡有一個房間，現在裡面是什麼樣子？",
+      "diary": "去看了牙醫，坐在候診室時有點緊張。",
+      "emotion": "anxious",
+      "tree_reply": "隔了一天才回來也沒關係，昨天緊張著去看牙醫的你很勇敢。",
+      "keywords": [
+        "牙醫"
+      ],
+      "planted_at": "2026-07-16T20:00:00",
+      "messages": [
+        {
+          "content": "下午去看了牙醫，有點緊張",
+          "photo": null,
+          "created_at": "2026-07-15T12:00:00"
+        }
+      ]
+    },
+    {
+      "date": "2026-07-20",
+      "status": "collecting",
+      "question": "有沒有什麼煩惱，說出來之後好像就沒那麼重了？",
+      "diary": null,
+      "emotion": null,
+      "tree_reply": null,
+      "keywords": [],
+      "planted_at": null,
+      "messages": [
+        {
+          "content": "今天還沒種的一天",
+          "photo": null,
+          "created_at": "2026-07-20T21:00:00"
+        }
+      ]
+    }
+  ],
+  "weekly_reports": [
+    {
+      "week_start": "2026-07-13",
+      "report": {
+        "good_things": [
+          "在河堤跑了一圈",
+          "簡報改完了"
+        ],
+        "bad_things": [
+          "看牙醫有點緊張"
+        ],
+        "keywords": [
+          "河堤",
+          "牙醫"
+        ],
+        "advice": "下週也照自己的步調來。"
+      },
+      "created_at": "2026-07-20T09:00:00"
+    }
+  ],
+  "memories": [
+    {
+      "id": 1,
+      "content": "週末喜歡去河堤跑步",
+      "source_date": "2026-07-13",
+      "created_at": "2026-10-28T11:23:28.208584"
+    },
+    {
+      "id": 2,
+      "content": "最近在準備搬家",
+      "source_date": "2026-07-15",
+      "created_at": "2026-10-28T11:23:28.256529"
+    }
+  ]
+}

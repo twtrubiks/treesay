@@ -1,0 +1,61 @@
+{
+  "plant": [
+    {
+      "name": "plant_today_plain",
+      "messages": [
+        {"time": "09:15", "content": "早上去河堤跑了一圈"},
+        {"time": "21:40", "content": "晚上看了一部很久沒看的電影 🎬"}
+      ],
+      "question": null,
+      "days_ago": 0,
+      "memories": [],
+      "recent_diaries": []
+    },
+    {
+      "name": "plant_with_everything",
+      "messages": [
+        {"time": "08:02", "content": "", "photo": 1},
+        {"time": "12:30", "content": "午餐吃了巷口的牛肉麵", "photo_unseen": true},
+        {"time": "23:10", "content": "今天的 bug 終於修好了", "photo": 2}
+      ],
+      "question": "今天有沒有替別人做什麼小事？就算只是幫忙按電梯也算。",
+      "days_ago": 0,
+      "memories": ["在準備搬家", "養了一隻貓叫麻糬"],
+      "recent_diaries": [
+        {"date": "2026-10-25", "emotion": "tired", "diary": "今天一直在打包。"},
+        {"date": "2026-10-26", "emotion": "happy", "diary": "麻糬終於肯進外出籠了。"}
+      ]
+    },
+    {
+      "name": "plant_backfill_yesterday",
+      "messages": [{"time": "22:00", "content": "有點累，先睡了"}],
+      "question": "最近有沒有什麼話，想說卻還沒說出口？",
+      "days_ago": 1,
+      "memories": ["最近在學吉他"],
+      "recent_diaries": []
+    },
+    {
+      "name": "plant_backfill_five_days",
+      "messages": [{"time": "03:30", "content": "睡不著"}],
+      "question": null,
+      "days_ago": 5,
+      "memories": [],
+      "recent_diaries": [{"date": "2026-10-20", "emotion": "anxious", "diary": "面試前一晚。"}]
+    }
+  ],
+  "weekly": [
+    {
+      "name": "weekly_plain",
+      "diaries": [
+        {"date": "2026-10-19", "emotion": "calm", "diary": "整理了陽台的盆栽。"},
+        {"date": "2026-10-23", "emotion": "excited", "diary": "收到朋友寄來的明信片。"}
+      ],
+      "memories": []
+    },
+    {
+      "name": "weekly_with_memories",
+      "diaries": [{"date": "2026-10-21", "emotion": "sad", "diary": "外婆住院了。"}],
+      "memories": ["外婆住在台南", "在準備搬家"]
+    }
+  ]
+}
